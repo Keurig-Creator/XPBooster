@@ -2,6 +2,7 @@ package com.keurig.xpbooster.command;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Dependency;
 import co.aikar.commands.annotation.Subcommand;
 import com.keurig.xpbooster.XPBooster;
@@ -9,7 +10,8 @@ import com.keurig.xpbooster.language.Language;
 import com.keurig.xpbooster.util.Chat;
 import org.bukkit.command.CommandSender;
 
-@CommandAlias("xpboost|expboost|exp|ex")
+@CommandAlias("xpbooster|xpboost|expboost|exp|ex")
+@CommandPermission("xpbooster.admin")
 public class XPBoostReloadCommand extends BaseCommand {
 
     @Dependency
