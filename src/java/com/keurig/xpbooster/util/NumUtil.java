@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class NumUtil {
 
-    public static String DATE_FORMAT_REGEX = "^(\\d+(?:\\.\\d{1,2})?)(day|d|year|y|second|s)$";
+    public static String DATE_FORMAT_REGEX = "^(\\d+(?:\\.\\d{1,2})?)(day|d|year|y|minute|min|m|second|s)$";
 
     public static boolean isNumber(String string) {
         return isNumber(string, true);
