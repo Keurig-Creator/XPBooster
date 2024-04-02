@@ -31,13 +31,22 @@ public class BoostEndTask extends BukkitRunnable {
             if (expBoost.isExpired()) {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     Player player = Bukkit.getPlayer(expBoost.getUuid());
-                    player.playSound(player, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
-//                    player.playSound(player, Sound.valueOf(plugin.config.getString()), 1, 1);
+
+                    if (player == null) {
+                        return;
+                    }
+
+                    try {
+                        player.playSound(player, Sound.valueOf(plugin.config.getString("boost_end_sound")), 1, 1);
+                    } catch (IllegalArgumentException ignored) {
+
+                    }
+                    
                     Chat.message(player, Language.BOOST_END_MESSAGE.toString());
                 }, 0);
 
+                iterator.remove();
                 XPBooster.getInstance().getBoostHandler().removeBoost(expBoost.getUuid());
-
             }
         }
     }
