@@ -2,7 +2,7 @@
 minimum_multiplier: 1
 
 # Maximum multiplier
-maximum_multiplier: 5
+maximum_multiplier: 15
 
 # Sound played when boost ends
 boost_end_sound: BLOCK_NOTE_BLOCK_PLING
