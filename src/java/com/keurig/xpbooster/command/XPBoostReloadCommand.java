@@ -5,7 +5,7 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Dependency;
 import co.aikar.commands.annotation.Subcommand;
-import com.keurig.xpbooster.XPBooster;
+import com.keurig.xpbooster.XPBoostPlugin;
 import com.keurig.xpbooster.language.Language;
 import com.keurig.xpbooster.util.Chat;
 import org.bukkit.command.CommandSender;
@@ -15,14 +15,17 @@ import org.bukkit.command.CommandSender;
 public class XPBoostReloadCommand extends BaseCommand {
 
     @Dependency
-    private XPBooster plugin;
+    private XPBoostPlugin plugin;
 
     @Subcommand("reload")
     public void onReload(CommandSender sender, String[] args) {
-        plugin.lang.load();
         plugin.loadLanguage();
         plugin.config.load();
         plugin.loadDataConfig();
+        plugin.getVoucherManager().getConfig().load();
+        plugin.getVoucherManager().setupVoucherConfig();
+        plugin.getShopManager().getConfig().load();
+        plugin.getShopManager().setupShopConfig();
         Chat.message(sender, Language.RELOAD_COMMAND.toString());
     }
 

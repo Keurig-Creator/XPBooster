@@ -1,0 +1,38 @@
+boosters:
+  Basic:
+    price: 1500
+    multiplier: 1.5
+    time: 15m
+
+    # This is the physical voucher
+    material: PAPER
+    title: "&7$name XP boost &e$multiplierx&7."
+    glow: true
+    lore:
+      - "&7Right click to &eclaim&7."
+      - "&7Multiplier &e$multiplierx"
+      - "&7Time &e$time"
+
+  Prime:
+    price: 1500
+    multiplier: 2
+    time: 15m
+    material: PAPER
+    title: "&a$name &fXP boost &e$multiplierx&7."
+    glow: true
+    lore:
+      - "&7Right click to &eclaim&7."
+      - "&7Multiplier &e$multiplierx"
+      - "&7Time &e$time"
+
+  Beast:
+    price: 5000
+    multiplier: 5
+    time: 15m
+    material: PAPER
+    title: "&6$name &fXP boost &e$multiplierx&7."
+    glow: true
+    lore:
+      - "&7Right click to &eclaim&7."
+      - "&7Multiplier &e$multiplierx"
+      - "&7Time &e$time"

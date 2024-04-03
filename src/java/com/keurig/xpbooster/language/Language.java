@@ -1,6 +1,6 @@
 package com.keurig.xpbooster.language;
 
-import com.keurig.xpbooster.XPBooster;
+import com.keurig.xpbooster.XPBoostPlugin;
 import com.keurig.xpbooster.util.Chat;
 import com.keurig.xpbooster.util.Replacement;
 import lombok.Getter;
@@ -14,6 +14,7 @@ public enum Language {
     PLAYER_NO_BOOST("&cYou have no active boosters"),
     TARGET_NO_BOOST("&cTarget has no active boosters"),
     INVALID_DATE("&cInvalid time/date format. Use formats like 1d, 1day, or 10s."),
+    INVALID_VOUCHER("&cInvalid voucher. &7[&f$vouchers&7]"),
     NO_MULTIPLIER("&cUsage: $command <player> [multiplier] [time]"),
     INVALID_NUMBER("&cPlease provide a valid number."),
     MINIMUM_MULTIPLIER("&cError minimum multiplier &f$minMultiplier&c."),
@@ -27,7 +28,7 @@ public enum Language {
     final
     public String value;
 
-    private final XPBooster plugin = XPBooster.getInstance();
+    private final XPBoostPlugin plugin = XPBoostPlugin.getInstance();
 
     Language(String value) {
         this.value = value;
@@ -36,8 +37,8 @@ public enum Language {
     @Override
     public String toString() {
         Replacement replacement = new Replacement();
-        replacement.addReplacement("(?i)\\$(min|minimum)(Multiplier)", String.valueOf(XPBooster.getInstance().config.getInt("minimum_multiplier")));
-        replacement.addReplacement("(?i)\\$(max|maximum)(Multiplier)", String.valueOf(XPBooster.getInstance().config.getInt("maximum_multiplier")));
+        replacement.addReplacement("(?i)\\$(min|minimum)(Multiplier)", String.valueOf(XPBoostPlugin.getInstance().config.getInt("minimum-multiplier")));
+        replacement.addReplacement("(?i)\\$(max|maximum)(Multiplier)", String.valueOf(XPBoostPlugin.getInstance().config.getInt("maximum-multiplier")));
         replacement.setInput(Chat.color(plugin.lang.getString(name().toLowerCase())));
         return replacement.getReplacement();
     }

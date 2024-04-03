@@ -1,6 +1,7 @@
 package com.keurig.xpbooster.tasks;
 
-import com.keurig.xpbooster.XPBooster;
+import com.keurig.xpbooster.XPBoostPlugin;
+import com.keurig.xpbooster.api.XPBoostAPI;
 import com.keurig.xpbooster.base.EXPBoost;
 import com.keurig.xpbooster.language.Language;
 import com.keurig.xpbooster.util.Chat;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class BoostEndTask extends BukkitRunnable {
 
-    private XPBooster plugin;
+    private XPBoostPlugin plugin;
 
     @Override
     public void run() {
@@ -41,12 +42,12 @@ public class BoostEndTask extends BukkitRunnable {
                     } catch (IllegalArgumentException ignored) {
 
                     }
-                    
+
                     Chat.message(player, Language.BOOST_END_MESSAGE.toString());
                 }, 0);
 
                 iterator.remove();
-                XPBooster.getInstance().getBoostHandler().removeBoost(expBoost.getUuid());
+                XPBoostAPI.removeBoost(expBoost.getUuid());
             }
         }
     }

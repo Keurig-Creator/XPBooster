@@ -1,6 +1,6 @@
 package com.keurig.xpbooster.util;
 
-import com.keurig.xpbooster.XPBooster;
+import com.keurig.xpbooster.XPBoostPlugin;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,10 +22,25 @@ public class Replacement {
     public static String TARGET_REGEX = "(?i)\\$target";
     public static String DURATION_REGEX = "(?i)\\$duration";
     public static String MULTIPLIER_REGEX = "(?i)\\$multiplier";
+    public static String VOUCHER_REGEX = "(?i)\\$multiplier";
+    public static String NAME_REGEX = "(?i)\\$name";
+    public static String PRICE_REGEX = "(?i)\\$price";
+    public static String TIME_REGEX = "(?i)\\$time";
+
+    public String getReplacement(String input) {
+        input = input.replaceAll("(?i)\\$(min|minimum)(Multiplier)", String.valueOf(XPBoostPlugin.getInstance().config.getInt("minimum-multiplier") + .5));
+        input = input.replaceAll("(?i)\\$(max|maximum)(Multiplier)", String.valueOf(XPBoostPlugin.getInstance().config.getInt("maximum-multiplier")));
+
+        for (Map.Entry<String, String> replace : replacements.entrySet()) {
+            input = input.replaceAll(replace.getKey(), replace.getValue());
+        }
+
+        return input;
+    }
 
     public String getReplacement() {
-        replaceMessage("(?i)\\$(min|minimum)(Multiplier)", String.valueOf(XPBooster.getInstance().config.getInt("minimum_multiplier") + .5));
-        replaceMessage("(?i)\\$(max|maximum)(Multiplier)", String.valueOf(XPBooster.getInstance().config.getInt("maximum_multiplier")));
+        replaceMessage("(?i)\\$(min|minimum)(Multiplier)", String.valueOf(XPBoostPlugin.getInstance().config.getInt("minimum-multiplier") + .5));
+        replaceMessage("(?i)\\$(max|maximum)(Multiplier)", String.valueOf(XPBoostPlugin.getInstance().config.getInt("maximum-multiplier")));
 
         for (Map.Entry<String, String> replace : replacements.entrySet()) {
             replaceMessage(replace.getKey(), replace.getValue());

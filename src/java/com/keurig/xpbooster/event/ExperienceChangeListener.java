@@ -1,6 +1,7 @@
-package com.keurig.xpbooster.listener;
+package com.keurig.xpbooster.event;
 
-import com.keurig.xpbooster.XPBooster;
+import com.keurig.xpbooster.XPBoostPlugin;
+import com.keurig.xpbooster.api.XPBoostAPI;
 import com.keurig.xpbooster.base.EXPBoost;
 import lombok.AllArgsConstructor;
 import org.bukkit.entity.Player;
@@ -11,14 +12,14 @@ import org.bukkit.event.player.PlayerExpChangeEvent;
 @AllArgsConstructor
 public class ExperienceChangeListener implements Listener {
 
-    private XPBooster plugin;
+    private XPBoostPlugin plugin;
 
     @EventHandler
     public void onExperienceChange(PlayerExpChangeEvent event) {
 
         Player player = event.getPlayer();
 
-        EXPBoost boost = plugin.getBoostHandler().getBoost(player.getUniqueId());
+        EXPBoost boost = XPBoostAPI.getBoost(player.getUniqueId());
         if (boost == null) {
             return;
         }

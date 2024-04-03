@@ -1,6 +1,6 @@
 package com.keurig.xpbooster.util;
 
-import com.keurig.xpbooster.XPBooster;
+import com.keurig.xpbooster.XPBoostPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,7 +14,11 @@ public class Chat {
     public static TempHashSet<UUID> temp = new TempHashSet<>(1000);
 
     public static String color(String message) {
-        return ChatColor.translateAlternateColorCodes('&', message);
+        try {
+            return ChatColor.translateAlternateColorCodes('&', message);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     public static String color(String... message) {
@@ -39,22 +43,22 @@ public class Chat {
     }
 
     public static void log(String message) {
-        XPBooster.getInstance().getLogger().log(Level.INFO, color(message));
+        XPBoostPlugin.getInstance().getLogger().log(Level.INFO, color(message));
     }
 
     public static void log(int number) {
-        XPBooster.getInstance().getLogger().log(Level.INFO, String.valueOf(number));
+        XPBoostPlugin.getInstance().getLogger().log(Level.INFO, String.valueOf(number));
     }
 
     public static void log(double number) {
-        XPBooster.getInstance().getLogger().log(Level.INFO, String.valueOf(number));
+        XPBoostPlugin.getInstance().getLogger().log(Level.INFO, String.valueOf(number));
     }
 
     public static void log(boolean value) {
-        XPBooster.getInstance().getLogger().log(Level.INFO, String.valueOf(value));
+        XPBoostPlugin.getInstance().getLogger().log(Level.INFO, String.valueOf(value));
     }
 
     public static void log(Object object) {
-        XPBooster.getInstance().getLogger().log(Level.INFO, object.toString());
+        XPBoostPlugin.getInstance().getLogger().log(Level.INFO, object.toString());
     }
 }

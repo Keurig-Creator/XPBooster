@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.keurig.xpbooster.XPBooster;
+import com.keurig.xpbooster.XPBoostPlugin;
 import com.keurig.xpbooster.base.EXPBoost;
 import lombok.Getter;
 
@@ -24,7 +24,7 @@ public class JsonConfig {
     private final Map<UUID, EXPBoost> expBoosts;
     private final File file;
 
-    public JsonConfig(String name, XPBooster plugin) {
+    public JsonConfig(String name, XPBoostPlugin plugin) {
         file = new File(plugin.getDataFolder(), name);
         expBoosts = new HashMap<>();
     }
