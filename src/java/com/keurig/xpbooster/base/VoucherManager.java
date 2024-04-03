@@ -7,6 +7,7 @@ import com.keurig.xpbooster.util.ItemBuilder;
 import com.keurig.xpbooster.util.Replacement;
 import lombok.*;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -80,6 +81,10 @@ public class VoucherManager {
         }
 
         return null;
+    }
+
+    public void claimVoucher(Player player, Voucher voucher) {
+
     }
 
     public void clear() {
