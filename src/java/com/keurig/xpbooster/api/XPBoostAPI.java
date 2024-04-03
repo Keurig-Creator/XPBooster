@@ -3,6 +3,8 @@ package com.keurig.xpbooster.api;
 import com.keurig.xpbooster.XPBoostPlugin;
 import com.keurig.xpbooster.base.EXPBoost;
 import com.keurig.xpbooster.base.InternalXPBoostHandler;
+import com.keurig.xpbooster.base.Voucher;
+import com.keurig.xpbooster.util.CalenderUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -24,7 +26,7 @@ public class XPBoostAPI {
     /**
      * Add boost to user
      */
-    public static void addBoost(UUID uuid, EXPBoost expBoost) {
+    public static void setBoost(UUID uuid, EXPBoost expBoost) {
         getBoostHandler().addBoost(uuid, expBoost);
     }
 
@@ -33,6 +35,16 @@ public class XPBoostAPI {
      */
     public static void removeBoost(UUID uuid) {
         getBoostHandler().removeBoost(uuid);
+    }
+
+    public static void addBoost(UUID uuid, Voucher voucher) {
+        if (hasBoost(uuid)) {
+            EXPBoost boost = getBoost(uuid);
+            boost.setDate(CalenderUtil.getTime(boost.getDate(), voucher.getTime()));
+            boost.setMultiplier(boost.getMultiplier());
+        } else {
+            setBoost(uuid, new EXPBoost(uuid, voucher.getMultiplier(), CalenderUtil.getTime(voucher.getTime()), voucher.getName()));
+        }
     }
 
     /**

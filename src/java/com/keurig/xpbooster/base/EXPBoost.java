@@ -25,6 +25,7 @@ public class EXPBoost {
 
     private double multiplier;
     private long date;
+    private String type;
 
     @Override
     public String toString() {
