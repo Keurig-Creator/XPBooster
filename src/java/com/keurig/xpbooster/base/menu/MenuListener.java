@@ -18,12 +18,22 @@ public class MenuListener implements Listener {
 
         Menu menu = (Menu) e.getInventory().getHolder();
 
+        ItemClickEvent action = new ItemClickEvent(
+                e.getCurrentItem(),
+                e.getView(),
+                menu,
+                ((Player) e.getWhoClicked()).getPlayer(),
+                e,
+                e.getClick(),
+                e.getSlot()
+        );
+        menu.handle(action);
+        e.setCurrentItem(action.getItem());
+
         if (menu.cancelClicks()) {
             e.setResult(Event.Result.DENY);
             e.setCancelled(true);
         }
-
-        menu.handle(e);
     }
 
 }
