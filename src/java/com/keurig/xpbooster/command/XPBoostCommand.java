@@ -152,7 +152,7 @@ public class XPBoostCommand extends BaseCommand {
                 .multiplier(multiplier)
                 .date(time).build();
 
-        XPBoostAPI.addBoost(toSet.getUniqueId(), expBoost);
+        XPBoostAPI.setBoost(toSet.getUniqueId(), expBoost);
 
         sender.sendMessage(Language.SET_XPBOOST_MESSAGE.toString(replace));
 
