@@ -1,0 +1,12 @@
+# Minimum multiplier: the next decimal example 1.5
+minimum-multiplier: 1
+
+# Maximum multiplier
+maximum-multiplier: 15
+
+# Sound played when boost ends
+boost-end-sound: BLOCK_NOTE_BLOCK_PLING
+
+# Range the multiplier will use. Keep in mind the multiplier will be rounded because of how Minecraft stores the experience.
+# For example, if set to true, you can have a full range including the decimal point for the multiplier.
+full-range-multiplier: false
