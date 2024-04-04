@@ -1,5 +1,6 @@
-package com.keurig.xpbooster.base.menu;
+package com.keurig.xpbooster.base.menu.item;
 
+import com.keurig.xpbooster.base.menu.Menu;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.Player;

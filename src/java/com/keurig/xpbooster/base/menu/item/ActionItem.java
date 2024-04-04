@@ -1,4 +1,4 @@
-package com.keurig.xpbooster.base.menu;
+package com.keurig.xpbooster.base.menu.item;
 
 import lombok.Getter;
 import lombok.Setter;

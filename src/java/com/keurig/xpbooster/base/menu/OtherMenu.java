@@ -1,16 +1,18 @@
 package com.keurig.xpbooster.base.menu;
 
 import com.keurig.xpbooster.base.menu.item.ActionItem;
+import com.keurig.xpbooster.base.menu.item.ItemAction;
 import com.keurig.xpbooster.base.menu.item.ItemClickEvent;
+import com.keurig.xpbooster.util.Chat;
 import com.keurig.xpbooster.util.ItemBuilder;
 import lombok.Builder;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 
-public class CustomMenu extends Menu {
+public class OtherMenu extends Menu {
 
     @Builder
-    public CustomMenu() {
+    public OtherMenu() {
 
     }
 
@@ -21,13 +23,12 @@ public class CustomMenu extends Menu {
 
     @Override
     public String getTitle() {
-        return "&cSick Menu";
+        return "&f&lOther Menu";
     }
 
     @Override
     public void onClick(ItemClickEvent e) {
         // Implement your custom onClick behavior here
-       
     }
 
     @Override
@@ -35,7 +36,14 @@ public class CustomMenu extends Menu {
         // Implement setup logic if needed
 
         ActionItem actionItem = new ActionItem(ItemBuilder.item(Material.PAPER).toItemStack());
-        actionItem.addAction(e -> MenuManager.openMenu(OtherMenu.class, e.getPlayer()));
+        actionItem.addAction(new ItemAction() {
+            @Override
+            public void onClick(ItemClickEvent e) {
+                Chat.log(e.getMenu().playerMenu.getHistory().size());
+                e.getMenu().playerMenu.getLast().actions.clear();
+                MenuManager.openMenu(e.getMenu().playerMenu.getLast(), playerMenu.getPlayer());
+            }
+        });
 
         addItems(actionItem);
         setActionItems(inventory);
