@@ -35,7 +35,12 @@ public class CustomMenu extends Menu {
         // Implement setup logic if needed
 
         ActionItem actionItem = new ActionItem(ItemBuilder.item(Material.PAPER).toItemStack());
-        actionItem.addAction(e -> MenuManager.openMenu(OtherMenu.class, e.getPlayer()));
+        actionItem.addAction(e -> {
+            e.getMenu().getPlayerMenu().setData("player", e.getPlayer());
+            e.setCurrentItem(ItemBuilder.item(Material.SADDLE).toItemStack());
+
+            MenuManager.openMenu(OtherMenu.class, e.getPlayer());
+        });
 
         addItems(actionItem);
     }

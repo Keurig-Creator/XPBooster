@@ -3,7 +3,6 @@ package com.keurig.xpbooster.base.menu;
 import com.keurig.xpbooster.base.menu.item.ActionItem;
 import com.keurig.xpbooster.base.menu.item.ItemAction;
 import com.keurig.xpbooster.base.menu.item.ItemClickEvent;
-import com.keurig.xpbooster.util.Chat;
 import com.keurig.xpbooster.util.ItemBuilder;
 import lombok.Builder;
 import org.bukkit.Material;
@@ -39,9 +38,7 @@ public class OtherMenu extends Menu {
         actionItem.addAction(new ItemAction() {
             @Override
             public void onClick(ItemClickEvent e) {
-                Chat.log(e.getMenu().playerMenu.getHistory().size());
-                e.getMenu().playerMenu.getLast().actions.clear();
-                MenuManager.openMenu(e.getMenu().playerMenu.getLast(), playerMenu.getPlayer());
+                MenuManager.openMenu(e.getMenu().playerMenu.getLast(), e.getPlayer());
             }
         });
 
