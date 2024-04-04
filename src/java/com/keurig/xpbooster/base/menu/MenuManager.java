@@ -27,6 +27,7 @@ public class MenuManager implements Listener {
             T menu = menuClass.getDeclaredConstructor().newInstance(); // Instantiate the menu using reflection
             Inventory inventory = menu.apply();
             menu.setup(inventory);
+            menu.setActionItems(inventory);
 
             if (openedMenus.containsKey(player)) {
                 menu.setPlayerMenu(openedMenus.get(player).playerMenu);

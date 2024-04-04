@@ -27,7 +27,7 @@ public class CustomMenu extends Menu {
     @Override
     public void onClick(ItemClickEvent e) {
         // Implement your custom onClick behavior here
-       
+
     }
 
     @Override
@@ -38,7 +38,6 @@ public class CustomMenu extends Menu {
         actionItem.addAction(e -> MenuManager.openMenu(OtherMenu.class, e.getPlayer()));
 
         addItems(actionItem);
-        setActionItems(inventory);
     }
 
     @Override
