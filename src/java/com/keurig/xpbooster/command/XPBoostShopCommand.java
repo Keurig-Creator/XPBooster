@@ -6,6 +6,7 @@ import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Dependency;
 import com.keurig.xpbooster.XPBoostPlugin;
 import com.keurig.xpbooster.base.menu.ActionItem;
+import com.keurig.xpbooster.base.menu.CustomMenu;
 import com.keurig.xpbooster.base.menu.GobackMenu;
 import com.keurig.xpbooster.base.menu.TestMenu;
 import com.keurig.xpbooster.util.Chat;
@@ -21,7 +22,6 @@ public class XPBoostShopCommand extends BaseCommand {
 
     @Default
     public void onCommand(Player player) {
-
         ActionItem item = new ActionItem(ItemBuilder.item(Material.PAPER).setName("&aGO TO OTHER MENU").toItemStack());
         item.addAction(e -> {
 
@@ -39,10 +39,23 @@ public class XPBoostShopCommand extends BaseCommand {
 
                 gobackMenu.open(e.getPlayer());
                 e.setCurrentItem(ItemBuilder.item(Material.SADDLE).toItemStack());
-            } else if (e.getItem().getType().equals(Material.SADDLE)) {
             }
 
         });
+
+        CustomMenu test = CustomMenu.builder()
+                .title("&fTest &aMenu")
+                .size(18)
+                .parentMenu(null)
+                .items(new ActionItem[]{item}) // Pass your items array here
+                .build();
+
+        CustomMenu othermenu = CustomMenu.builder()
+                .title("&fTest &aMenu")
+                .size(18)
+                .parentMenu(test)
+                .items(new ActionItem[]{item}) // Pass your items array here
+                .build();
 
         TestMenu menu = new TestMenu("&fTest &aMenu", 18, null, item);
         menu.open(player);

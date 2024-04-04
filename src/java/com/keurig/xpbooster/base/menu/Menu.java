@@ -2,6 +2,7 @@ package com.keurig.xpbooster.base.menu;
 
 import com.keurig.xpbooster.util.Chat;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -20,7 +21,8 @@ public abstract class Menu implements InventoryHolder {
     protected final int size;
 
     @Getter
-    protected final Menu parent;
+    @Setter
+    protected Menu parent;
 
     public Menu(String title, int size, Menu parent, ActionItem... items) {
         this.title = title;
@@ -69,7 +71,7 @@ public abstract class Menu implements InventoryHolder {
             getParent().open(e.getPlayer());
             e.setGoback(false);
         } else if (e.isUpdate()) {
-            
+
             update(e.getPlayer());
             e.setUpdate(false);
         }
