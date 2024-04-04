@@ -25,25 +25,8 @@ public class MenuManager implements Listener {
     public static <T extends Menu> Inventory openMenu(Class<T> menuClass, Player player) {
         try {
             T menu = menuClass.getDeclaredConstructor().newInstance(); // Instantiate the menu using reflection
-            Inventory inventory = menu.apply();
-            menu.setup(inventory);
-            menu.setActionItems(inventory);
 
-            if (openedMenus.containsKey(player)) {
-                menu.setPlayerMenu(openedMenus.get(player).playerMenu);
-                menu.getPlayerMenu().addHistory(menu);
-            } else {
-                PlayerMenu playerMenu = new PlayerMenu(player);
-                playerMenu.addHistory(menu);
-                menu.setPlayerMenu(playerMenu);
-            }
-
-            player.closeInventory();
-            player.openInventory(menu.getInventory());
-
-            openedMenus.put(player, menu);
-
-            return inventory;
+            return openMenu(menu, player);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -53,6 +36,7 @@ public class MenuManager implements Listener {
     public static Inventory openMenu(Menu menu, Player player) {
         Inventory inventory = menu.apply();
         menu.setup(inventory);
+        menu.setActionItems(inventory);
 
         if (openedMenus.containsKey(player)) {
             menu.setPlayerMenu(openedMenus.get(player).playerMenu);
