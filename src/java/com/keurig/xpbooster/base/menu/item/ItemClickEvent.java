@@ -1,6 +1,7 @@
 package com.keurig.xpbooster.base.menu.item;
 
-import com.keurig.xpbooster.base.menu.Menu;
+import com.keurig.xpbooster.base.menu.data.Menu;
+import com.keurig.xpbooster.base.menu.data.PlayerMenu;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.Player;
@@ -14,9 +15,10 @@ import org.bukkit.inventory.ItemStack;
 @Setter
 public class ItemClickEvent {
 
-    private ItemStack item;
+    private ItemStack currentItem;
     private final InventoryView view;
-    private final Menu menu;
+    private final Menu currentMenu;
+    private final PlayerMenu playerMenu;
     private final Player player;
     private final InventoryClickEvent e;
     private final ClickType clickType;
@@ -24,14 +26,16 @@ public class ItemClickEvent {
     private boolean update;
     private boolean goback;
 
-    public ItemClickEvent(ItemStack item, InventoryView view, Menu menu, Player player, InventoryClickEvent e, ClickType clickType, int slot) {
-        this.item = item;
+    public ItemClickEvent(ItemStack currentItem, InventoryView view, PlayerMenu playerMenu, Player player, InventoryClickEvent e, ClickType clickType, int slot) {
+        this.currentItem = currentItem;
         this.view = view;
-        this.menu = menu;
+        this.playerMenu = playerMenu;
         this.player = player;
         this.e = e;
         this.clickType = clickType;
         this.slot = slot;
+
+        currentMenu = playerMenu.getLast();
     }
 
     public Inventory getInventory() {
@@ -52,7 +56,7 @@ public class ItemClickEvent {
 
     public void setCurrentItem(ItemStack item) {
         setUpdate(true);
-        this.item = item;
+        currentItem = item;
     }
 
     public void goback() {

@@ -13,6 +13,7 @@ import lombok.ToString;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -22,9 +23,10 @@ import java.util.stream.Collectors;
 public class ShopManager {
 
     // Added support down the road for more shops when added faction support
-    private final HashMap<String, ShopMenu> shops = new HashMap<>();
+    private final HashMap<String, ShopConfig> shops = new HashMap<>();
     private XPBoostPlugin plugin;
     private ConfigYml config;
+
 
     public void setupShopConfig() {
         shops.clear();
@@ -56,10 +58,10 @@ public class ShopManager {
             return;
         }
 
-        ShopMenu shopMenu = new ShopMenu(guiName, command);
-        shopMenu.setFill(menuFill);
-        shopMenu.setSize(size);
-        shopMenu.setGuiName(guiName);
+        ShopConfig shopConfig = new ShopConfig(guiName, command);
+        shopConfig.setFill(menuFill);
+        shopConfig.setSize(size);
+        shopConfig.setGuiName(guiName);
 
         for (String key : itemsSection.getKeys(false)) {
             ConfigurationSection itemSection = itemsSection.getConfigurationSection(key);
@@ -104,13 +106,21 @@ public class ShopManager {
             }
 
 
-            shopMenu.getItems().add(shopItem);
+            shopConfig.getItems().add(shopItem);
         }
 
-        shops.put("regular_boost_shop", shopMenu);
+        shops.put("regular_boost_shop", shopConfig);
     }
 
-    public ShopMenu getShop() {
+    public ShopConfig getShop() {
         return shops.get("regular_boost_shop");
+    }
+
+    public List<String> getShopLore(Voucher voucher) {
+        return getConfig().getStringList("voucher-shop.lore").stream().map(voucher::getReplacement).collect(Collectors.toList());
+    }
+
+    public boolean addLoreToTop() {
+        return getConfig().getBoolean("voucher-shop.to-top");
     }
 }

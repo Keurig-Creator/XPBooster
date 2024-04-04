@@ -1,7 +1,6 @@
-package com.keurig.xpbooster.base.menu;
+package com.keurig.xpbooster.base.menu.data;
 
 import com.keurig.xpbooster.base.menu.item.ItemClickEvent;
-import com.keurig.xpbooster.util.Chat;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -35,8 +34,6 @@ public class MenuManager implements Listener {
 
     public static Inventory openMenu(Menu menu, Player player) {
         Inventory inventory = menu.apply();
-        menu.setup(inventory);
-        menu.setActionItems(inventory);
 
         if (openedMenus.containsKey(player)) {
             menu.setPlayerMenu(openedMenus.get(player).playerMenu);
@@ -46,6 +43,9 @@ public class MenuManager implements Listener {
             playerMenu.addHistory(menu);
             menu.setPlayerMenu(playerMenu);
         }
+
+        menu.setup(inventory);
+        menu.setActionItems(inventory);
 
         player.closeInventory();
         player.openInventory(menu.getInventory());
@@ -58,23 +58,21 @@ public class MenuManager implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         e.getInventory();
-        if (e.getInventory().getType() != InventoryType.CHEST || !(e.getWhoClicked() instanceof Player) || !(e.getInventory().getHolder() instanceof Menu)) {
+        if (e.getInventory().getType() != InventoryType.CHEST || !(e.getWhoClicked() instanceof Player) || !(e.getInventory().getHolder() instanceof Menu menu)) {
             return;
         }
-
-        Menu menu = (Menu) e.getInventory().getHolder();
 
         ItemClickEvent action = new ItemClickEvent(
                 e.getCurrentItem(),
                 e.getView(),
-                menu,
+                menu.playerMenu,
                 ((Player) e.getWhoClicked()).getPlayer(),
                 e,
                 e.getClick(),
                 e.getSlot()
         );
         menu.handle(action);
-        e.setCurrentItem(action.getItem());
+        e.setCurrentItem(action.getCurrentItem());
 
         if (menu.cancelClicks()) {
             e.setResult(Event.Result.DENY);
@@ -91,16 +89,12 @@ public class MenuManager implements Listener {
 
         if (!menu.isOpenMenu(e.getPlayer())) {
             openedMenus.remove(e.getPlayer());
-        } else {
-            Chat.log("From other menu");
         }
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         HumanEntity player = event.getPlayer();
-        if (openedMenus.containsKey(player)) {
-            openedMenus.remove(player);
-        }
+        openedMenus.remove(player);
     }
 }

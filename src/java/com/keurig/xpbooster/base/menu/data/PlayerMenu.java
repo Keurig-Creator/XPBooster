@@ -1,4 +1,4 @@
-package com.keurig.xpbooster.base.menu;
+package com.keurig.xpbooster.base.menu.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import java.util.Stack;
 @AllArgsConstructor
 public class PlayerMenu {
 
-    private final HashMap<String, Object> store = new HashMap<>();
+    private final HashMap<Object, Object> store = new HashMap<>();
     private final Stack<Menu> history = new Stack<>();
     private final Player player;
 
@@ -31,11 +31,25 @@ public class PlayerMenu {
         store.put(key, obj);
     }
 
+    public void setData(Object key, Object obj) {
+        store.put(key, obj);
+    }
+
     public <T> T getData(String key, Class<T> ref) {
         Object obj = store.get(key);
 
         if (obj != null) {
             return ref.cast(obj);
+        }
+
+        return null;
+    }
+
+    public <T> T getData(Object obj, Class<T> ref) {
+        Object obj2 = store.get(obj);
+
+        if (obj2 != null) {
+            return ref.cast(obj2);
         }
 
         return null;

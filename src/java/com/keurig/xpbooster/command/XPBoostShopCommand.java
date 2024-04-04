@@ -5,8 +5,8 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Dependency;
 import com.keurig.xpbooster.XPBoostPlugin;
-import com.keurig.xpbooster.base.menu.CustomMenu;
-import com.keurig.xpbooster.base.menu.MenuManager;
+import com.keurig.xpbooster.base.menu.ShopMenu;
+import com.keurig.xpbooster.base.menu.data.MenuManager;
 import org.bukkit.entity.Player;
 
 @CommandAlias("%shopcommand")
@@ -17,7 +17,7 @@ public class XPBoostShopCommand extends BaseCommand {
 
     @Default
     public void onCommand(Player player) {
-        MenuManager.openMenu(CustomMenu.class, player);
+        MenuManager.openMenu(ShopMenu.class, player);
     }
 
 }

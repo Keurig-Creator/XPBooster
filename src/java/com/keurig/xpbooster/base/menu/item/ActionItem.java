@@ -14,14 +14,17 @@ public class ActionItem {
 
     private final Set<ItemAction> actions = new HashSet<>();
     private final ItemStack item;
+    private int slot;
 
     public ActionItem(ItemStack item) {
         this.item = item;
     }
 
 
-    public void addAction(ItemAction itemAction) {
+    public ActionItem addAction(ItemAction itemAction) {
         actions.add(itemAction);
+
+        return this;
     }
 
     public void onClick(ItemClickEvent e) {

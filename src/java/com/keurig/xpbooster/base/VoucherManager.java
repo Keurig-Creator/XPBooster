@@ -4,12 +4,12 @@ import com.keurig.xpbooster.XPBoostPlugin;
 import com.keurig.xpbooster.util.Chat;
 import com.keurig.xpbooster.util.ConfigYml;
 import com.keurig.xpbooster.util.ItemBuilder;
-import com.keurig.xpbooster.util.Replacement;
 import lombok.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -45,19 +45,18 @@ public class VoucherManager {
             voucher.setMultiplier(sec.getInt("multiplier"));
             voucher.setTime(sec.getString("time"));
             voucher.setPrice(sec.getInt("price"));
+            voucher.setTitle(voucher.getReplacement(sec.getString("title")));
+            voucher.setGlowing(sec.getBoolean("glow"));
 
-            Replacement replace = new Replacement();
-            replace.addReplacement(Replacement.VOUCHER_REGEX, plugin.getVoucherManager().getVouchers().toString());
-            replace.addReplacement(Replacement.MULTIPLIER_REGEX, String.valueOf(voucher.getMultiplier()));
-            replace.addReplacement(Replacement.NAME_REGEX, voucher.getName());
-            replace.addReplacement(Replacement.PRICE_REGEX, String.valueOf(voucher.getPrice()));
-            replace.addReplacement(Replacement.TIME_REGEX, voucher.getTime());
+            List<String> lore = sec.getStringList("lore").stream().map(voucher::getReplacement).map(Chat::color).collect(Collectors.toList());
 
             ItemBuilder is = ItemBuilder.fromString(sec.getString("material"));
-            is.setName(replace.getReplacement(sec.getString("title")));
-            is.setGlow(sec.getBoolean("glow"));
-            is.setLore(sec.getStringList("lore").stream().map(replace::getReplacement).collect(Collectors.toList()).stream().map(Chat::color).collect(Collectors.toList()));
+            is.setName(voucher.getTitle());
+            is.setGlow(voucher.isGlowing());
+            is.setLore(lore);
             is.setLocalizedName(voucher.getName());
+
+            voucher.setLore(lore);
 
             voucher.setItem(is.toItemStack());
 
@@ -90,4 +89,6 @@ public class VoucherManager {
     public void clear() {
         vouchers.clear();
     }
+
+
 }

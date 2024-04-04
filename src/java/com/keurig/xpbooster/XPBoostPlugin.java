@@ -7,9 +7,9 @@ import com.keurig.xpbooster.base.EXPBoost;
 import com.keurig.xpbooster.base.InternalXPBoostHandler;
 import com.keurig.xpbooster.base.Voucher;
 import com.keurig.xpbooster.base.VoucherManager;
-import com.keurig.xpbooster.base.menu.MenuManager;
+import com.keurig.xpbooster.base.menu.data.MenuManager;
+import com.keurig.xpbooster.base.shop.ShopConfig;
 import com.keurig.xpbooster.base.shop.ShopManager;
-import com.keurig.xpbooster.base.shop.ShopMenu;
 import com.keurig.xpbooster.command.XPBoostCommand;
 import com.keurig.xpbooster.command.XPBoostReloadCommand;
 import com.keurig.xpbooster.command.XPBoostShopCommand;
@@ -75,7 +75,7 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
             return voucherManager.getVoucher(c.popFirstArg());
         });
 
-        manager.getCommandContexts().registerContext(ShopMenu.class, c -> {
+        manager.getCommandContexts().registerContext(ShopConfig.class, c -> {
             return shopManager.getShop();
         });
 

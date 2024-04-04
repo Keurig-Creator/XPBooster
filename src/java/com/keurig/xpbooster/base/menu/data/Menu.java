@@ -1,4 +1,4 @@
-package com.keurig.xpbooster.base.menu;
+package com.keurig.xpbooster.base.menu.data;
 
 import com.keurig.xpbooster.base.menu.item.ActionItem;
 import com.keurig.xpbooster.base.menu.item.ItemClickEvent;
@@ -12,7 +12,8 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 public abstract class Menu implements InventoryHolder {
@@ -20,7 +21,7 @@ public abstract class Menu implements InventoryHolder {
     @Setter
     protected PlayerMenu playerMenu;
     protected Inventory inventory;
-    protected List<ActionItem> actions;
+    protected HashMap<Integer, ActionItem> actions = new HashMap<>();
 
     @Setter
     protected Menu parent;
@@ -33,8 +34,9 @@ public abstract class Menu implements InventoryHolder {
     }
 
 
-    public void addItems(ActionItem... actions) {
-        this.actions = List.of(actions);
+    public void addAction(ActionItem action, int slot) {
+        action.setSlot(slot);
+        actions.put(slot, action);
     }
 
     public boolean hasParent() {
@@ -57,11 +59,11 @@ public abstract class Menu implements InventoryHolder {
         onClick(e);
 
         // Handle action click
-        if (e.getSlot() < 0 || e.getSlot() >= actions.size() || getAction(e.getSlot()) == null) {
+        if (e.getSlot() < 0 || actions.get(e.getSlot()) == null) {
             return;
         }
 
-        getAction(e.getSlot()).onClick(e);
+        actions.get(e.getSlot()).onClick(e);
 
         if (e.isGoback() && parent != null) {
 //            getParent().open(e.getPlayer());
@@ -92,13 +94,14 @@ public abstract class Menu implements InventoryHolder {
     }
 
     public void setActionItems(Inventory inventory) {
-        for (int i = 0; i < actions.size(); i++) {
-            if (i >= inventory.getSize()) {
-                break;
-            }
 
-            if (getAction(i) != null) {
-                inventory.setItem(i, getAction(i).getItem());
+        for (Map.Entry<Integer, ActionItem> entry : actions.entrySet()) {
+            if (getAction(entry.getKey()) != null) {
+                if (getAction(entry.getKey()).getSlot() == -1) {
+                    inventory.addItem(getAction(entry.getKey()).getItem());
+                } else {
+                    inventory.setItem(getAction(entry.getKey()).getSlot(), getAction(entry.getKey()).getItem());
+                }
             }
         }
     }
@@ -111,12 +114,17 @@ public abstract class Menu implements InventoryHolder {
         return equals((player.getOpenInventory().getTopInventory().getHolder() instanceof Menu));
     }
 
+    public ActionItem getActionSlot(int slot) {
+        return actions.get(slot);
+    }
+
     public ActionItem getAction(int index) {
-        if (actions.size() >= index) {
-            return actions.get(index);
-        } else {
-            throw new ArrayIndexOutOfBoundsException(index);
+        for (Map.Entry<Integer, ActionItem> entry : actions.entrySet()) {
+            if (entry.getValue().getSlot() == index) {
+                return entry.getValue();
+            }
         }
+        return null; // Or throw an exception if desired
     }
 
     @Override
