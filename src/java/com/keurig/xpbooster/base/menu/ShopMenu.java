@@ -61,15 +61,8 @@ public class ShopMenu extends Menu {
     public void setShopMenu(Inventory inventory) {
         ShopProfile shop = XPBoostPlugin.getInstance().getShopManager().getShop();
 
-        if (shop.getFill().getType().equals(MenuFill.FillType.BORDER)) {
-            InventoryUtil.fillInventory(inventory, shop.getFill().getMaterial());
-        } else {
-            InventoryUtil.fillBorder(inventory, shop.getFill().getMaterial());
-        }
-        Chat.log(shop.getBoosters().size());
-
-        int nextSlot = 0;
         for (ShopBooster shopBooster : shop.getBoosters()) {
+            Chat.log(shopBooster.getBooster().getId());
 
 
             ActionItem action = new ActionItem(shopBooster.getShopItem()).addAction(e -> {
@@ -80,11 +73,16 @@ public class ShopMenu extends Menu {
 
             });
 
-            Chat.log(shopBooster.getEmptySlot(inventory) + nextSlot);
-            addAction(action, shopBooster.getEmptySlot(inventory) + nextSlot);
-            nextSlot++;
+
+            int nextSlot = getNextSlot(shopBooster.getSlot());
+            addAction(action, nextSlot);
         }
 
+        if (shop.getFill().getType().equals(MenuFill.FillType.FILL)) {
+            InventoryUtil.fillInventory(inventory, shop.getFill().getMaterial());
+        } else {
+            InventoryUtil.fillBorder(inventory, shop.getFill().getMaterial());
+        }
     }
 
     @Override
