@@ -77,4 +77,8 @@ public class ConfigYml extends YamlConfiguration {
     public List<String> getStringList(String path) {
         return super.getStringList(path).stream().map(Chat::color).collect(Collectors.toList());
     }
+
+    public String[] getStringArray(String path) {
+        return super.getStringList(path).stream().map(Chat::color).toArray(String[]::new);
+    }
 }

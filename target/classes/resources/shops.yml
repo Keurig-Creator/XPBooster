@@ -1,56 +1,28 @@
-# Used if custom shop item is not found
-# Adds to the top of boosters.yml
-voucher-shop:
-
-  # Places lore on the top instead
-  to-top: true
+# You can edit individual item
+default-items:
+  material: PAPER
+  title: "&8$name &7XP Booster"
+  glow: true
   lore:
-    - "&7Cost &e$price"
+    - "&7Purchase for &c$price"
     - ""
+    - "&7Multiplier &e$multiplierx"
+    - "&7Time &e$time"
 
 regular_boost_shop:
   command: "xpshop|xps"
-  gui-name: "&7Regular Boost Shop"
+  gui-name: "&eXP &6Boost &fShop"
   size: 27
+  instant-claim: true
   fill:
     type: FILL
     material: GRAY_STAINED_GLASS_PANE
-  items:
-    basic:
-      slot: 10
-      voucher-type: "BASIC"
-      instant-claim: false
-
-      # Custom shop item is optional otherwise it will display the voucher
-    material: PAPER
-    title: "&7$name XP boost"
-    glow: true
-    lore:
-      - "&7Purchase for &c$price"
-      - ""
-      - "&7Multiplier &e$multiplierx"
-      - "&7Time &e$time"
-    prime:
-      slot: 13
-      voucher-type: "PRIME"
-      instant-claim: true
-      material: PAPER
-      title: "&a$name &fXP boost &e$multiplierx&7."
-      glow: true
-      lore:
-        - "&7Purchase for &c$price"
-        - ""
-        - "&7Multiplier &e$multiplierx"
-        - "&7Time &e$time"
-    beast:
-      slot: 16
-      voucher-type: "BEAST"
-      instant-claim: true
-      material: PAPER
-      title: "&6$name &fXP boost"
-      glow: true
-      lore:
-        - "&7Purchase for &c$price"
-        - ""
-        - "&7Multiplier &e$multiplierx"
-        - "&7Time &e$time"
+  boosters:
+    items:
+      basic:
+        material: PAPER
+        title: "&3Crazy &7XP Booster"
+        glow: true
+        lore:
+          - "&7Purchase for &c$price"
+          - "&7Multiplier: &e1.5x"

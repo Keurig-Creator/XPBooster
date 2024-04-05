@@ -22,8 +22,8 @@ public class XPBoostReloadCommand extends BaseCommand {
         plugin.loadLanguage();
         plugin.config.load();
         plugin.loadDataConfig();
-        plugin.getVoucherManager().getConfig().load();
-        plugin.getVoucherManager().setupVoucherConfig();
+        plugin.getBoosterManager().getConfig().load();
+        plugin.getBoosterManager().setupVoucherConfig();
         plugin.getShopManager().getConfig().load();
         plugin.getShopManager().setupShopConfig();
         Chat.message(sender, Language.RELOAD_COMMAND.toString());

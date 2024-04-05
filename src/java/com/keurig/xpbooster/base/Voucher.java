@@ -1,36 +1,30 @@
 package com.keurig.xpbooster.base;
 
-import com.keurig.xpbooster.XPBoostPlugin;
 import com.keurig.xpbooster.util.Replacement;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@AllArgsConstructor
-@RequiredArgsConstructor
 @Builder
 @Getter
 @Setter
 public class Voucher {
+    protected ItemStack item;
+    protected String title;
+    protected boolean glowing;
 
-    private final String name;
-    private String title;
-    private ItemStack item;
-    private boolean glowing;
-    private List<String> lore = new ArrayList<>();
-    private int multiplier;
-    private String time;
-    private int price;
+    public void setTitle(String title) {
+        this.title = getReplacement(title);
+    }
 
-    public String getReplacement(String input) {
+    public static String getReplacement(String input) {
         Replacement replace = new Replacement();
-        replace.addReplacement(Replacement.VOUCHER_REGEX, XPBoostPlugin.getInstance().getVoucherManager().getVouchers().toString());
-        replace.addReplacement(Replacement.MULTIPLIER_REGEX, String.valueOf(getMultiplier()));
-        replace.addReplacement(Replacement.NAME_REGEX, getName());
-        replace.addReplacement(Replacement.PRICE_REGEX, String.valueOf(getPrice()));
-        replace.addReplacement(Replacement.TIME_REGEX, getTime());
+//        replace.addReplacement(Replacement.VOUCHER_REGEX, XPBoostPlugin.getInstance().getBoosterManager().getVouchers().toString());
+//        replace.addReplacement(Replacement.MULTIPLIER_REGEX, String.valueOf(getMultiplier()));
+//        replace.addReplacement(Replacement.NAME_REGEX, getName());
+//        replace.addReplacement(Replacement.PRICE_REGEX, String.valueOf(getPrice()));
+//        replace.addReplacement(Replacement.TIME_REGEX, getTime());
 
         return replace.getReplacement(input);
     }

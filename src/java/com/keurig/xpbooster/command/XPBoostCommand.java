@@ -6,7 +6,6 @@ import com.keurig.xpbooster.XPBoostPlugin;
 import com.keurig.xpbooster.api.XPBoostAPI;
 import com.keurig.xpbooster.base.EXPBoost;
 import com.keurig.xpbooster.base.InternalXPBoostHandler;
-import com.keurig.xpbooster.base.Voucher;
 import com.keurig.xpbooster.language.Language;
 import com.keurig.xpbooster.util.Chat;
 import com.keurig.xpbooster.util.NumUtil;
@@ -87,14 +86,14 @@ public class XPBoostCommand extends BaseCommand {
             replace.addReplacement(Replacement.DURATION_REGEX, NumUtil.convertDateToStr(date));
         }
 
-        Voucher voucher = plugin.getVoucherManager().getVoucher(v);
-        if (voucher == null) {
-            Chat.message(sender, Language.INVALID_VOUCHER.toString(replace));
-            return;
-        }
+//        Voucher voucher = plugin.getBoosterManager().getVoucher(v);
+//        if (voucher == null) {
+//            Chat.message(sender, Language.INVALID_VOUCHER.toString(replace));
+//            return;
+//        }
 
 
-        toSet.getPlayer().getInventory().addItem(voucher.getItem());
+//        toSet.getPlayer().getInventory().addItem(voucher.getItem());
 
 //        sender.sendMessage(Language.GI.toString(replace));
 

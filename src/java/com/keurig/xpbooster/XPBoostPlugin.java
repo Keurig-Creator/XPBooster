@@ -3,13 +3,12 @@ package com.keurig.xpbooster;
 import co.aikar.commands.CommandReplacements;
 import co.aikar.commands.PaperCommandManager;
 import com.keurig.xpbooster.api.XPBoostAPI;
+import com.keurig.xpbooster.base.BoosterManager;
 import com.keurig.xpbooster.base.EXPBoost;
 import com.keurig.xpbooster.base.InternalXPBoostHandler;
-import com.keurig.xpbooster.base.Voucher;
-import com.keurig.xpbooster.base.VoucherManager;
 import com.keurig.xpbooster.base.menu.data.MenuManager;
-import com.keurig.xpbooster.base.shop.ShopConfig;
 import com.keurig.xpbooster.base.shop.ShopManager;
+import com.keurig.xpbooster.base.shop.ShopProfile;
 import com.keurig.xpbooster.command.XPBoostCommand;
 import com.keurig.xpbooster.command.XPBoostReloadCommand;
 import com.keurig.xpbooster.command.XPBoostShopCommand;
@@ -40,7 +39,7 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
     private @Getter InternalXPBoostHandler boostHandler;
 
     @Getter
-    private VoucherManager voucherManager;
+    private BoosterManager boosterManager;
 
     @Getter
     private ShopManager shopManager;
@@ -54,10 +53,10 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
         lang = new ConfigYml("lang.yml", this);
         dataConfig = new JsonConfig("user-data.json", this);
         boostHandler = new InternalXPBoostHandler(dataConfig);
-        voucherManager = new VoucherManager(this, new ConfigYml("boosters.yml", this));
+        boosterManager = new BoosterManager(this, new ConfigYml("boosters.yml", this));
         shopManager = new ShopManager(this, new ConfigYml("shops.yml", this));
 
-        voucherManager.setupVoucherConfig();
+        boosterManager.setupVoucherConfig();
         shopManager.setupShopConfig();
 
         loadLanguage();
@@ -71,11 +70,8 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
         manager.registerCommand(new XPBoostReloadCommand());
         manager.registerCommand(new XPBoostShopCommand());
 
-        manager.getCommandContexts().registerContext(Voucher.class, c -> {
-            return voucherManager.getVoucher(c.popFirstArg());
-        });
 
-        manager.getCommandContexts().registerContext(ShopConfig.class, c -> {
+        manager.getCommandContexts().registerContext(ShopProfile.class, c -> {
             return shopManager.getShop();
         });
 
@@ -125,6 +121,6 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
     public void onDisable() {
         instance = null;
         dataConfig.getExpBoosts().clear();
-        voucherManager.clear();
+        boosterManager.clear();
     }
 }

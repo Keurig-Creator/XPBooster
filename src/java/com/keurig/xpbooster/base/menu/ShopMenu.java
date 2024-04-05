@@ -2,8 +2,15 @@ package com.keurig.xpbooster.base.menu;
 
 import com.keurig.xpbooster.XPBoostPlugin;
 import com.keurig.xpbooster.base.menu.data.Menu;
+import com.keurig.xpbooster.base.menu.data.MenuManager;
+import com.keurig.xpbooster.base.menu.item.ActionItem;
+import com.keurig.xpbooster.base.menu.item.ConfirmMenu;
 import com.keurig.xpbooster.base.menu.item.ItemClickEvent;
-import com.keurig.xpbooster.base.shop.ShopConfig;
+import com.keurig.xpbooster.base.shop.MenuFill;
+import com.keurig.xpbooster.base.shop.ShopBooster;
+import com.keurig.xpbooster.base.shop.ShopProfile;
+import com.keurig.xpbooster.util.Chat;
+import com.keurig.xpbooster.util.InventoryUtil;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.inventory.Inventory;
@@ -15,20 +22,20 @@ public class ShopMenu extends Menu {
     private int size;
     private String title;
 
-    private ShopConfig shopConfig;
+    private ShopProfile shopProfile;
 
     public ShopMenu() {
-        shopConfig = XPBoostPlugin.getInstance().getShopManager().getShop();
+        shopProfile = XPBoostPlugin.getInstance().getShopManager().getShop();
     }
 
     @Override
     public int getSize() {
-        return shopConfig.getSize();
+        return shopProfile.getSize();
     }
 
     @Override
     public String getTitle() {
-        return shopConfig.getGuiName();
+        return shopProfile.getGuiName();
     }
 
     @Override
@@ -38,7 +45,7 @@ public class ShopMenu extends Menu {
     @Override
     public void setup(Inventory inventory) {
 
-        shopConfig.setShopMenu(this);
+        setShopMenu(inventory);
 //        List<ActionItem> actionItems = new ArrayList<>();
 
 
@@ -49,6 +56,35 @@ public class ShopMenu extends Menu {
 //        }
 
 //        addItems(actionItems.toArray(new ActionItem[0]));
+    }
+
+    public void setShopMenu(Inventory inventory) {
+        ShopProfile shop = XPBoostPlugin.getInstance().getShopManager().getShop();
+
+        if (shop.getFill().getType().equals(MenuFill.FillType.BORDER)) {
+            InventoryUtil.fillInventory(inventory, shop.getFill().getMaterial());
+        } else {
+            InventoryUtil.fillBorder(inventory, shop.getFill().getMaterial());
+        }
+        Chat.log(shop.getBoosters().size());
+
+        int nextSlot = 0;
+        for (ShopBooster shopBooster : shop.getBoosters()) {
+
+
+            ActionItem action = new ActionItem(shopBooster.getShopItem()).addAction(e -> {
+                getPlayerMenu().setData("booster", shopBooster.getBooster());
+                getPlayerMenu().setData("shopBooster", shopBooster.getShopItem());
+
+                MenuManager.openMenu(ConfirmMenu.class, e.getPlayer());
+
+            });
+
+            Chat.log(shopBooster.getEmptySlot(inventory) + nextSlot);
+            addAction(action, shopBooster.getEmptySlot(inventory) + nextSlot);
+            nextSlot++;
+        }
+
     }
 
     @Override
