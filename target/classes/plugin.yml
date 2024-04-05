@@ -1,0 +1,4 @@
+name: XPBooster
+version: '${project.version}'
+main: com.keurig.xpbooster.XPBoostPlugin
+api-version: '1.20'

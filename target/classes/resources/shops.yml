@@ -21,7 +21,7 @@ regular_boost_shop:
     items:
       basic:
         material: PAPER
-        title: "&3Crazy &7XP Booster"
+        title: "&7Basic &7XP Booster"
         glow: true
         lore:
           - "&7Purchase for &c$price"

@@ -1,0 +1,46 @@
+boosters:
+  vouchers-enabled: true
+
+  basic:
+    name: "&7Basic"
+    multiplier: 1.5
+    time: 15m
+
+    # This is the physical voucher if enabled
+    voucher:
+      material: PAPER
+      title: "&7$name XP boost &e$multiplierx&7."
+      glow: true
+      lore:
+        - "&7Right click to &aActivate&7"
+        - "&7Multiplier &e$multiplierx"
+        - "&7Time &e$time"
+
+  prime:
+    name: "&aPrime"
+    multiplier: 2
+    time: 15m
+
+    voucher:
+      material: PAPER
+      title: "&a$name &fXP boost &e$multiplierx&7."
+      glow: true
+      lore:
+        - "&7Right click to &aActivate&7"
+        - "&7Multiplier &e$multiplierx"
+        - "&7Time &e$time"
+
+  beast:
+    name: "&aBeast"
+    price: 5000
+    multiplier: 5
+    time: 15m
+
+    voucher:
+      material: PAPER
+      title: "&6$name &fXP boost &e$multiplierx&7."
+      glow: true
+      lore:
+        - "&7Right click to &aActivate&7"
+        - "&7Multiplier &e$multiplierx"
+        - "&7Time &e$time"
