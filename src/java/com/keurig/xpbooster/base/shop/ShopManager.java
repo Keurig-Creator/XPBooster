@@ -102,7 +102,8 @@ public class ShopManager {
 //            replace.addReplacement(Replacement.PRICE_REGEX, String.valueOf(voucher.getPrice()));
 
 
-            ShopBooster shopBooster = new ShopBooster(new Booster());
+            ShopBooster shopBooster = new ShopBooster(XPBoostPlugin.getInstance().getBoosterManager().getBooster(key.toLowerCase()));
+
 
             if (itemBuilder != null) {
                 if (itemSection.getString("title") != null)
@@ -120,7 +121,6 @@ public class ShopManager {
                 shopBooster.setIs(defaultShopItem.getIs());
             }
 
-            Chat.log(itemSection.getInt("slot", -1));
             shopBooster.setSlot(itemSection.getInt("slot", -1));
             shopProfile.getBoosters().add(shopBooster);
         }

@@ -3,8 +3,8 @@ package com.keurig.xpbooster.base.shop;
 import com.keurig.xpbooster.base.menu.data.Menu;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -18,7 +18,7 @@ public class ShopProfile {
     private String guiName;
     private int size;
     private MenuFill fill;
-    private Set<ShopBooster> boosters = new HashSet<>();
+    private List<ShopBooster> boosters = new ArrayList<>();
     private boolean instantClaim;
 
 
