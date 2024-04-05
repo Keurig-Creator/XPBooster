@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +38,7 @@ public abstract class Menu implements InventoryHolder {
     public void addAction(ActionItem action, int slot) {
         action.setSlot(slot);
         actions.put(slot, action);
+        setActionItems(inventory);
     }
 
     public boolean hasParent() {
@@ -93,11 +95,44 @@ public abstract class Menu implements InventoryHolder {
         }
     }
 
+    public int getNextSlot(int slot) {
+        if (slot != -1) {
+            return slot;
+        }
+
+        ItemStack[] contents = inventory.getContents();
+        int guiSize = contents.length; // Use the actual size of the inventory
+
+        // Iterate over slots excluding the top, bottom, left, and right columns
+        for (int index = 0; index < guiSize; index++) {
+            // Skip the first and last 9 slots (top and bottom rows)
+            if (index < 9 || index >= guiSize - 9) {
+                continue;
+            }
+
+            // Calculate the column index
+            int column = index % 9;
+
+            // Skip the leftmost and rightmost columns
+            if (column == 0 || column == 8) {
+                continue;
+            }
+
+            if (contents[index] == null) {
+                return index;
+            }
+        }
+
+        return -1; // If no empty slot found in the GUI
+    }
+
     public void setActionItems(Inventory inventory) {
 
         for (Map.Entry<Integer, ActionItem> entry : actions.entrySet()) {
+            Chat.log(entry.getKey());
             if (getAction(entry.getKey()) != null) {
                 if (getAction(entry.getKey()).getSlot() == -1) {
+                    Chat.log(getAction(entry.getKey()).getItem().getAmount());
                     inventory.addItem(getAction(entry.getKey()).getItem());
                 } else {
                     inventory.setItem(getAction(entry.getKey()).getSlot(), getAction(entry.getKey()).getItem());
