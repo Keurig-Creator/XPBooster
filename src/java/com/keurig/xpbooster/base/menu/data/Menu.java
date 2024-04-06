@@ -129,10 +129,8 @@ public abstract class Menu implements InventoryHolder {
     public void setActionItems(Inventory inventory) {
 
         for (Map.Entry<Integer, ActionItem> entry : actions.entrySet()) {
-            Chat.log(entry.getKey());
             if (getAction(entry.getKey()) != null) {
                 if (getAction(entry.getKey()).getSlot() == -1) {
-                    Chat.log(getAction(entry.getKey()).getItem().getAmount());
                     inventory.addItem(getAction(entry.getKey()).getItem());
                 } else {
                     inventory.setItem(getAction(entry.getKey()).getSlot(), getAction(entry.getKey()).getItem());
