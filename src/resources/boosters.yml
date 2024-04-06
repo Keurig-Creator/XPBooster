@@ -5,6 +5,7 @@ boosters:
     name: "&7Basic"
     multiplier: 1.5
     time: 15m
+    price: 1500
 
     # This is the physical voucher if enabled
     voucher:
@@ -20,6 +21,7 @@ boosters:
     name: "&aPrime"
     multiplier: 2
     time: 15m
+    price: 3000
 
     voucher:
       material: PAPER
@@ -32,9 +34,9 @@ boosters:
 
   beast:
     name: "&aBeast"
-    price: 5000
     multiplier: 5
     time: 15m
+    price: 15000
 
     voucher:
       material: PAPER
