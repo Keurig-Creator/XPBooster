@@ -4,12 +4,13 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.keurig.xpbooster.XPBoostPlugin;
 import com.keurig.xpbooster.api.XPBoostAPI;
+import com.keurig.xpbooster.base.Booster;
 import com.keurig.xpbooster.base.EXPBoost;
 import com.keurig.xpbooster.base.InternalXPBoostHandler;
 import com.keurig.xpbooster.language.Language;
 import com.keurig.xpbooster.util.Chat;
 import com.keurig.xpbooster.util.NumUtil;
-import com.keurig.xpbooster.util.Replacement;
+import com.keurig.xpbooster.util.replacement.Replacement;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -43,48 +44,28 @@ public class XPBoostCommand extends BaseCommand {
 
     @Subcommand("voucher")
     @Syntax("<player> <voucher> <multiplier> [time]")
-    @CommandCompletion("@players")
-    public void onVoucher(CommandSender sender, OfflinePlayer toSet, String v, String m, String[] args) {
+    @CommandCompletion("@players @boosters")
+    public void onVoucher(CommandSender sender, OfflinePlayer toSet, Booster booster) {
         Replacement replace = Replacement.createReplacement(getName(), sender.getName(), toSet.getName());
+        replace.addReplacement(Replacement.DURATION_REGEX, booster.getTime());
+        replace.addReplacement(Replacement.MULTIPLIER_REGEX, String.valueOf(booster.getMultiplier()));
+        replace.addReplacement(Replacement.MULTIPLIER_REGEX, booster.getName());
 
-        if (!NumUtil.isNumber(m, false)) {
-            Chat.message(sender, Language.INVALID_NUMBER.toString());
-            return;
-        }
-
-        double multiplier = Double.parseDouble(m);
-
-        if (multiplier <= plugin.config.getDouble("minimum-multiplier")) {
-            Chat.message(sender, Language.MINIMUM_MULTIPLIER.toString(replace));
-            return;
-        } else if (multiplier > plugin.config.getDouble("maximum-multiplier")) {
-            Chat.message(sender, Language.MAXIMUM_MULTIPLIER.toString(replace));
-            return;
-        } else if (!plugin.config.getBoolean("full_range_multiplier") && !NumUtil.isWholeOrHalf(multiplier)) {
-            Chat.message(sender, Language.FULL_RANGE_MULTIPLIER.toString(replace));
-            return;
-        }
-        replace.addReplacement(Replacement.DURATION_REGEX, "PERMANENT");
-        replace.addReplacement(Replacement.MULTIPLIER_REGEX, String.valueOf(multiplier));
 
         long time = 0;
-        if (args.length == 1) {
-            Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
 
-            String date = args[0];
+        int extractNumber = NumUtil.extractNumber(booster.getTime());
+        int calenderN = NumUtil.convertToCalendar(booster.getTime());
 
-            int extractNumber = NumUtil.extractNumber(date);
-            int calenderN = NumUtil.convertToCalendar(date);
-
-            if (extractNumber == -1 || calenderN == -1) {
-                Chat.message(sender, Language.INVALID_DATE.toString(replace));
-                return;
-            }
-
-            calendar.add(calenderN, extractNumber);
-            time = calendar.getTime().getTime();
-            replace.addReplacement(Replacement.DURATION_REGEX, NumUtil.convertDateToStr(date));
+        if (extractNumber == -1 || calenderN == -1) {
+            Chat.message(sender, Language.INVALID_DATE.toString(replace));
+            return;
         }
+
+        calendar.add(calenderN, extractNumber);
+        time = calendar.getTime().getTime();
+        replace.addReplacement(Replacement.DURATION_REGEX, NumUtil.convertDateToStr(booster.getTime()));
 
 //        Voucher voucher = plugin.getBoosterManager().getVoucher(v);
 //        if (voucher == null) {
@@ -92,10 +73,9 @@ public class XPBoostCommand extends BaseCommand {
 //            return;
 //        }
 
+        toSet.getPlayer().getInventory().addItem(booster.getVoucher().getItem());
 
-//        toSet.getPlayer().getInventory().addItem(voucher.getItem());
-
-//        sender.sendMessage(Language.GI.toString(replace));
+        sender.sendMessage(booster.getVoucher().getReplace(Language.VOUCHER_GIVE_XPBOOST_MESSAGE.toString()));
 
 
     }
