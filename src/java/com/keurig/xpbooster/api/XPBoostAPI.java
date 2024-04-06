@@ -1,9 +1,10 @@
 package com.keurig.xpbooster.api;
 
 import com.keurig.xpbooster.XPBoostPlugin;
+import com.keurig.xpbooster.base.Booster;
 import com.keurig.xpbooster.base.EXPBoost;
 import com.keurig.xpbooster.base.InternalXPBoostHandler;
-import com.keurig.xpbooster.base.Voucher;
+import com.keurig.xpbooster.util.CalenderUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -36,14 +37,14 @@ public class XPBoostAPI {
         getBoostHandler().removeBoost(uuid);
     }
 
-    public static void addBoost(UUID uuid, Voucher voucher) {
-//        if (hasBoost(uuid)) {
-//            EXPBoost boost = getBoost(uuid);
-//            boost.setDate(CalenderUtil.getTime(boost.getDate(), voucher.getTime()));
-//            boost.setMultiplier(boost.getMultiplier());
-//        } else {
-//            setBoost(uuid, new EXPBoost(uuid, voucher.getMultiplier(), CalenderUtil.getTime(voucher.getTime()), voucher.getName()));
-//        }
+    public static void addBoost(UUID uuid, Booster booster) {
+        if (hasBoost(uuid)) {
+            EXPBoost boost = getBoost(uuid);
+            boost.setDate(CalenderUtil.getTime(boost.getDate(), booster.getTime()));
+            boost.setMultiplier(boost.getMultiplier());
+        } else {
+            setBoost(uuid, new EXPBoost(uuid, booster.getMultiplier(), CalenderUtil.getTime(booster.getTime()), booster.getName()));
+        }
     }
 
     /**
