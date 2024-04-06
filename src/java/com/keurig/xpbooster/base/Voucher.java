@@ -1,32 +1,47 @@
 package com.keurig.xpbooster.base;
 
-import com.keurig.xpbooster.util.Replacement;
+import com.keurig.xpbooster.XPBoostPlugin;
+import com.keurig.xpbooster.util.Chat;
+import com.keurig.xpbooster.util.ItemBuilder;
+import com.keurig.xpbooster.util.replacement.Replacable;
+import com.keurig.xpbooster.util.replacement.Replacement;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.stream.Collectors;
+
 @Builder
 @Getter
 @Setter
-public class Voucher {
-    protected ItemStack item;
-    protected String title;
-    protected boolean glowing;
+public class Voucher extends Item implements Replacable {
+    protected Booster booster;
 
-    public void setTitle(String title) {
-        this.title = getReplacement(title);
+    @Override
+    public String getReplace(String input) {
+        return getReplacement(input).getReplacement();
     }
 
-    public static String getReplacement(String input) {
+    @Override
+    public Replacement getReplacement(String input) {
         Replacement replace = new Replacement();
-//        replace.addReplacement(Replacement.VOUCHER_REGEX, XPBoostPlugin.getInstance().getBoosterManager().getVouchers().toString());
-//        replace.addReplacement(Replacement.MULTIPLIER_REGEX, String.valueOf(getMultiplier()));
-//        replace.addReplacement(Replacement.NAME_REGEX, getName());
-//        replace.addReplacement(Replacement.PRICE_REGEX, String.valueOf(getPrice()));
-//        replace.addReplacement(Replacement.TIME_REGEX, getTime());
+        replace.setInput(input);
+        replace.addReplacement(Replacement.VOUCHER_REGEX, XPBoostPlugin.getInstance().getBoosterManager().getAllBoosters().toString());
+        replace.addReplacement(Replacement.MULTIPLIER_REGEX, String.valueOf(booster.getMultiplier()));
+        replace.addReplacement(Replacement.NAME_REGEX, booster.getName());
+        replace.addReplacement(Replacement.TIME_REGEX, booster.getTime());
+        replace.addReplacement(Replacement.PRICE_REGEX, String.valueOf(booster.getPrice()));
 
-        return replace.getReplacement(input);
+        return replace;
     }
 
+    public ItemStack getItem() {
+        ItemBuilder itemBuilder = ItemBuilder.item(material);
+        itemBuilder.setName(getReplace(title));
+        itemBuilder.setLore(lore.stream().map(Chat::color).map(this::getReplace).collect(Collectors.toList()));
+        itemBuilder.setGlow(glowing);
+
+        return itemBuilder.toItemStack();
+    }
 }

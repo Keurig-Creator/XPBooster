@@ -1,5 +1,6 @@
 package com.keurig.xpbooster.base.shop;
 
+import com.keurig.xpbooster.base.ShopBooster;
 import com.keurig.xpbooster.base.menu.data.Menu;
 import lombok.*;
 
@@ -19,12 +20,9 @@ public class ShopProfile {
     private int size;
     private MenuFill fill;
     private List<ShopBooster> boosters = new ArrayList<>();
+    @Getter
     private boolean instantClaim;
 
-
-    public boolean isInstantClaim() {
-        return instantClaim;
-    }
 
     public int nextSlot(Menu menu, ShopBooster shopBooster) {
 

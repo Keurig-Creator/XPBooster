@@ -2,13 +2,15 @@ package com.keurig.xpbooster.language;
 
 import com.keurig.xpbooster.XPBoostPlugin;
 import com.keurig.xpbooster.util.Chat;
-import com.keurig.xpbooster.util.Replacement;
+import com.keurig.xpbooster.util.replacement.Replacement;
 import lombok.Getter;
 
 public enum Language {
 
     BOOST_END_MESSAGE("&7Your XP Boost has &eexpired&7."),
     SET_XPBOOST_MESSAGE("&7Set XP boost to &e$target&7 with a multiplier of &c$multiplier&7 for &e$duration&7."),
+    VOUCHER_GIVE_XPBOOST_MESSAGE("&7Gave XP boost voucher &e$booster &7to &e$target&7"),
+    VOUCHER_RECEIVE_XPBOOST_MESSAGE("&7You were given the &e$name &7XP boost voucher!"),
     ADD_XPBOOST_MESSAGE("&7Added &e$duration&7 to &e$target&7's &7XP boost."),
     REMOVE_XPBOOST_MESSAGE("&7Removed XP boost from &e$target&7."),
     PLAYER_NO_BOOST("&cYou have no active boosters"),

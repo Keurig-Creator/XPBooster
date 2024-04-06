@@ -3,17 +3,16 @@ package com.keurig.xpbooster.base;
 import com.keurig.xpbooster.XPBoostPlugin;
 import com.keurig.xpbooster.util.Chat;
 import com.keurig.xpbooster.util.ConfigYml;
-import com.keurig.xpbooster.util.ItemBuilder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Getter
@@ -49,7 +48,6 @@ public class BoosterManager {
             Voucher voucher = null;
 
             if (vouchersEnabled) {
-                Chat.log("voucher enabled");
                 ConfigurationSection voucherSec = sec.getConfigurationSection("voucher");
 
                 if (voucherSec == null) {
@@ -57,27 +55,27 @@ public class BoosterManager {
                 }
 
                 voucher = Voucher.builder()
-                        .title(voucherSec.getString("title"))
-                        .glowing(voucherSec.getBoolean("glow"))
                         .build();
 
-                List<String> lore = voucherSec.getStringList("lore").stream().map(Voucher::getReplacement).map(Chat::color).collect(Collectors.toList());
-
-                ItemBuilder is = ItemBuilder.fromString(voucherSec.getString("material"));
-                is.setName(voucher.title);
-                is.setGlow(voucher.isGlowing());
-                is.setLore(lore);
-                is.setLocalizedName(key.toLowerCase());
-
-                voucher.setItem(is.toItemStack());
+                List<String> lore = voucherSec.getStringList("lore");
+                voucher.setMaterial(Material.valueOf(voucherSec.getString("material")));
+                voucher.setLore(lore);
+                voucher.setGlowing(voucherSec.getBoolean("glow"));
+                voucher.setTitle(Chat.color(voucherSec.getString("title")));
             }
 
-            Booster booster = Booster.builder()
+
+            Booster.BoosterBuilder boosterBuilder = Booster.builder()
                     .id(key.toLowerCase())
-                    .name(sec.getString("title"))
+                    .name(Chat.color(sec.getString("name")))
                     .multiplier(sec.getInt("multiplier"))
                     .time(sec.getString("time"))
-                    .voucher(voucher).build();
+                    .price(sec.getInt("price"));
+
+
+            Booster booster = boosterBuilder.build();
+            voucher.setBooster(booster);
+            booster.setVoucher(voucher);
 
             allBoosters.put(key.toLowerCase(), booster);
         }
