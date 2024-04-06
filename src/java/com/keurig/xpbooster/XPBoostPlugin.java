@@ -3,11 +3,8 @@ package com.keurig.xpbooster;
 import co.aikar.commands.CommandReplacements;
 import co.aikar.commands.PaperCommandManager;
 import com.keurig.xpbooster.api.XPBoostAPI;
-import com.keurig.xpbooster.base.BoosterManager;
-import com.keurig.xpbooster.base.EXPBoost;
-import com.keurig.xpbooster.base.InternalXPBoostHandler;
+import com.keurig.xpbooster.base.*;
 import com.keurig.xpbooster.base.menu.data.MenuManager;
-import com.keurig.xpbooster.base.shop.ShopManager;
 import com.keurig.xpbooster.base.shop.ShopProfile;
 import com.keurig.xpbooster.command.XPBoostCommand;
 import com.keurig.xpbooster.command.XPBoostReloadCommand;
@@ -66,14 +63,15 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
         CommandReplacements replacements = manager.getCommandReplacements();
         replacements.addReplacements("%shopcommand", shopManager.getShop().getCommand());
 
+        manager.getCommandContexts().registerContext(ShopProfile.class, c -> shopManager.getShop());
+
+        manager.getCommandContexts().registerContext(Booster.class, c -> boosterManager.getBooster(c.popFirstArg()));
+
+        manager.getCommandCompletions().registerCompletion("boosters", c -> boosterManager.getAllBoosters().keySet());
+
         manager.registerCommand(new XPBoostCommand());
         manager.registerCommand(new XPBoostReloadCommand());
         manager.registerCommand(new XPBoostShopCommand());
-
-
-        manager.getCommandContexts().registerContext(ShopProfile.class, c -> {
-            return shopManager.getShop();
-        });
 
 
         Bukkit.getPluginManager().registerEvents(new ExperienceChangeListener(this), this);
