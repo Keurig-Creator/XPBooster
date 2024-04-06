@@ -1,21 +1,18 @@
 package com.keurig.xpbooster.base.shop;
 
+import com.keurig.xpbooster.base.ShopBooster;
 import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.Material;
+
+import java.util.List;
 
 @Getter
 public class DefaultShopBooster extends ShopBooster {
 
-    protected final Material type;
-    protected @Setter
-    @Getter String[] lore;
-
-
-    public DefaultShopBooster(Material type, String title, boolean glow, String[] lore) {
+    public DefaultShopBooster(Material material, String title, boolean glow, String[] lore) {
         super(null);
-        this.type = type;
-        this.lore = lore;
+        this.material = material;
+        this.lore = List.of(lore);
         setSlot(-1);
     }
 }
