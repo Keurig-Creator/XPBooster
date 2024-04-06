@@ -1,4 +1,4 @@
-package com.keurig.xpbooster.util;
+package com.keurig.xpbooster.util.replacement;
 
 import com.keurig.xpbooster.XPBoostPlugin;
 import lombok.Builder;
@@ -26,6 +26,7 @@ public class Replacement {
     public static String NAME_REGEX = "(?i)\\$name";
     public static String PRICE_REGEX = "(?i)\\$price";
     public static String TIME_REGEX = "(?i)\\$time";
+    public static String BOOSTER_REGEX = "(?i)\\$booster";
 
     public String getReplacement(String input) {
         input = input.replaceAll("(?i)\\$(min|minimum)(Multiplier)", String.valueOf(XPBoostPlugin.getInstance().config.getInt("minimum-multiplier") + .5));
@@ -48,7 +49,7 @@ public class Replacement {
 
         return input;
     }
-
+    
     @Builder(builderMethodName = "builder", buildMethodName = "buildInternal")
     public static Replacement createReplacement(String command, String player, String target) {
         Replacement replacement = new Replacement();

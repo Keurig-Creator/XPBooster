@@ -1,11 +1,11 @@
-package com.keurig.xpbooster.base.shop;
+package com.keurig.xpbooster.base;
 
 import com.keurig.xpbooster.XPBoostPlugin;
-import com.keurig.xpbooster.base.Booster;
-import com.keurig.xpbooster.base.Voucher;
+import com.keurig.xpbooster.base.shop.DefaultShopBooster;
+import com.keurig.xpbooster.base.shop.MenuFill;
+import com.keurig.xpbooster.base.shop.ShopProfile;
 import com.keurig.xpbooster.util.Chat;
 import com.keurig.xpbooster.util.ConfigYml;
-import com.keurig.xpbooster.util.ItemBuilder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -55,6 +55,7 @@ public class ShopManager {
 
         String command = shopSection.getString("command");
         String guiName = Chat.color(shopSection.getString("gui-name"));
+        boolean instantClaim = shopSection.getBoolean("instant-claim");
         int size = shopSection.getInt("size");
 
         // Fill section
@@ -77,6 +78,7 @@ public class ShopManager {
         shopProfile.setFill(menuFill);
         shopProfile.setSize(size);
         shopProfile.setGuiName(guiName);
+        shopProfile.setInstantClaim(instantClaim);
 
         for (String key : itemsSection.getKeys(false)) {
             ConfigurationSection itemSection = itemsSection.getConfigurationSection(key);
@@ -91,9 +93,6 @@ public class ShopManager {
                 throw new RuntimeException("Booster " + key + " was not found");
             }
 
-            ItemBuilder itemBuilder = ItemBuilder.fromConfig(itemSection);
-
-
 //            Replacement replace = new Replacement();
 //            replace.addReplacement(Replacement.VOUCHER_REGEX, plugin.getBoosterManager().getVouchers().toString());
 //            replace.addReplacement(Replacement.MULTIPLIER_REGEX, String.valueOf(voucher.getMultiplier()));
@@ -102,24 +101,14 @@ public class ShopManager {
 //            replace.addReplacement(Replacement.PRICE_REGEX, String.valueOf(voucher.getPrice()));
 
 
-            ShopBooster shopBooster = new ShopBooster(XPBoostPlugin.getInstance().getBoosterManager().getBooster(key.toLowerCase()));
+            ShopBooster shopBooster = new ShopBooster(booster);
 
+            if (itemSection.getString("title") != null)
+                shopBooster.setTitle(itemSection.getString("title"));
+            shopBooster.setLore(itemSection.getStringList("lore").stream().map(Chat::color).collect(Collectors.toList()));
+            shopBooster.setGlowing(itemSection.getBoolean("glow"));
+            shopBooster.setMaterial(Material.valueOf(itemSection.getString("material")));
 
-            if (itemBuilder != null) {
-                if (itemSection.getString("title") != null)
-                    itemBuilder.setName(itemSection.getString("title"));
-
-                itemSection.getStringList("lore");
-                itemBuilder.setLore(itemSection.getStringList("lore").stream().map(Chat::color).collect(Collectors.toList()));
-                itemBuilder.setGlow(itemSection.getBoolean("glow"));
-                itemBuilder.setLocalizedName(booster.getName());
-
-
-                shopBooster.setIs(itemBuilder.toItemStack());
-
-            } else {
-                shopBooster.setIs(defaultShopItem.getIs());
-            }
 
             shopBooster.setSlot(itemSection.getInt("slot", -1));
             shopProfile.getBoosters().add(shopBooster);
@@ -133,7 +122,7 @@ public class ShopManager {
     }
 
     public List<String> getShopLore(Voucher voucher) {
-        return getConfig().getStringList("voucher-shop.lore").stream().map(Voucher::getReplacement).collect(Collectors.toList());
+        return getConfig().getStringList("voucher-shop.lore").stream().map(voucher::getReplace).collect(Collectors.toList());
     }
 
     public boolean addLoreToTop() {
