@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
@@ -23,6 +24,7 @@ public class BoosterManager {
     private final HashMap<String, Booster> allBoosters = new HashMap<>();
     private final XPBoostPlugin plugin;
     private final ConfigYml config;
+    private BoosterSound sound;
 
     private boolean vouchersEnabled;
 
@@ -37,6 +39,27 @@ public class BoosterManager {
         }
 
         vouchersEnabled = boosters.getBoolean("vouchers-enabled");
+
+
+        String[] soundS = boosters.getString("special-claim-sound").split(":");
+
+        // Initialize variables outside the try-catch block with default values
+        Sound sound = Sound.BLOCK_CONDUIT_DEACTIVATE;
+        float volume = 1.0f;
+        float pitch = 1.0f;
+
+        // Check if the array has at least 3 elements
+        if (soundS.length >= 3) {
+            try {
+                sound = Sound.valueOf(soundS[0]);
+                volume = Float.parseFloat(soundS[1]);
+                pitch = Float.parseFloat(soundS[2]);
+            } catch (IllegalArgumentException e) {
+                Chat.log("The format of sound is SOUND:VOLUME:PITCH in special-claim-sound boosters.yml");
+            }
+        }
+
+        this.sound = new BoosterSound(sound, volume, pitch);
 
         for (String key : boosters.getKeys(false)) {
             ConfigurationSection sec = boosters.getConfigurationSection(key);
@@ -68,7 +91,7 @@ public class BoosterManager {
             Booster.BoosterBuilder boosterBuilder = Booster.builder()
                     .id(key.toLowerCase())
                     .name(Chat.color(sec.getString("name")))
-                    .multiplier(sec.getInt("multiplier"))
+                    .multiplier(sec.getDouble("multiplier"))
                     .time(sec.getString("time"))
                     .price(sec.getInt("price"));
 
