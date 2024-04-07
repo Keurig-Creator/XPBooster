@@ -33,6 +33,7 @@ public class ShopBooster extends Item implements Replacable {
         itemBuilder.setName(getReplace(title));
         itemBuilder.setLore(lore.stream().map(Chat::color).map(this::getReplace).collect(Collectors.toList()));
         itemBuilder.setGlow(glowing);
+        itemBuilder.setLocalizedName(booster.getId());
 
         return itemBuilder.toItemStack();
     }

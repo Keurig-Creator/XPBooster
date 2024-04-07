@@ -23,6 +23,16 @@ public class Voucher extends Item implements Replacable {
         return getReplacement(input).getReplacement();
     }
 
+    public ItemStack getItem() {
+        ItemBuilder itemBuilder = ItemBuilder.item(material);
+        itemBuilder.setName(getReplace(title));
+        itemBuilder.setLore(lore.stream().map(Chat::color).map(this::getReplace).collect(Collectors.toList()));
+        itemBuilder.setGlow(glowing);
+        itemBuilder.setLocalizedName(booster.getId());
+
+        return itemBuilder.toItemStack();
+    }
+
     @Override
     public Replacement getReplacement(String input) {
         Replacement replace = new Replacement();
@@ -34,14 +44,5 @@ public class Voucher extends Item implements Replacable {
         replace.addReplacement(Replacement.PRICE_REGEX, String.valueOf(booster.getPrice()));
 
         return replace;
-    }
-
-    public ItemStack getItem() {
-        ItemBuilder itemBuilder = ItemBuilder.item(material);
-        itemBuilder.setName(getReplace(title));
-        itemBuilder.setLore(lore.stream().map(Chat::color).map(this::getReplace).collect(Collectors.toList()));
-        itemBuilder.setGlow(glowing);
-
-        return itemBuilder.toItemStack();
     }
 }
