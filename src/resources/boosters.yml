@@ -1,48 +1,55 @@
 boosters:
-  vouchers-enabled: true
+  vouchers-enabled: true  # Enable vouchers if not will auto instant claim
+
+  # This is the voucher claim sound used when activating for first time
+  # or confirming multiplier
+  # Change this if version errors out
+  special-claim-sound: "BLOCK_CONDUIT_DEACTIVATE:0.3:0.5" # "SOUND:VOLUME:PITCH"
 
   basic:
     name: "&7Basic"
     multiplier: 1.5
-    time: 15m
+    time: 15m  # Time formats example [1s, 1m, 1d, 1y] you can use decimal [1.5d]
     price: 1500
 
-    # This is the physical voucher if enabled
+    # Physical voucher details if enabled
     voucher:
-      material: PAPER
-      title: "&7$name XP boost &e$multiplierx&7."
-      glow: true
+      material: EXPERIENCE_BOTTLE
+      title: "&7$name XP Boost &e$multiplier&7."
+      glow: false
       lore:
-        - "&7Right click to &aActivate&7"
+        - "&7Right-click to &aactivate&7"
         - "&7Multiplier &e$multiplierx"
         - "&7Time &e$time"
 
   prime:
     name: "&aPrime"
     multiplier: 2
-    time: 15m
+    time: 15m  # Time formats example [1s, 1m, 1d, 1y] you can use decimal [1.5d]
     price: 3000
 
+    # Physical voucher details if enabled
     voucher:
-      material: PAPER
-      title: "&a$name &fXP boost &e$multiplierx&7."
+      material: EXPERIENCE_BOTTLE
+      title: "&a$name &fXP Boost &e$multiplier&7."
       glow: true
       lore:
-        - "&7Right click to &aActivate&7"
+        - "&7Right-click to &aactivate&7"
         - "&7Multiplier &e$multiplierx"
         - "&7Time &e$time"
 
   beast:
     name: "&aBeast"
     multiplier: 5
-    time: 15m
+    time: 15m  # Time formats example [1s, 1m, 1d, 1y] you can use decimal [1.5d]
     price: 15000
 
+    # Physical voucher details if enabled
     voucher:
-      material: PAPER
-      title: "&6$name &fXP boost &e$multiplierx&7."
+      material: EXPERIENCE_BOTTLE
+      title: "&6$name &fXP Boost &e$multiplier&7."
       glow: true
       lore:
-        - "&7Right click to &aActivate&7"
+        - "&7Right-click to &aactivate&7"
         - "&7Multiplier &e$multiplierx"
         - "&7Time &e$time"

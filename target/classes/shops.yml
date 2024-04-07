@@ -6,17 +6,17 @@ default-items:
   lore:
     - "&7Purchase for &c$price"
     - ""
-    - "&7Multiplier &e$multiplierx"
+    - "&7Multiplier &e$multiplier"
     - "&7Time &e$time"
 
 regular_boost_shop:
   command: "xpshop|xps"
   gui-name: "&eXP &6Boost &fShop"
   size: 27
-  instant-claim: true
+  instant-claim: false
   fill:
     type: FILL
-    material: GRAY_STAINED_GLASS_PANE
+    material: BLACK_STAINED_GLASS_PANE
   boosters:
     items:
       basic:
