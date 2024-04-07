@@ -5,8 +5,10 @@ import com.keurig.xpbooster.base.Booster;
 import com.keurig.xpbooster.base.EXPBoost;
 import com.keurig.xpbooster.base.InternalXPBoostHandler;
 import com.keurig.xpbooster.util.CalenderUtil;
+import com.keurig.xpbooster.util.Chat;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
@@ -37,14 +39,25 @@ public class XPBoostAPI {
         getBoostHandler().removeBoost(uuid);
     }
 
-    public static void addBoost(UUID uuid, Booster booster) {
-        if (hasBoost(uuid)) {
-            EXPBoost boost = getBoost(uuid);
-            boost.setDate(CalenderUtil.getTime(boost.getDate(), booster.getTime()));
-            boost.setMultiplier(boost.getMultiplier());
-        } else {
-            setBoost(uuid, new EXPBoost(uuid, booster.getMultiplier(), CalenderUtil.getTime(booster.getTime()), booster.getName()));
+    public static void setBoost(Player player, Booster booster) {
+        setBoost(player.getUniqueId(), new EXPBoost(player.getUniqueId(), booster.getMultiplier(), CalenderUtil.getTime(booster.getTime()), booster.getName()));
+    }
+
+    public static void addBoost(Player player, Booster booster) {
+        UUID playerId = player.getUniqueId();
+        if (hasBoost(playerId)) {
+            EXPBoost existingBoost = getBoost(playerId);
+            if (existingBoost.getMultiplier() == booster.getMultiplier()) {
+                Chat.log("Adding time");
+                long newExpirationTime = CalenderUtil.getTime(existingBoost.getDate(), booster.getTime());
+                existingBoost.setDate(newExpirationTime);
+                setBoost(playerId, existingBoost);
+                return;
+            }
         }
+
+        Chat.log("Setting new booster");
+        setBoost(playerId, new EXPBoost(playerId, booster.getMultiplier(), CalenderUtil.getTime(booster.getTime()), booster.getName()));
     }
 
     /**
