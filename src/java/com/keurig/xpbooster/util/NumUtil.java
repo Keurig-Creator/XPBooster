@@ -57,6 +57,14 @@ public class NumUtil {
         return -1; // Indicate failure if input doesn't match the pattern
     }
 
+    public static String formatMultiplier(double multiplier) {
+        if (multiplier == (int) multiplier) {
+            return String.format("%.0fx", multiplier);
+        } else {
+            return multiplier + "x";
+        }
+    }
+
     public static String timeFormat(long millis, boolean round) {
         long currentTimeMillis = System.currentTimeMillis();
         long durationInMillis = millis - currentTimeMillis;
