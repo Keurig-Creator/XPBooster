@@ -11,6 +11,7 @@ import com.keurig.xpbooster.command.XPBoostReloadCommand;
 import com.keurig.xpbooster.command.XPBoostShopCommand;
 import com.keurig.xpbooster.event.ExperienceChangeListener;
 import com.keurig.xpbooster.event.InventoryMoveListener;
+import com.keurig.xpbooster.event.PlayerClickEvent;
 import com.keurig.xpbooster.language.Language;
 import com.keurig.xpbooster.tasks.BoostEndTask;
 import com.keurig.xpbooster.util.ConfigYml;
@@ -76,6 +77,7 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
 
         Bukkit.getPluginManager().registerEvents(new ExperienceChangeListener(this), this);
         Bukkit.getPluginManager().registerEvents(new InventoryMoveListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerClickEvent(this), this);
         Bukkit.getPluginManager().registerEvents(new MenuManager(), this);
 
         new BoostEndTask(this).runTaskTimerAsynchronously(this, 0, 5);
