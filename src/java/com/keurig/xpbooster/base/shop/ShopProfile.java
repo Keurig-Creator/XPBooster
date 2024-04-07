@@ -2,7 +2,9 @@ package com.keurig.xpbooster.base.shop;
 
 import com.keurig.xpbooster.base.ShopBooster;
 import com.keurig.xpbooster.base.menu.data.Menu;
+import com.keurig.xpbooster.util.ItemBuilder;
 import lombok.*;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,5 +29,9 @@ public class ShopProfile {
     public int nextSlot(Menu menu, ShopBooster shopBooster) {
 
         return shopBooster.getSlot();
+    }
+
+    public ItemStack fillItem() {
+        return ItemBuilder.item(fill.getMaterial()).setName("&8 ").toItemStack();
     }
 }
