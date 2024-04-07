@@ -14,7 +14,7 @@ public class Booster implements Replacable {
 
     protected String id;
     protected String name;
-    private int multiplier;
+    private double multiplier;
     private String time;
     private int price;
     private Voucher voucher;
