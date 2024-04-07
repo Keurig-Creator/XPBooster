@@ -195,7 +195,7 @@ public class ItemBuilder {
 
     public ItemBuilder setLore(String... lore) {
         ItemMeta im = is.getItemMeta();
-        im.setLore(List.of(lore));
+        im.setLore(Chat.color(lore));
         is.setItemMeta(im);
         return this;
     }
