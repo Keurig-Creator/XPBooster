@@ -48,7 +48,7 @@ public class XPBoostCommand extends BaseCommand {
     public void onVoucher(CommandSender sender, OfflinePlayer toSet, Booster booster) {
         Replacement replace = Replacement.createReplacement(getName(), sender.getName(), toSet.getName());
         replace.addReplacement(Replacement.DURATION_REGEX, booster.getTime());
-        replace.addReplacement(Replacement.MULTIPLIER_REGEX, String.valueOf(booster.getMultiplier()));
+        replace.addReplacement(Replacement.MULTIPLIER_REGEX, NumUtil.formatMultiplier(booster.getMultiplier()));
         replace.addReplacement(Replacement.MULTIPLIER_REGEX, booster.getName());
 
 
@@ -59,7 +59,7 @@ public class XPBoostCommand extends BaseCommand {
         int calenderN = NumUtil.convertToCalendar(booster.getTime());
 
         if (extractNumber == -1 || calenderN == -1) {
-            Chat.message(sender, Language.INVALID_DATE.toString(replace));
+            Chat.message(sender, Language.INVALID_DATE_FORMAT.toString(replace));
             return;
         }
 
@@ -75,7 +75,7 @@ public class XPBoostCommand extends BaseCommand {
 
         toSet.getPlayer().getInventory().addItem(booster.getVoucher().getItem());
 
-        sender.sendMessage(booster.getVoucher().getReplace(Language.VOUCHER_GIVE_XPBOOST_MESSAGE.toString()));
+        sender.sendMessage(booster.getVoucher().getReplace(Language.GIVE_VOUCHER_MESSAGE.toString()));
 
 
     }
@@ -116,7 +116,7 @@ public class XPBoostCommand extends BaseCommand {
             int calenderN = NumUtil.convertToCalendar(date);
 
             if (extractNumber == -1 || calenderN == -1) {
-                Chat.message(sender, Language.INVALID_DATE.toString(replace));
+                Chat.message(sender, Language.INVALID_DATE_FORMAT.toString(replace));
                 return;
             }
 
@@ -133,7 +133,7 @@ public class XPBoostCommand extends BaseCommand {
 
         XPBoostAPI.setBoost(toSet.getUniqueId(), expBoost);
 
-        sender.sendMessage(Language.SET_XPBOOST_MESSAGE.toString(replace));
+        sender.sendMessage(Language.SET_BOOST_MESSAGE.toString(replace));
 
     }
 
@@ -145,7 +145,7 @@ public class XPBoostCommand extends BaseCommand {
         replace.addReplacement(Replacement.DURATION_REGEX, "PERMANENT");
 
         if (!XPBoostAPI.hasBoost(toSet.getUniqueId())) {
-            sender.sendMessage(Language.PLAYER_NO_BOOST.toString(replace));
+            sender.sendMessage(Language.NO_ACTIVE_BOOSTER.toString(replace));
             return;
         }
 
@@ -159,7 +159,7 @@ public class XPBoostCommand extends BaseCommand {
         int calenderN = NumUtil.convertToCalendar(timeDate);
 
         if (extractNumber == -1 || calenderN == -1) {
-            Chat.message(sender, Language.INVALID_DATE.toString(replace));
+            Chat.message(sender, Language.INVALID_DATE_FORMAT.toString(replace));
             return;
         }
 
@@ -169,7 +169,7 @@ public class XPBoostCommand extends BaseCommand {
         boost.setDate(calendar.getTime().getTime());
         plugin.getDataConfig().save();
 
-        sender.sendMessage(Language.ADD_XPBOOST_MESSAGE.toString(replace));
+        sender.sendMessage(Language.ADD_BOOST_MESSAGE.toString(replace));
 
     }
 
@@ -183,9 +183,9 @@ public class XPBoostCommand extends BaseCommand {
 
         if (XPBoostAPI.hasBoost(toSet.getUniqueId())) {
             XPBoostAPI.removeBoost(toSet.getUniqueId());
-            sender.sendMessage(Language.REMOVE_XPBOOST_MESSAGE.toString(replace));
+            sender.sendMessage(Language.REMOVE_BOOST_MESSAGE.toString(replace));
         } else {
-            sender.sendMessage(Language.PLAYER_NO_BOOST.toString(replace));
+            sender.sendMessage(Language.NO_ACTIVE_BOOSTER.toString(replace));
         }
     }
 
@@ -198,7 +198,7 @@ public class XPBoostCommand extends BaseCommand {
             EXPBoost boost = XPBoostAPI.getBoost(player.getUniqueId());
             Chat.message(player, "&8&l----- &eActive &6Booster Info &8&l-----\n \n&7Multiplier &e" + boost.getMultiplier() + "\n&7Time remaining: &e" + boost.getRemainingTime() + "\n ");
         } else {
-            Chat.message(player, Language.PLAYER_NO_BOOST.toString());
+            Chat.message(player, Language.NO_ACTIVE_BOOSTER.toString());
         }
     }
 
@@ -211,7 +211,7 @@ public class XPBoostCommand extends BaseCommand {
             EXPBoost boost = XPBoostAPI.getBoost(target.getUniqueId());
             Chat.message(sender, "&8&l----- &eActive &6Booster Info &8&l-----\n \n&7Player &e" + target.getName() + "\n&7Multiplier &e" + boost.getMultiplier() + "\n&7Time remaining: &e" + boost.getRemainingTime() + "\n ");
         } else {
-            Chat.message(sender, Language.TARGET_NO_BOOST.toString());
+            Chat.message(sender, Language.TARGET_NO_ACTIVE_BOOSTER.toString());
         }
     }
 
