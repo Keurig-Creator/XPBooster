@@ -21,6 +21,17 @@ public class MenuManager implements Listener {
     private static final Map<HumanEntity, Menu> openedMenus = Collections.synchronizedMap(new HashMap<>());
 
 
+    public static <T extends Menu> Inventory openMenu(Class<T> menuClass, PlayerMenu playerMenu) {
+        try {
+            T menu = menuClass.getDeclaredConstructor().newInstance(); // Instantiate the menu using reflection
+
+            return openMenu(menu, playerMenu);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static <T extends Menu> Inventory openMenu(Class<T> menuClass, Player player) {
         try {
             T menu = menuClass.getDeclaredConstructor().newInstance(); // Instantiate the menu using reflection
@@ -30,6 +41,29 @@ public class MenuManager implements Listener {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static Inventory openMenu(Menu menu, PlayerMenu playerMenu) {
+        Inventory inventory = menu.apply();
+        Player player = playerMenu.getPlayer();
+
+        if (openedMenus.containsKey(player)) {
+            menu.setPlayerMenu(openedMenus.get(player).playerMenu);
+            menu.getPlayerMenu().addHistory(menu);
+        } else {
+            playerMenu.addHistory(menu);
+            menu.setPlayerMenu(playerMenu);
+        }
+
+        menu.setup(inventory);
+        menu.setActionItems(inventory);
+
+        player.closeInventory();
+        player.openInventory(menu.getInventory());
+
+        openedMenus.put(player, menu);
+
+        return inventory;
     }
 
     public static Inventory openMenu(Menu menu, Player player) {

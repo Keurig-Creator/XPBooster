@@ -65,6 +65,10 @@ public abstract class Menu implements InventoryHolder {
             return;
         }
 
+        if (!e.isLeftClick())
+            return;
+
+
         actions.get(e.getSlot()).onClick(e);
 
         if (e.isGoback() && parent != null) {

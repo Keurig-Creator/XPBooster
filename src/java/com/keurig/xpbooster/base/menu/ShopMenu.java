@@ -68,6 +68,7 @@ public class ShopMenu extends Menu {
                 if (shop.isInstantClaim()) {
                     getPlayerMenu().setData("shop", shop);
                     getPlayerMenu().setData("shopBooster", shopBooster);
+                    getPlayerMenu().setData("instantClaim", getShopProfile().isInstantClaim());
 
                     MenuManager.openMenu(ConfirmMenu.class, e.getPlayer());
                 } else {

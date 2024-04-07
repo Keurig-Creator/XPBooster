@@ -27,12 +27,14 @@ public class PlayerMenu {
     }
 
 
-    public void setData(String key, Object obj) {
+    public PlayerMenu setData(String key, Object obj) {
         store.put(key, obj);
+        return this;
     }
 
-    public void setData(Object key, Object obj) {
+    public PlayerMenu setData(Object key, Object obj) {
         store.put(key, obj);
+        return this;
     }
 
     public <T> T getData(String key, Class<T> ref) {
