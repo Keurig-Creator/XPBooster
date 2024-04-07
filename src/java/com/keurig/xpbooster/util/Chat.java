@@ -6,8 +6,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 public class Chat {
 
@@ -21,9 +23,12 @@ public class Chat {
         }
     }
 
-    public static String color(String... message) {
-        return ChatColor.translateAlternateColorCodes('&', Arrays.toString(message));
+    public static List<String> color(String... message) {
+        return Arrays.stream(message)
+                .map(line -> ChatColor.translateAlternateColorCodes('&', line))
+                .collect(Collectors.toList());
     }
+
 
     public static void message(Player player, String... messages) {
         Arrays.stream(messages).forEach(s -> player.sendMessage(color(s)));
