@@ -9,20 +9,14 @@ public class CalenderUtil {
         calendar.setTimeInMillis(beginningTime);
 
         int extractNumber = NumUtil.extractNumber(time);
-        int calenderN = NumUtil.convertToCalendar(time);
+        int calendarUnit = NumUtil.convertToCalendar(time);
 
-        calendar.add(calenderN, extractNumber);
+        calendar.add(calendarUnit, extractNumber);
         return calendar.getTime().getTime();
     }
 
     public static long getTime(String time) {
-        Calendar calendar = Calendar.getInstance();
-
-        int extractNumber = NumUtil.extractNumber(time);
-        int calenderN = NumUtil.convertToCalendar(time);
-
-        calendar.add(calenderN, extractNumber);
-        return calendar.getTime().getTime();
+        return getTime(System.currentTimeMillis(), time); // Call the other getTime method with current time
     }
 
     public static long removeTime(String time) {
