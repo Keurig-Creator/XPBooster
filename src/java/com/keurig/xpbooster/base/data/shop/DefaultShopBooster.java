@@ -1,6 +1,6 @@
-package com.keurig.xpbooster.base.shop;
+package com.keurig.xpbooster.base.data.shop;
 
-import com.keurig.xpbooster.base.ShopBooster;
+import com.keurig.xpbooster.base.data.booster.ShopBooster;
 import lombok.Getter;
 import org.bukkit.Material;
 
@@ -13,6 +13,9 @@ public class DefaultShopBooster extends ShopBooster {
         super(null);
         this.material = material;
         this.lore = List.of(lore);
+        this.title = title;
+        glowing = glow;
+        slot = -1;
         setSlot(-1);
     }
 }

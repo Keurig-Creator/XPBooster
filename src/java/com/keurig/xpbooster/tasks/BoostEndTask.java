@@ -2,12 +2,11 @@ package com.keurig.xpbooster.tasks;
 
 import com.keurig.xpbooster.XPBoostPlugin;
 import com.keurig.xpbooster.api.XPBoostAPI;
-import com.keurig.xpbooster.base.EXPBoost;
+import com.keurig.xpbooster.base.data.EXPBoost;
 import com.keurig.xpbooster.language.Language;
 import com.keurig.xpbooster.util.Chat;
 import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -37,11 +36,11 @@ public class BoostEndTask extends BukkitRunnable {
                         return;
                     }
 
-                    try {
-                        player.playSound(player, Sound.valueOf(plugin.config.getString("boost_end_sound")), 1, 1);
-                    } catch (IllegalArgumentException ignored) {
-
-                    }
+//                    try {
+//                        player.playSound(player, Sound.valueOf(plugin.config.getString("boost_end_sound")), 1, 1);
+//                    } catch (IllegalArgumentException ignored) {
+//
+//                    }
 
                     Chat.message(player, Language.BOOST_END_MESSAGE.toString());
                 }, 0);

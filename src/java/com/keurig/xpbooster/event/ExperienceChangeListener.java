@@ -2,7 +2,7 @@ package com.keurig.xpbooster.event;
 
 import com.keurig.xpbooster.XPBoostPlugin;
 import com.keurig.xpbooster.api.XPBoostAPI;
-import com.keurig.xpbooster.base.EXPBoost;
+import com.keurig.xpbooster.base.data.EXPBoost;
 import lombok.AllArgsConstructor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

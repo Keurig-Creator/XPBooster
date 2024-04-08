@@ -75,6 +75,16 @@ public class NumUtil {
         long day = durationInMillis / (1000 * 60 * 60 * 24);
         long year = day / 365;
 
+        // Adjust minute if seconds are greater than or equal to 30
+        if (round && second >= 59) {
+            minute++;
+            second = 0;
+            if (minute == 60) { // Adjust hour if minute overflows
+                hour++;
+                minute = 0;
+            }
+        }
+
         StringBuilder formattedTime = new StringBuilder();
         if (year > 0) {
             formattedTime.append(year).append("y ");

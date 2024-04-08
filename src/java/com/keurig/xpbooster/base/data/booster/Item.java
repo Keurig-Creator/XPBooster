@@ -1,4 +1,4 @@
-package com.keurig.xpbooster.base;
+package com.keurig.xpbooster.base.data.booster;
 
 import lombok.Getter;
 import lombok.Setter;

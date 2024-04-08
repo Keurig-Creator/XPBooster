@@ -5,7 +5,7 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Dependency;
 import com.keurig.xpbooster.XPBoostPlugin;
-import com.keurig.xpbooster.base.menu.ShopMenu;
+import com.keurig.xpbooster.base.data.ui.ShopMenu;
 import com.keurig.xpbooster.base.menu.data.MenuManager;
 import org.bukkit.entity.Player;
 

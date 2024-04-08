@@ -1,6 +1,7 @@
-package com.keurig.xpbooster.base.shop;
+package com.keurig.xpbooster.base.data.shop;
 
-import com.keurig.xpbooster.base.ShopBooster;
+import com.keurig.xpbooster.base.data.booster.ShopBooster;
+import com.keurig.xpbooster.base.data.ui.MenuFill;
 import com.keurig.xpbooster.base.menu.data.Menu;
 import com.keurig.xpbooster.util.ItemBuilder;
 import lombok.*;

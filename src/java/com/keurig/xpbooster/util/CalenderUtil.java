@@ -12,7 +12,7 @@ public class CalenderUtil {
         int calendarUnit = NumUtil.convertToCalendar(time);
 
         calendar.add(calendarUnit, extractNumber);
-        return calendar.getTime().getTime();
+        return calendar.getTimeInMillis(); // Return the end time in milliseconds
     }
 
     public static long getTime(String time) {

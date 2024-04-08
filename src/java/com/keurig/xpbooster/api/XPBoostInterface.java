@@ -1,6 +1,6 @@
 package com.keurig.xpbooster.api;
 
-import com.keurig.xpbooster.base.EXPBoost;
+import com.keurig.xpbooster.base.data.EXPBoost;
 
 import java.util.UUID;
 

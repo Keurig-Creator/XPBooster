@@ -2,9 +2,9 @@ package com.keurig.xpbooster.event;
 
 import com.keurig.xpbooster.XPBoostPlugin;
 import com.keurig.xpbooster.api.XPBoostAPI;
-import com.keurig.xpbooster.base.Booster;
-import com.keurig.xpbooster.base.BoosterSound;
-import com.keurig.xpbooster.base.menu.VoucherMenu;
+import com.keurig.xpbooster.base.data.booster.Booster;
+import com.keurig.xpbooster.base.data.booster.BoosterSound;
+import com.keurig.xpbooster.base.data.ui.VoucherMenu;
 import com.keurig.xpbooster.base.menu.data.MenuManager;
 import com.keurig.xpbooster.base.menu.data.PlayerMenu;
 import com.keurig.xpbooster.language.Language;

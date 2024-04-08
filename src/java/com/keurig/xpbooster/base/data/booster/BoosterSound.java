@@ -1,4 +1,4 @@
-package com.keurig.xpbooster.base;
+package com.keurig.xpbooster.base.data.booster;
 
 import lombok.AllArgsConstructor;
 import org.bukkit.Sound;

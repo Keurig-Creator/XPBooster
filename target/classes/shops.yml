@@ -1,13 +1,13 @@
 # You can edit individual item
-default-items:
-  material: PAPER
-  title: "&8$name &7XP Booster"
+default-item:
+  material: EXPERIENCE_BOTTLE
+  title: "$name &7XP Booster"
   glow: true
   lore:
-    - "&7Purchase for &c$price"
     - ""
-    - "&7Multiplier &e$multiplier"
-    - "&7Time &e$time"
+    - "&7Purchase for &c$$price"
+    - "&7Multiplier of &e$multiplier"
+    - "&7Time of &e$time"
 
 regular_boost_shop:
   command: "xpshop|xps"
@@ -15,14 +15,16 @@ regular_boost_shop:
   size: 27
   instant-claim: false
   fill:
-    type: FILL
-    material: BLACK_STAINED_GLASS_PANE
-  boosters:
-    items:
-      basic:
-        material: PAPER
-        title: "&7Basic &7XP Booster"
-        glow: true
-        lore:
-          - "&7Purchase for &c$price"
-          - "&7Multiplier: &e1.5x"
+    type: BORDER
+    material: GRAY_STAINED_GLASS_PANE
+  boosters: [ basic, prime, beast ] # Booster key found in boosters.yml
+#    items: # List each booster by key
+#      basic:
+#        material: EXPERIENCE_BOTTLE
+#        title: "$name &7XP Booster"
+#        glow: true
+#        lore:
+#          - ""
+#          - "&7Purchase for &c$$price"
+#          - "&7Multiplier of &e$multiplier"
+#          - "&7Time of &e$time"

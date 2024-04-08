@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.keurig.xpbooster.XPBoostPlugin;
-import com.keurig.xpbooster.base.EXPBoost;
+import com.keurig.xpbooster.base.data.EXPBoost;
 import lombok.Getter;
 
 import java.io.*;

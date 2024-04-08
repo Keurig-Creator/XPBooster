@@ -1,6 +1,9 @@
-package com.keurig.xpbooster.base;
+package com.keurig.xpbooster.base.data.booster;
 
 
+import com.keurig.xpbooster.XPBoostPlugin;
+import com.keurig.xpbooster.base.data.booster.voucher.Voucher;
+import com.keurig.xpbooster.util.NumUtil;
 import com.keurig.xpbooster.util.replacement.Replacable;
 import com.keurig.xpbooster.util.replacement.Replacement;
 import lombok.*;
@@ -28,7 +31,11 @@ public class Booster implements Replacable {
     public Replacement getReplacement(String input) {
         Replacement replace = new Replacement();
         replace.setInput(input);
-        replace.addReplacement(Replacement.PRICE_REGEX, String.valueOf(price));
+        replace.addReplacement(Replacement.VOUCHER_REGEX, XPBoostPlugin.getInstance().getBoosterManager().getAllBoosters().toString());
+        replace.addReplacement(Replacement.MULTIPLIER_REGEX, NumUtil.formatMultiplier(getMultiplier()));
+        replace.addReplacement(Replacement.NAME_REGEX, getName());
+        replace.addReplacement(Replacement.TIME_REGEX, getTime());
+        replace.addReplacement(Replacement.PRICE_REGEX, String.valueOf(getPrice()));
         return replace;
     }
 }

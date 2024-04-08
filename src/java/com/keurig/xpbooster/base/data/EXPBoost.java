@@ -1,4 +1,4 @@
-package com.keurig.xpbooster.base;
+package com.keurig.xpbooster.base.data;
 
 import com.google.gson.*;
 import com.google.gson.annotations.SerializedName;
@@ -48,7 +48,7 @@ public class EXPBoost {
         if (date == 0) {
             return "PERMANENT";
         } else {
-            return NumUtil.timeFormat(date, false);
+            return NumUtil.timeFormat(date, true);
         }
     }
 

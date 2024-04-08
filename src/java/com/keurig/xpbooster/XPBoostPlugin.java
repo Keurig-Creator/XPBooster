@@ -3,10 +3,15 @@ package com.keurig.xpbooster;
 import co.aikar.commands.CommandReplacements;
 import co.aikar.commands.PaperCommandManager;
 import com.keurig.xpbooster.api.XPBoostAPI;
-import com.keurig.xpbooster.base.*;
+import com.keurig.xpbooster.base.data.EXPBoost;
+import com.keurig.xpbooster.base.data.booster.Booster;
+import com.keurig.xpbooster.base.data.shop.ShopProfile;
+import com.keurig.xpbooster.base.handler.BoosterManager;
+import com.keurig.xpbooster.base.handler.InternalXPBoostHandler;
+import com.keurig.xpbooster.base.handler.ShopManager;
 import com.keurig.xpbooster.base.menu.data.MenuManager;
-import com.keurig.xpbooster.base.shop.ShopProfile;
 import com.keurig.xpbooster.command.XPBoostCommand;
+import com.keurig.xpbooster.command.XPBoostInfoCommand;
 import com.keurig.xpbooster.command.XPBoostReloadCommand;
 import com.keurig.xpbooster.command.XPBoostShopCommand;
 import com.keurig.xpbooster.event.ExperienceChangeListener;
@@ -73,6 +78,7 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
         manager.registerCommand(new XPBoostCommand());
         manager.registerCommand(new XPBoostReloadCommand());
         manager.registerCommand(new XPBoostShopCommand());
+        manager.registerCommand(new XPBoostInfoCommand());
 
 
         Bukkit.getPluginManager().registerEvents(new ExperienceChangeListener(this), this);

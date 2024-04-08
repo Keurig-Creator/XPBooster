@@ -1,13 +1,12 @@
-package com.keurig.xpbooster.base.menu;
+package com.keurig.xpbooster.base.data.ui;
 
 import com.keurig.xpbooster.XPBoostPlugin;
-import com.keurig.xpbooster.base.ShopBooster;
+import com.keurig.xpbooster.base.data.booster.ShopBooster;
+import com.keurig.xpbooster.base.data.shop.ShopProfile;
 import com.keurig.xpbooster.base.menu.data.Menu;
 import com.keurig.xpbooster.base.menu.data.MenuManager;
 import com.keurig.xpbooster.base.menu.item.ActionItem;
 import com.keurig.xpbooster.base.menu.item.ItemClickEvent;
-import com.keurig.xpbooster.base.shop.MenuFill;
-import com.keurig.xpbooster.base.shop.ShopProfile;
 import com.keurig.xpbooster.util.Chat;
 import com.keurig.xpbooster.util.InventoryUtil;
 import lombok.Getter;
@@ -65,16 +64,11 @@ public class ShopMenu extends Menu {
                 Chat.log(shop.isInstantClaim());
 
                 // Check if the user should be given the voucher or a confirmation menu
-                if (shop.isInstantClaim()) {
-                    getPlayerMenu().setData("shop", shop);
-                    getPlayerMenu().setData("shopBooster", shopBooster);
-                    getPlayerMenu().setData("instantClaim", getShopProfile().isInstantClaim());
+                getPlayerMenu().setData("shop", shop);
+                getPlayerMenu().setData("booster", shopBooster.getBooster());
+                getPlayerMenu().setData("instantClaim", getShopProfile().isInstantClaim());
 
-                    MenuManager.openMenu(ConfirmMenu.class, e.getPlayer());
-                } else {
-                    e.getPlayer().getInventory().addItem(shopBooster.getBooster().getVoucher().getItem());
-                    e.getPlayer().closeInventory();
-                }
+                MenuManager.openMenu(ConfirmMenu.class, e.getPlayer());
             });
 
 

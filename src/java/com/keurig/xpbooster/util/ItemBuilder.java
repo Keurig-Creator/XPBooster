@@ -1,9 +1,6 @@
 package com.keurig.xpbooster.util;
 
 import com.cryptomorin.xseries.XMaterial;
-import de.tr7zw.changeme.nbtapi.NBT;
-import de.tr7zw.changeme.nbtapi.iface.ReadWriteItemNBT;
-import de.tr7zw.changeme.nbtapi.iface.ReadableItemNBT;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -17,7 +14,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class ItemBuilder {
 
@@ -78,16 +74,6 @@ public class ItemBuilder {
         ItemMeta im = is.getItemMeta();
         im.setCustomModelData(data);
         is.setItemMeta(im);
-        return this;
-    }
-
-    public ItemBuilder modify(Consumer<ReadWriteItemNBT> consumer) {
-        NBT.modify(is, consumer);
-        return this;
-    }
-
-    public ItemBuilder get(Consumer<ReadableItemNBT> consumer) {
-        NBT.get(is, consumer);
         return this;
     }
 

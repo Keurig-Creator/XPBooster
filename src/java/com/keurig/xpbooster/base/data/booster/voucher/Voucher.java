@@ -1,33 +1,31 @@
-package com.keurig.xpbooster.base;
+package com.keurig.xpbooster.base.data.booster.voucher;
 
 import com.keurig.xpbooster.XPBoostPlugin;
+import com.keurig.xpbooster.base.data.booster.Booster;
+import com.keurig.xpbooster.base.data.booster.Item;
 import com.keurig.xpbooster.util.Chat;
 import com.keurig.xpbooster.util.ItemBuilder;
 import com.keurig.xpbooster.util.NumUtil;
 import com.keurig.xpbooster.util.replacement.Replacable;
 import com.keurig.xpbooster.util.replacement.Replacement;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.stream.Collectors;
 
+@Builder
 @Getter
-public class ShopBooster extends Item implements Replacable {
+@Setter
+public class Voucher extends Item implements Replacable {
+    protected Booster booster;
 
-    @Getter
-    protected @Setter int slot;
-    protected final Booster booster;
-
-    public ShopBooster(Booster booster) {
-        this.booster = booster;
+    @Override
+    public String getReplace(String input) {
+        return getReplacement(input).getReplacement();
     }
 
-    /**
-     * Get the shop item in the config either use whats in shops.yml or the voucher itself and add the lore
-     *
-     * @return
-     */
     public ItemStack getItem() {
         ItemBuilder itemBuilder = ItemBuilder.item(material);
         itemBuilder.setName(getReplace(title));
@@ -36,11 +34,6 @@ public class ShopBooster extends Item implements Replacable {
         itemBuilder.setLocalizedName(booster.getId());
 
         return itemBuilder.toItemStack();
-    }
-
-    @Override
-    public String getReplace(String input) {
-        return getReplacement(input).getReplacement();
     }
 
     @Override

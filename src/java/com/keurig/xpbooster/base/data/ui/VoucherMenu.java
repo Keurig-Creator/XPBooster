@@ -1,10 +1,10 @@
-package com.keurig.xpbooster.base.menu;
+package com.keurig.xpbooster.base.data.ui;
 
 import com.keurig.xpbooster.XPBoostPlugin;
 import com.keurig.xpbooster.api.XPBoostAPI;
-import com.keurig.xpbooster.base.Booster;
-import com.keurig.xpbooster.base.BoosterSound;
-import com.keurig.xpbooster.base.Voucher;
+import com.keurig.xpbooster.base.data.booster.Booster;
+import com.keurig.xpbooster.base.data.booster.BoosterSound;
+import com.keurig.xpbooster.base.data.booster.voucher.Voucher;
 import com.keurig.xpbooster.base.menu.data.Menu;
 import com.keurig.xpbooster.base.menu.item.ActionItem;
 import com.keurig.xpbooster.base.menu.item.ItemClickEvent;

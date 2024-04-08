@@ -3,53 +3,52 @@ boosters:
 
   # This is the voucher claim sound used when activating for first time
   # or confirming multiplier
-  # Change this if version errors out
   special-claim-sound: "BLOCK_CONDUIT_DEACTIVATE:0.3:0.5" # "SOUND:VOLUME:PITCH"
 
   basic:
     name: "&7Basic"
-    multiplier: 1.5
-    time: 15m  # Time formats example [1s, 1m, 1d, 1y] you can use decimal [1.5d]
+    multiplier: 2
+    time: 30m  # Time formats example [1s, 1m, 1d, 1y] you can use decimal [1.5d]
     price: 1500
 
     # Physical voucher details if enabled
     voucher:
       material: EXPERIENCE_BOTTLE
-      title: "&7$name XP Boost &e$multiplier&7."
+      title: "&7$name XP Voucher &e$multiplier&7"
       glow: false
       lore:
         - "&7Right-click to &aactivate&7"
-        - "&7Multiplier &e$multiplierx"
+        - "&7Multiplier &e$multiplier"
         - "&7Time &e$time"
 
   prime:
-    name: "&aPrime"
-    multiplier: 2
-    time: 15m  # Time formats example [1s, 1m, 1d, 1y] you can use decimal [1.5d]
+    name: "&b&lPrime"
+    multiplier: 3
+    time: 20m  # Time formats example [1s, 1m, 1d, 1y] you can use decimal [1.5d]
     price: 3000
 
     # Physical voucher details if enabled
     voucher:
       material: EXPERIENCE_BOTTLE
-      title: "&a$name &fXP Boost &e$multiplier&7."
+      title: "&a$name &fXP Voucher &e$multiplier&7"
       glow: true
       lore:
         - "&7Right-click to &aactivate&7"
-        - "&7Multiplier &e$multiplierx"
+        - "&7Multiplier &e$multiplier"
         - "&7Time &e$time"
 
   beast:
-    name: "&aBeast"
+    name: "&e&lBeast"
     multiplier: 5
     time: 15m  # Time formats example [1s, 1m, 1d, 1y] you can use decimal [1.5d]
-    price: 15000
+    price: 5000
 
     # Physical voucher details if enabled
     voucher:
       material: EXPERIENCE_BOTTLE
-      title: "&6$name &fXP Boost &e$multiplier&7."
+      title: "&6$name &fXP Voucher &e$multiplier&7"
       glow: true
       lore:
         - "&7Right-click to &aactivate&7"
-        - "&7Multiplier &e$multiplierx"
+        - "&7Multiplier &e$multiplier"
         - "&7Time &e$time"

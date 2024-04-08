@@ -1,6 +1,7 @@
-package com.keurig.xpbooster.base;
+package com.keurig.xpbooster.base.handler;
 
 import com.keurig.xpbooster.api.XPBoostInterface;
+import com.keurig.xpbooster.base.data.EXPBoost;
 import com.keurig.xpbooster.util.JsonConfig;
 import lombok.AllArgsConstructor;
 

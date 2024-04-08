@@ -1,4 +1,4 @@
-package com.keurig.xpbooster.base.shop;
+package com.keurig.xpbooster.base.data.ui;
 
 import com.keurig.xpbooster.util.ItemBuilder;
 import lombok.AccessLevel;

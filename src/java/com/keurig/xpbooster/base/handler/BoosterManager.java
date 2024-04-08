@@ -1,6 +1,9 @@
-package com.keurig.xpbooster.base;
+package com.keurig.xpbooster.base.handler;
 
 import com.keurig.xpbooster.XPBoostPlugin;
+import com.keurig.xpbooster.base.data.booster.Booster;
+import com.keurig.xpbooster.base.data.booster.BoosterSound;
+import com.keurig.xpbooster.base.data.booster.voucher.Voucher;
 import com.keurig.xpbooster.util.Chat;
 import com.keurig.xpbooster.util.ConfigYml;
 import lombok.Getter;
@@ -97,7 +100,9 @@ public class BoosterManager {
 
 
             Booster booster = boosterBuilder.build();
-            voucher.setBooster(booster);
+
+            if (voucher != null)
+                voucher.setBooster(booster);
             booster.setVoucher(voucher);
 
             allBoosters.put(key.toLowerCase(), booster);

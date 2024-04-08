@@ -4,9 +4,9 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.keurig.xpbooster.XPBoostPlugin;
 import com.keurig.xpbooster.api.XPBoostAPI;
-import com.keurig.xpbooster.base.Booster;
-import com.keurig.xpbooster.base.EXPBoost;
-import com.keurig.xpbooster.base.InternalXPBoostHandler;
+import com.keurig.xpbooster.base.data.EXPBoost;
+import com.keurig.xpbooster.base.data.booster.Booster;
+import com.keurig.xpbooster.base.handler.InternalXPBoostHandler;
 import com.keurig.xpbooster.language.Language;
 import com.keurig.xpbooster.util.Chat;
 import com.keurig.xpbooster.util.NumUtil;
@@ -31,6 +31,7 @@ public class XPBoostCommand extends BaseCommand {
                 "&8&l----- &6&lXPBooster &e&lCommands &8&l-----\n" +
                         " \n" + // empty Space
                         "&e/xpbooster &6info &7[player]\n" +
+                        "&e/xpbooster &6voucher &7<player> <voucher>\n" +
                         "&e/xpbooster &6set &7<player> <multiplier> &8[time]\n" +
                         "&e/xpbooster &6add &7<player> &8[time]\n" +
                         "&e/xpbooster &6remove &7<player>\n" +
