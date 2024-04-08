@@ -1,4 +1,6 @@
 name: XPBooster
-version: '${project.version}'
-main: com.keurig.xpbooster.XPBoostPlugin
+version: '1.1'
+main: com.keurigsweb.xpbooster.XPBoostPlugin
 api-version: '1.13'
+softdepend:
+  - Vault
