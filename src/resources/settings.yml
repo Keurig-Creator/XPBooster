@@ -10,3 +10,29 @@ boost-end-sound: BLOCK_NOTE_BLOCK_PLING
 # Range the multiplier will use. Keep in mind the multiplier will be rounded because of how Minecraft stores the experience.
 # For example, if set to true, you can have a full range including the decimal point for the multiplier.
 full-range-multiplier: false
+
+# Select the timezone you are in https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+global-boost:
+  enabled: true
+  allow-stacking: true # Stacks with other multipliers
+  schedule:
+    timezone: "America/Chicago"
+    holidays:
+      Christmas: # both Christmas Eve and Christmas Day combined
+        start-date: "12-25"
+        end-date: "12-26"
+        multiplier: 5
+        notify: "&2🎄 &aMerry Christmas! &7Enjoy a festive &e$multiplier XP Boost!"
+      New-Year:
+        start-date: "12-31"
+        end-date: "01-01"
+        multiplier: 5
+        notify: "&5🎉 &dHappy New Year! &7Kick off the year with a &e$multiplier &7XP Boost!"
+    days-of-week: # 0 or 1 to disable
+      Monday: 1
+      Tuesday: 1
+      Wednesday: 2
+      Thursday: 1
+      Friday: 3
+      Saturday: 1
+      Sunday: 3

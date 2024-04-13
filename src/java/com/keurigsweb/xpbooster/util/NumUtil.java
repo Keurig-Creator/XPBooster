@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class NumUtil {
 
-    public static String DATE_FORMAT_REGEX = "^(\\d+(?:\\.\\d{1,2})?)(day|d|year|y|minute|min|m|second|s)$";
+    public static String DATE_FORMAT_REGEX = "^(\\d+(?:\\.\\d{1,2})?)(day|d|year|y|minute|min|m|hour|h|second|s)$";
 
     public static boolean isNumber(String string) {
         return isNumber(string, true);
@@ -47,6 +47,8 @@ public class NumUtil {
                     return Calendar.DATE;
                 case "m":
                     return Calendar.MINUTE;
+                case "h":
+                    return Calendar.HOUR;
                 case "y":
                     return Calendar.YEAR;
                 case "s":
@@ -123,6 +125,8 @@ public class NumUtil {
                     return num + " day" + pluralize;
                 case "m":
                     return num + " minute" + pluralize;
+                case "h":
+                    return num + " hour" + pluralize;
                 case "y":
                     return num + " year" + pluralize;
                 case "s":

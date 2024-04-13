@@ -10,6 +10,7 @@ import com.keurigsweb.xpbooster.base.data.booster.voucher.Voucher;
 import com.keurigsweb.xpbooster.base.menu.data.Menu;
 import com.keurigsweb.xpbooster.base.menu.item.ActionItem;
 import com.keurigsweb.xpbooster.base.menu.item.ItemClickEvent;
+import com.keurigsweb.xpbooster.event.VoucherClickEvent;
 import com.keurigsweb.xpbooster.language.Language;
 import com.keurigsweb.xpbooster.util.Chat;
 import com.keurigsweb.xpbooster.util.InventoryUtil;
@@ -88,21 +89,12 @@ public class VoucherMenu extends Menu {
 
         addAction(new ActionItem(acceptItem.toItemStack()).addAction(e -> {
             Player player = e.getPlayer();
-
-//            ItemStack item = player.getInventory().getItemInMainHand();
-
-            ItemStack item = player.getInventory().getItemInHand();
-            item.setAmount(item.getAmount() - 1);
-            player.getInventory().setItemInHand(item);
-
+            VoucherClickEvent voucherClickEvent = playerMenu.getData("voucherClickEvent", VoucherClickEvent.class);
             BoosterSound sound = XPBoostPlugin.getInstance().getBoosterManager().getSound();
             if (sound.sound != null) {
                 player.playSound(player.getLocation(), sound.sound, sound.volume, sound.pitch);
             }
-
-            XPBoostAPI.setBoost(player, booster);
-            player.sendMessage(booster.getVoucher().getReplace(Language.BOOSTER_ACTIVATE_MESSAGE.toString()));
-            player.closeInventory();
+            voucherClickEvent.claim(booster);
         }), 11);
 
         addAction(new ActionItem(infoItem.toItemStack()), 13);

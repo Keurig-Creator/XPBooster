@@ -29,6 +29,9 @@ public class Replacement {
     public static String BOOSTER_REGEX = "(?i)\\$booster";
 
     public String getReplacement(String input) {
+        if (input == null)
+            return null;
+
         input = input.replaceAll("(?i)\\$(min|minimum)(Multiplier)", String.valueOf(XPBoostPlugin.getInstance().config.getInt("minimum-multiplier") + .5));
         input = input.replaceAll("(?i)\\$(max|maximum)(Multiplier)", String.valueOf(XPBoostPlugin.getInstance().config.getInt("maximum-multiplier")));
 

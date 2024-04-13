@@ -5,6 +5,40 @@ boosters:
   # or confirming multiplier
   special-claim-sound: "BLOCK_CONDUIT_DEACTIVATE:0.3:0.5" # "SOUND:VOLUME:PITCH"
 
+  global5:
+    type: global
+    name: "&5&lGlobal"
+    multiplier: 5
+    time: 1h  # Time formats example [1s, 1m, 1d, 1y] you can use decimal [1.5d]
+    price: 20000
+
+    # Physical voucher details if enabled
+    voucher:
+      material: EXPERIENCE_BOTTLE
+      title: "$name &7XP Voucher &b$multiplier&7"
+      glow: true
+      lore:
+        - "&7Right-click to &aactivate&7"
+        - "&7Multiplier &e$multiplier"
+        - "&7Time &e$time"
+
+  global10:
+    type: global
+    name: "&b&lGlobal"
+    multiplier: 10
+    time: 1h  # Time formats example [1s, 1m, 1d, 1y] you can use decimal [1.5d]
+    price: 100000
+
+    # Physical voucher details if enabled
+    voucher:
+      material: EXPERIENCE_BOTTLE
+      title: "$name &7XP Voucher &3$multiplier&7"
+      glow: true
+      lore:
+        - "&7Right-click to &aactivate&7"
+        - "&7Multiplier &e$multiplier"
+        - "&7Time &e$time"
+
   basic:
     name: "&7Basic"
     multiplier: 2

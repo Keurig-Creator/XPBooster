@@ -10,6 +10,7 @@ public enum Language {
     NOT_ENOUGH_FUNDS("&cNot enough funds"),
     BOOST_END_MESSAGE("&7Your XP Boost has &eexpired&7."),
     SET_BOOST_MESSAGE("&7Set XP boost to &c$target&7 with a multiplier of &c$multiplier&7 for &e$duration&7."),
+    GLOBAL_MESSAGE("&7Global XP Boost multiplier &e$multiplier &7activated by &e$target&7!"),
     GIVE_VOUCHER_MESSAGE("&7Gave XP boost voucher &f&l$name &7to &c$target&7"),
     VOUCHER_RECEIVE_MESSAGE("&7You were given the $name &7XP boost voucher"),
     BOOSTER_ACTIVATE_MESSAGE("&7Your XP multiplier is now &e$multiplier &7Booster time is now &e$time"),
@@ -25,8 +26,17 @@ public enum Language {
     MAXIMUM_MULTIPLIER("&cError maximum multiplier &f$maxMultiplier&c."),
     FULL_RANGE_MULTIPLIER("&cFull range multiplier is disabled. You can enable it in the configuration."),
     RELOAD_COMMAND("&eConfiguration has been successfully reloaded."),
-    ;
+    DAY_OF_MONDAY("&7Start your &6week &7with a &e$multiplier &7XP Boost!"),
+    DAY_OF_TUESDAY("&7Tuesdays call for a &6$multiplier &7XP Boost!"),
+    DAY_OF_WEDNESDAY("&7Midweek celebration! Enjoy a &6$multiplier &7XP Boost!"),
+    DAY_OF_THURSDAY("&7Thursdays are for a &6$multiplier &7XP Boost!"),
+    DAY_OF_FRIDAY("&7It's Friday! Celebrate with a &6$multiplier &7XP Boost!"),
+    DAY_OF_SATURDAY("&7Saturday vibes! Get a &6$multiplier &7XP Boost!"),
+    DAY_OF_SUNDAY("&7Chill out on Sunday with a &6$multiplier &7XP Boost!");
 
+//    @Getter
+//    final
+//    public String path;
 
     @Getter
     final

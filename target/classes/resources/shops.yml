@@ -17,7 +17,7 @@ regular_boost_shop:
   fill:
     type: BORDER
     material: GRAY_STAINED_GLASS_PANE
-  boosters: [ basic, prime, beast ] # Booster key found in boosters.yml
+  boosters: [ basic, prime, beast, global5, global10 ] # Booster key found in boosters.yml
 #    items: # List each booster by key
 #      basic:
 #        material: EXPERIENCE_BOTTLE

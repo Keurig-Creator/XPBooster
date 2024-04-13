@@ -6,6 +6,7 @@ import com.keurigsweb.xpbooster.adapter.VaultEconomyAdapter;
 import com.keurigsweb.xpbooster.api.XPBoostAPI;
 import com.keurigsweb.xpbooster.base.data.EXPBoost;
 import com.keurigsweb.xpbooster.base.data.booster.Booster;
+import com.keurigsweb.xpbooster.base.data.booster.global.HolidayBoost;
 import com.keurigsweb.xpbooster.base.data.shop.ShopProfile;
 import com.keurigsweb.xpbooster.base.handler.BoosterManager;
 import com.keurigsweb.xpbooster.base.handler.InternalXPBoostHandler;
@@ -15,23 +16,20 @@ import com.keurigsweb.xpbooster.command.XPBoostCommand;
 import com.keurigsweb.xpbooster.command.XPBoostInfoCommand;
 import com.keurigsweb.xpbooster.command.XPBoostReloadCommand;
 import com.keurigsweb.xpbooster.command.XPBoostShopCommand;
-import com.keurigsweb.xpbooster.event.ExperienceChangeListener;
-import com.keurigsweb.xpbooster.event.InventoryMoveListener;
-import com.keurigsweb.xpbooster.event.PlayerClickEvent;
+import com.keurigsweb.xpbooster.listener.PlayerExpChangeListener;
+import com.keurigsweb.xpbooster.listener.PlayerInteractListener;
+import com.keurigsweb.xpbooster.listener.PlayerJoinListener;
 import com.keurigsweb.xpbooster.language.Language;
 import com.keurigsweb.xpbooster.tasks.BoostEndTask;
 import com.keurigsweb.xpbooster.util.Chat;
 import com.keurigsweb.xpbooster.util.ConfigYml;
 import com.keurigsweb.xpbooster.util.JsonConfig;
-import de.tr7zw.changeme.nbtapi.NBT;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Iterator;
 import java.util.Map;
-import java.util.UUID;
 
 public final class XPBoostPlugin extends JavaPlugin implements Listener {
 
@@ -59,6 +57,8 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
 
     private @Getter CommandReplacements replacements;
 
+    private @Getter HolidayBoost holidayBoost;
+
     @Override
     public void onEnable() {
         int pluginId = 21541; // <-- Replace with the id of your plugin!
@@ -76,6 +76,7 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
         shopManager.setupShopConfig();
         loadLanguage();
         loadDataConfig();
+        holidayBoost = new HolidayBoost();
 
         manager = new PaperCommandManager(this);
         replacements = manager.getCommandReplacements();
@@ -99,10 +100,10 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
         manager.registerCommand(new XPBoostInfoCommand());
 
 
-        Bukkit.getPluginManager().registerEvents(new ExperienceChangeListener(this), this);
-        Bukkit.getPluginManager().registerEvents(new InventoryMoveListener(this), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerClickEvent(this), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerExpChangeListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(this), this);
         Bukkit.getPluginManager().registerEvents(new MenuManager(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
 
         new BoostEndTask(this).runTaskTimerAsynchronously(this, 0, 5);
     }
@@ -114,14 +115,11 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
         dataConfig.load();
 
         // Safety remove an expired user from the data
-        Iterator<Map.Entry<UUID, EXPBoost>> iterator = dataConfig.getExpBoosts().entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<UUID, EXPBoost> entry = iterator.next();
+        for (Map.Entry<String, EXPBoost> entry : dataConfig.getExpBoosts().entrySet()) {
             EXPBoost expBoost = entry.getValue();
 
             if (expBoost.isExpired()) {
                 XPBoostAPI.removeBoost(expBoost.getUuid());
-                iterator.remove(); // Remove the current entry from the map
             }
         }
     }

@@ -21,6 +21,7 @@ public class Booster implements Replacable {
     private String time;
     private int price;
     private Voucher voucher;
+    private boolean global;
 
     @Override
     public String getReplace(String input) {

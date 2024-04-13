@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Getter
@@ -97,12 +98,18 @@ public class BoosterManager {
                 voucher.setTitle(Chat.color(voucherSec.getString("title")));
             }
 
+            boolean isGlobal = false;
+
+            if (sec.getString("type") != null && sec.getString("type").equalsIgnoreCase("global")) {
+                isGlobal = true;
+            }
 
             Booster.BoosterBuilder boosterBuilder = Booster.builder()
                     .id(key.toLowerCase())
                     .name(Chat.color(sec.getString("name")))
                     .multiplier(sec.getDouble("multiplier"))
                     .time(sec.getString("time"))
+                    .global(isGlobal)
                     .price(sec.getInt("price"));
 
 

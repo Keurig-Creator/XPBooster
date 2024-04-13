@@ -8,6 +8,10 @@ public interface XPBoostInterface {
 
     void addBoost(UUID uuid, EXPBoost expBoost);
 
+//    void setGlobalBoost();
+//
+//    void removeGlobalBoost();
+
     void removeBoost(UUID uuid);
 
     boolean hasBoost(UUID uuid);

@@ -7,10 +7,12 @@ import com.keurigsweb.xpbooster.XPBoostPlugin;
 import com.keurigsweb.xpbooster.api.XPBoostAPI;
 import com.keurigsweb.xpbooster.base.data.EXPBoost;
 import com.keurigsweb.xpbooster.base.data.booster.Booster;
+import com.keurigsweb.xpbooster.base.data.booster.global.GlobalBoost;
 import com.keurigsweb.xpbooster.base.handler.InternalXPBoostHandler;
 import com.keurigsweb.xpbooster.language.Language;
 import com.keurigsweb.xpbooster.util.Chat;
 import com.keurigsweb.xpbooster.util.NumUtil;
+import com.keurigsweb.xpbooster.util.TimeUtil;
 import com.keurigsweb.xpbooster.util.replacement.Replacement;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -49,6 +51,47 @@ public class XPBoostCommand extends BaseCommand {
                         "&7<> &7- &fRequired Argument\n" +
                         "&8[] &7- &fOptional Argument\n"
         );
+    }
+
+    @Subcommand("global")
+    @Syntax("<player> <multiplier> [time]")
+    @CommandCompletion("@players")
+    public void onGlobal(CommandSender sender, OfflinePlayer toSet, String m, String[] args) {
+        Replacement replace = Replacement.createReplacement(getName(), sender.getName(), toSet.getName());
+
+        if (!NumUtil.isNumber(m, false)) {
+            Chat.message(sender, Language.INVALID_NUMBER.toString());
+            return;
+        }
+
+        double multiplier = Double.parseDouble(m);
+
+        if (multiplier <= plugin.config.getDouble("minimum-multiplier")) {
+            Chat.message(sender, Language.MINIMUM_MULTIPLIER.toString(replace));
+            return;
+        } else if (multiplier > plugin.config.getDouble("maximum-multiplier")) {
+            Chat.message(sender, Language.MAXIMUM_MULTIPLIER.toString(replace));
+            return;
+        } else if (!plugin.config.getBoolean("full_range_multiplier") && !NumUtil.isWholeOrHalf(multiplier)) {
+            Chat.message(sender, Language.FULL_RANGE_MULTIPLIER.toString(replace));
+            return;
+        }
+        replace.addReplacement(Replacement.DURATION_REGEX, "PERMANENT");
+        replace.addReplacement(Replacement.MULTIPLIER_REGEX, String.valueOf(multiplier));
+
+        if (args.length == 1) {
+            replace.addReplacement(Replacement.DURATION_REGEX, args[0]);
+        }
+
+//        GlobalBoost globalBoost = GlobalBoost.builder()
+//                .uuid(toSet.getUniqueId().toString())
+//                .multiplier(multiplier)
+//                .time(TimeUtil.getTime(args[0])).build();
+
+        XPBoostAPI.addGlobalBoost(toSet.getPlayer(), multiplier, args[0]);
+
+        String message = Language.GLOBAL_MESSAGE.toString(replace);
+        Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(message));
     }
 
     @Subcommand("voucher")
@@ -140,7 +183,7 @@ public class XPBoostCommand extends BaseCommand {
         EXPBoost expBoost = EXPBoost.builder()
                 .uuid(toSet.getUniqueId())
                 .multiplier(multiplier)
-                .date(time).build();
+                .time(time).build();
 
         XPBoostAPI.setBoost(toSet.getUniqueId(), expBoost);
 
@@ -161,24 +204,8 @@ public class XPBoostCommand extends BaseCommand {
         }
 
         EXPBoost boost = XPBoostAPI.getBoost(toSet.getUniqueId());
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(boost.getDate());
-
-
-        int extractNumber = NumUtil.extractNumber(timeDate);
-        int calenderN = NumUtil.convertToCalendar(timeDate);
-
-        if (extractNumber == -1 || calenderN == -1) {
-            Chat.message(sender, Language.INVALID_DATE_FORMAT.toString(replace));
-            return;
-        }
-
-        calendar.add(calenderN, extractNumber);
-        replace.addReplacement(Replacement.DURATION_REGEX, NumUtil.convertDateToStr(timeDate));
-
-        boost.setDate(calendar.getTime().getTime());
-        plugin.getDataConfig().save();
+        XPBoostAPI.addBoost(toSet.getUniqueId(), boost.getMultiplier(), timeDate);
+        replace.addReplacement(Replacement.DURATION_REGEX, timeDate);
 
         sender.sendMessage(Language.ADD_BOOST_MESSAGE.toString(replace));
 
@@ -205,6 +232,7 @@ public class XPBoostCommand extends BaseCommand {
 
         Replacement replace = Replacement.createReplacement(getName(), player.getName());
 
+
         if (XPBoostAPI.hasBoost(player.getUniqueId())) {
             EXPBoost boost = XPBoostAPI.getBoost(player.getUniqueId());
             Chat.message(player, "&8&l----- &eActive &6Booster Info &8&l-----\n \n&7Multiplier &e" + boost.getMultiplier() + "\n&7Time remaining: &e" + boost.getRemainingTime() + "\n ");
@@ -212,18 +240,4 @@ public class XPBoostCommand extends BaseCommand {
             Chat.message(player, Language.NO_ACTIVE_BOOSTER.toString());
         }
     }
-
-    @Subcommand("info")
-    @CommandCompletion("@players")
-    public void onInfo(CommandSender sender, OfflinePlayer target) {
-        Replacement replace = Replacement.createReplacement(getName(), sender.getName(), target.getName());
-
-        if (XPBoostAPI.hasBoost(target.getUniqueId())) {
-            EXPBoost boost = XPBoostAPI.getBoost(target.getUniqueId());
-            Chat.message(sender, "&8&l----- &eActive &6Booster Info &8&l-----\n \n&7Player &e" + target.getName() + "\n&7Multiplier &e" + boost.getMultiplier() + "\n&7Time remaining: &e" + boost.getRemainingTime() + "\n ");
-        } else {
-            Chat.message(sender, Language.TARGET_NO_ACTIVE_BOOSTER.toString());
-        }
-    }
-
 }

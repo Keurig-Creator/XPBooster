@@ -1,5 +1,6 @@
 package com.keurigsweb.xpbooster.tasks;
 
+import com.cryptomorin.xseries.XSound;
 import com.keurigsweb.xpbooster.XPBoostPlugin;
 import com.keurigsweb.xpbooster.api.XPBoostAPI;
 import com.keurigsweb.xpbooster.base.data.EXPBoost;
@@ -7,6 +8,7 @@ import com.keurigsweb.xpbooster.language.Language;
 import com.keurigsweb.xpbooster.util.Chat;
 import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -21,10 +23,10 @@ public class BoostEndTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        Iterator<Map.Entry<UUID, EXPBoost>> iterator = plugin.getDataConfig().getExpBoosts().entrySet().iterator();
+        Iterator<Map.Entry<String, EXPBoost>> iterator = plugin.getDataConfig().getExpBoosts().entrySet().iterator();
 
         while (iterator.hasNext()) {
-            Map.Entry<UUID, EXPBoost> next = iterator.next();
+            Map.Entry<String, EXPBoost> next = iterator.next();
 
             EXPBoost expBoost = next.getValue();
 
@@ -36,11 +38,11 @@ public class BoostEndTask extends BukkitRunnable {
                         return;
                     }
 
-//                    try {
-//                        player.playSound(player, Sound.valueOf(plugin.config.getString("boost_end_sound")), 1, 1);
-//                    } catch (IllegalArgumentException ignored) {
-//
-//                    }
+                    try {
+                        player.playSound(player, Sound.valueOf(plugin.config.getString("boost_end_sound")), 1, 1);
+                    } catch (Exception ignored) {
+
+                    }
 
                     Chat.message(player, Language.BOOST_END_MESSAGE.toString());
                 }, 0);

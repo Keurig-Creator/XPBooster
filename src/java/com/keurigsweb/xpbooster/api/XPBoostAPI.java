@@ -3,12 +3,19 @@ package com.keurigsweb.xpbooster.api;
 import com.keurigsweb.xpbooster.XPBoostPlugin;
 import com.keurigsweb.xpbooster.base.data.EXPBoost;
 import com.keurigsweb.xpbooster.base.data.booster.Booster;
+import com.keurigsweb.xpbooster.base.data.booster.global.GlobalBoost;
 import com.keurigsweb.xpbooster.base.handler.InternalXPBoostHandler;
-import com.keurigsweb.xpbooster.util.CalenderUtil;
+import com.keurigsweb.xpbooster.util.ConfigValue;
+import com.keurigsweb.xpbooster.util.TimeUtil;
+import com.keurigsweb.xpbooster.util.Chat;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -54,8 +61,62 @@ public class XPBoostAPI {
         getBoostHandler().removeBoost(uuid);
     }
 
+    public static void addGlobalBoost(CommandSender commandSender, double multiplier, String time) {
+
+
+        if (commandSender instanceof Player player) {
+            getBoostHandler().addGlobalBoost(new GlobalBoost(player.getUniqueId().toString(), multiplier, TimeUtil.getTime(time)));
+        } else if (commandSender instanceof ConsoleCommandSender) {
+            getBoostHandler().addGlobalBoost(new GlobalBoost("Console", multiplier, TimeUtil.getTime(time)));
+        }
+    }
+
+    public static void removeGlobalBoost(Double multiplier) {
+        getBoostHandler().removeGlobalBoost(multiplier);
+    }
+
+    public static GlobalBoost getGlobalBoost(Double multiplier) {
+        return getBoostHandler().getGlobalBoost(multiplier);
+    }
+
+    public static double getGlobalMultiplier() {
+        Set<Double> uniqueMultipliers = new HashSet<>();
+
+        for (GlobalBoost globalBoost : getBoostHandler().getGlobalBoosts()) {
+            if (!globalBoost.isExpired()) {
+                uniqueMultipliers.add(globalBoost.getMultiplier());
+            }
+        }
+
+        double totalMultiplier = 0;
+        for (double multiplier : uniqueMultipliers) {
+            if (ConfigValue.GLOBAL_STACKING) {
+                totalMultiplier += multiplier;
+            } else if (totalMultiplier < multiplier) {
+                totalMultiplier = multiplier;
+            }
+        }
+
+        return totalMultiplier;
+    }
+
     public static void setBoost(Player player, Booster booster) {
-        setBoost(player.getUniqueId(), new EXPBoost(player.getUniqueId(), booster.getMultiplier(), CalenderUtil.getTime(booster.getTime()), booster.getName()));
+        setBoost(player.getUniqueId(), new EXPBoost(player.getUniqueId(), booster.getMultiplier(), TimeUtil.getTime(booster.getTime()), booster.getName()));
+    }
+
+    public static EXPBoost addBoost(UUID uuid, double multiplier, String time) {
+        if (hasBoost(uuid)) {
+            Chat.log("Boost already exists!");
+            EXPBoost existingBoost = getBoost(uuid);
+            long newExpirationTime = TimeUtil.getTime(existingBoost.getTime(), time);
+            existingBoost.setTime(newExpirationTime);
+            setBoost(uuid, existingBoost);
+            return existingBoost;
+        }
+
+        EXPBoost expBoost = new EXPBoost(uuid, multiplier, TimeUtil.getTime(time), null);
+        setBoost(uuid, expBoost);
+        return expBoost;
     }
 
     public static EXPBoost addBoost(Player player, Booster booster) {
@@ -63,14 +124,14 @@ public class XPBoostAPI {
         if (hasBoost(playerId)) {
             EXPBoost existingBoost = getBoost(playerId);
             if (existingBoost.getMultiplier() == booster.getMultiplier()) {
-                long newExpirationTime = CalenderUtil.getTime(existingBoost.getDate(), booster.getTime());
-                existingBoost.setDate(newExpirationTime);
+                long newExpirationTime = TimeUtil.getTime(existingBoost.getTime(), booster.getTime());
+                existingBoost.setTime(newExpirationTime);
                 setBoost(playerId, existingBoost);
                 return existingBoost;
             }
         }
 
-        EXPBoost expBoost = new EXPBoost(playerId, booster.getMultiplier(), CalenderUtil.getTime(booster.getTime()), booster.getName());
+        EXPBoost expBoost = new EXPBoost(playerId, booster.getMultiplier(), TimeUtil.getTime(booster.getTime()), booster.getName());
         setBoost(playerId, expBoost);
         return expBoost;
     }

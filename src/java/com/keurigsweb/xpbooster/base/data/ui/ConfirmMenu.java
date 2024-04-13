@@ -80,20 +80,22 @@ public class ConfirmMenu extends Menu {
         if (instantClaim) {
             infoLore.set(0, "&cYou are purchasing this for $" + booster.getPrice());
             infoLore.set(1, "&cActivation immediately");
-            // Add warning if current player's multiplier is less than booster multiplier
-            if (currentPlayerMultiplier != boosterMultiplier && currentPlayerMultiplier != 0) {
-                infoLore.add("");
-                infoLore.add("&cConflicting multiplier: &6" + NumUtil.formatMultiplier(currentPlayerMultiplier));
-                infoLore.add("&cOverride current time for new multiplier of &6" + NumUtil.formatMultiplier(boosterMultiplier) + "&c?");
-            }
+            if (!booster.isGlobal()) {
+                // Add warning if current player's multiplier is less than booster multiplier
+                if (currentPlayerMultiplier != boosterMultiplier && currentPlayerMultiplier != 0) {
+                    infoLore.add("");
+                    infoLore.add("&cConflicting multiplier: &6" + NumUtil.formatMultiplier(currentPlayerMultiplier));
+                    infoLore.add("&cOverride current time for new multiplier of &6" + NumUtil.formatMultiplier(boosterMultiplier) + "&c?");
+                }
 
-            if (currentPlayerMultiplier > boosterMultiplier) {
-                infoLore.add(7, "&4Warning: Your current multiplier is less than the new multiplier!");
-            }
+                if (currentPlayerMultiplier > boosterMultiplier) {
+                    infoLore.add(7, "&4Warning: Your current multiplier is less than the new multiplier!");
+                }
 
-            // Set lore for accept and info items
-            if (!boosterType.isBlank() && !boosterType.isEmpty())
-                acceptItem.setLore(Chat.color("", "&7" + boosterType));
+                // Set lore for accept and info items
+                if (!boosterType.isBlank() && !boosterType.isEmpty())
+                    acceptItem.setLore(Chat.color("", "&7" + boosterType));
+            }
         } else {
             infoLore.set(0, "&cYou are purchasing this voucher for $" + booster.getPrice());
             infoLore.add("&fYou receive a physical voucher");
@@ -125,13 +127,23 @@ public class ConfirmMenu extends Menu {
                 player.getInventory().addItem(voucher.getItem());
                 player.sendMessage(booster.getReplace(Language.VOUCHER_RECEIVE_MESSAGE.toString()));
             } else {
-                Replacement replacement = booster.getReplacement(Language.BOOSTER_ACTIVATE_MESSAGE.toString());
+
+                if (booster.isGlobal()) {
+                    Replacement replacement = booster.getReplacement(Language.GLOBAL_MESSAGE.toString());
+                    replacement.addReplacement(Replacement.DURATION_REGEX, booster.getTime());
+                    replacement.addReplacement(Replacement.TARGET_REGEX, player.getName());
+
+                    player.sendMessage(replacement.getReplacement());
+                    XPBoostAPI.addGlobalBoost(player, booster.getMultiplier(), booster.getTime());
+                } else {
+                    Replacement replacement = booster.getReplacement(Language.BOOSTER_ACTIVATE_MESSAGE.toString());
 
 
-                // Apply booster to the player
-                EXPBoost expBoost = XPBoostAPI.addBoost(player, booster);
-                replacement.addReplacement(Replacement.TIME_REGEX, expBoost.getRemainingTime());
-                player.sendMessage(replacement.getReplacement());
+                    // Apply booster to the player
+                    EXPBoost expBoost = XPBoostAPI.addBoost(player, booster);
+                    replacement.addReplacement(Replacement.TIME_REGEX, expBoost.getRemainingTime());
+                    player.sendMessage(replacement.getReplacement());
+                }
             }
 
             player.closeInventory();
