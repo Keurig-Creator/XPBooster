@@ -65,7 +65,7 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        int pluginId = 21541; // <-- Replace with the id of your plugin!
+        int pluginId = 21541;
         metrics = new Metrics(this, pluginId);
 
         instance = this;
