@@ -28,3 +28,4 @@ src/.DS_Store
 .idea/artifacts/XPBooster_jar.xml
 /target
 .idea/workspace.xml
+/.idea
