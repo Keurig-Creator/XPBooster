@@ -29,3 +29,4 @@ src/.DS_Store
 /target
 .idea/workspace.xml
 /.idea
+dependency-reduced-pom.xml
