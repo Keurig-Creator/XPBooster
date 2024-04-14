@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.Default;
+import com.keurigsweb.xpbooster.XPBoostPlugin;
 import com.keurigsweb.xpbooster.api.XPBoostAPI;
 import com.keurigsweb.xpbooster.base.data.EXPBoost;
 import com.keurigsweb.xpbooster.base.data.booster.global.GlobalBoost;
@@ -39,6 +40,7 @@ public class XPBoostInfoCommand extends BaseCommand {
 
             double globalMultiplier = 0;
             double holidayMultiplier = 0;
+            double permissionMultiplier = 0;
             double multiplier = 0;
 
             if (boost != null) {
@@ -55,7 +57,6 @@ public class XPBoostInfoCommand extends BaseCommand {
                 }
             }
 
-            Chat.log(HolidayBoost.GLOBAL_MULTIPLIER);
             if (HolidayBoost.GLOBAL_MULTIPLIER > 0) {
                 holidayMultiplier = HolidayBoost.GLOBAL_MULTIPLIER;
             }
@@ -64,6 +65,10 @@ public class XPBoostInfoCommand extends BaseCommand {
                 chat.add("&e&l" + NumUtil.formatMultiplier(multiplier) + " &8Your Booster");
                 chat.add("&8&l- &7Time &e" + boost.getRemainingTime());
                 chat.add("\n");
+            }
+
+            if (XPBoostPlugin.permisionMultiplier.get(player.getUniqueId()) > 0) {
+                permissionMultiplier = XPBoostPlugin.permisionMultiplier.get(player.getUniqueId());
             }
 
             if (globalMultiplier > 0) {
@@ -77,6 +82,11 @@ public class XPBoostInfoCommand extends BaseCommand {
                 }
             }
 
+            if (permissionMultiplier > 0) {
+                chat.add("&e&l" + NumUtil.formatMultiplier(permissionMultiplier) + " &8Permission Boost");
+                chat.add("\n");
+            }
+
 
             if (holidayMultiplier > 0) {
                 chat.add("&e&l" + NumUtil.formatMultiplier(holidayMultiplier) + " &8Event Booster");
@@ -86,14 +96,12 @@ public class XPBoostInfoCommand extends BaseCommand {
 
 
             StringBuilder total = new StringBuilder();
-            double highestMultiplier = Math.max(Math.max(multiplier, globalMultiplier), holidayMultiplier);
-            double totalMultiplier = Math.abs(multiplier + globalMultiplier + holidayMultiplier);
+            double highestMultiplier = Math.max(Math.max(Math.max(permissionMultiplier, multiplier), globalMultiplier), holidayMultiplier);
+            double totalMultiplier = Math.abs(multiplier + globalMultiplier + holidayMultiplier + permissionMultiplier);
+
             if (!ConfigValue.GLOBAL_STACKING) {
                 total.append("&f&lTOTAL BONUS &7").append(NumUtil.formatMultiplier(highestMultiplier));
             } else {
-                Chat.log(multiplier);
-                Chat.log(globalMultiplier);
-                Chat.log(holidayMultiplier);
                 total.append("&f&lTOTAL BONUS &7").append(NumUtil.formatMultiplier(totalMultiplier));
             }
 

@@ -18,6 +18,10 @@ import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import javax.xml.crypto.dom.DOMCryptoContext;
+import java.util.HashMap;
+import java.util.UUID;
+
 @AllArgsConstructor
 public class VoucherClickEvent {
 

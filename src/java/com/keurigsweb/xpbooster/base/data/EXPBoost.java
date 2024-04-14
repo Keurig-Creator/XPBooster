@@ -26,7 +26,6 @@ public class EXPBoost {
 
     public EXPBoost(UUID uuid, double multiplier, long time, String boosterType) {
 
-        Chat.log(time);
         this.uuid = uuid;
         this.multiplier = multiplier;
         this.time = time;
@@ -64,7 +63,6 @@ public class EXPBoost {
     }
 
     public String getRemainingTime() {
-        Chat.log(time);
         if (time == 0) {
             return "PERMANENT";
         } else {

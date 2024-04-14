@@ -54,7 +54,6 @@ public class JsonConfig {
         }
 
         try {
-            Chat.log("reading");
             readFile();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -94,7 +93,6 @@ public class JsonConfig {
                     for (Map.Entry<String, JsonElement> entry : userSection.entrySet()) {
                         String uuidString = entry.getKey();
                         JsonObject expBoostJson = entry.getValue().getAsJsonObject();
-                        Chat.log("UUID: " + uuidString);
                         EXPBoost expBoost = gson.fromJson(expBoostJson, EXPBoost.class);
                         expBoost.setUuid(UUID.fromString(uuidString));
                         expBoosts.put(uuidString, expBoost);

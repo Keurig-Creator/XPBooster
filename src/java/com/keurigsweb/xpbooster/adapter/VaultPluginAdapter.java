@@ -2,20 +2,20 @@ package com.keurigsweb.xpbooster.adapter;
 
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-import java.util.logging.Level;
-
-public class VaultEconomyAdapter implements EconomyAdapter {
+public class VaultPluginAdapter implements VaultAdapter {
     private Economy economy;
     private @Getter boolean enabled;
 
-    public VaultEconomyAdapter() {
+    public VaultPluginAdapter() {
         // Attempt to hook into Vault's economy implementation
         try {
             RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
+
             if (rsp != null) {
                 enabled = true;
                 economy = rsp.getProvider();

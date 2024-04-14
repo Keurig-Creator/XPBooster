@@ -2,7 +2,7 @@ package com.keurigsweb.xpbooster;
 
 import co.aikar.commands.CommandReplacements;
 import co.aikar.commands.PaperCommandManager;
-import com.keurigsweb.xpbooster.adapter.VaultEconomyAdapter;
+import com.keurigsweb.xpbooster.adapter.VaultPluginAdapter;
 import com.keurigsweb.xpbooster.api.XPBoostAPI;
 import com.keurigsweb.xpbooster.base.data.EXPBoost;
 import com.keurigsweb.xpbooster.base.data.booster.Booster;
@@ -29,7 +29,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public final class XPBoostPlugin extends JavaPlugin implements Listener {
 
@@ -51,13 +53,15 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
     private PaperCommandManager manager;
 
     @Getter
-    private VaultEconomyAdapter economyAdapter;
+    private VaultPluginAdapter economyAdapter;
 
     private Metrics metrics;
 
     private @Getter CommandReplacements replacements;
 
     private @Getter HolidayBoost holidayBoost;
+
+    public static HashMap<UUID, Double> permisionMultiplier = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -88,7 +92,7 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
         manager.registerCommand(new XPBoostCommand());
         manager.registerCommand(new XPBoostReloadCommand());
 
-        economyAdapter = new VaultEconomyAdapter();
+        economyAdapter = new VaultPluginAdapter();
         if (economyAdapter.isEnabled()) {
             Chat.log("Economy hook is enabled");
             replacements.addReplacements("%shopcommand", shopManager.getShop().getCommand());

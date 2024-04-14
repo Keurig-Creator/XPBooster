@@ -28,14 +28,9 @@ public class HolidayBoost {
             loadHolidays();
             loadDaysOfWeek();
         }
-
-
-        Chat.log(GLOBAL_MULTIPLIER);
     }
 
     private void loadDaysOfWeek() {
-        Chat.log("loading days");
-
         for (Map.Entry<DayOfWeek, Double> entry : ConfigValue.GLOBAL_DAYS_OF_WEEK.entrySet()) {
             DayOfWeek day = entry.getKey();
             Double dayMultiplier = entry.getValue();

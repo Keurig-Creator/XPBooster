@@ -43,7 +43,11 @@ public class PlayerExpChangeListener implements Listener {
             multiplier = roundMultiplier(HolidayBoost.GLOBAL_MULTIPLIER);
         }
 
-        Chat.log(multiplier);
+        if (ConfigValue.GLOBAL_STACKING) {
+            multiplier += roundMultiplier(XPBoostPlugin.permisionMultiplier.get(player.getUniqueId()));
+        } else if (XPBoostPlugin.permisionMultiplier.get(player.getUniqueId()) > multiplier){
+            multiplier = roundMultiplier(XPBoostPlugin.permisionMultiplier.get(player.getUniqueId()));
+        }
 
         if (multiplier > 0) {
             event.setAmount(adjustExperience(event.getAmount(), multiplier));
