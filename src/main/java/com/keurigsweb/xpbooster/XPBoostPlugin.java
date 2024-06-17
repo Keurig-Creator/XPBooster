@@ -24,6 +24,7 @@ import com.keurigsweb.xpbooster.tasks.BoostEndTask;
 import com.keurigsweb.xpbooster.util.Chat;
 import com.keurigsweb.xpbooster.util.ConfigYml;
 import com.keurigsweb.xpbooster.util.JsonConfig;
+import com.keurigsweb.xpbooster.util.Metrics;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;

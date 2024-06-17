@@ -1,4 +1,4 @@
-package com.keurigsweb.xpbooster;
+package com.keurigsweb.xpbooster.util;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
