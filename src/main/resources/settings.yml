@@ -14,6 +14,8 @@ full-range-multiplier: false
 # Example a user with xpbooster.multiplier.5 will receive a permanent xp boost of 5
 permission-based-multiplier: true
 
+ignore-xp-bottles: false
+
 # Select the timezone you are in https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 global-boost:
   enabled: true

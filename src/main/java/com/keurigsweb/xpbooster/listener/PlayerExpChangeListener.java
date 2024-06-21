@@ -4,9 +4,9 @@ import com.keurigsweb.xpbooster.XPBoostPlugin;
 import com.keurigsweb.xpbooster.api.XPBoostAPI;
 import com.keurigsweb.xpbooster.base.data.EXPBoost;
 import com.keurigsweb.xpbooster.base.data.booster.global.HolidayBoost;
-import com.keurigsweb.xpbooster.util.Chat;
 import com.keurigsweb.xpbooster.util.ConfigValue;
 import lombok.AllArgsConstructor;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,8 +19,15 @@ public class PlayerExpChangeListener implements Listener {
 
     @EventHandler
     public void onExperienceChange(PlayerExpChangeEvent event) {
-
         Player player = event.getPlayer();
+
+        try {
+            if(event.getSource() instanceof ExperienceOrb orb) {
+                if (ConfigValue.IGNOREXPBOTTLES && orb.getSpawnReason() == ExperienceOrb.SpawnReason.EXP_BOTTLE) {
+                    return;
+                }
+            }
+        } catch (Exception ignored) {}
 
         int multiplier = 0;
 
