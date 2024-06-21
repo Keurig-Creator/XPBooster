@@ -152,12 +152,12 @@ public class ItemBuilder {
 
 
         if (value) {
-            addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+            addUnsafeEnchantment(Enchantment.MENDING, 1);
             itemMeta = is.getItemMeta();
             itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
         } else {
-            removeEnchantment(Enchantment.LURE);
+            removeEnchantment(Enchantment.MENDING);
             itemMeta = is.getItemMeta();
             itemMeta.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
