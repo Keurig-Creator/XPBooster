@@ -27,6 +27,8 @@ public class PlayerJoinListener implements Listener {
         Player player = event.getPlayer();
         String notify = HolidayBoost.GLOBAL_NOTIFY;
 
+
+       // Use Permission based multiplier
         if (plugin.config.getBoolean("permission-based-multiplier")) {
             List<String> permissions = player.getEffectivePermissions().stream()
                     .filter(p -> p.getPermission().contains("xpbooster.multiplier"))

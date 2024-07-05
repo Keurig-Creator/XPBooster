@@ -14,6 +14,7 @@ full-range-multiplier: false
 # Example a user with xpbooster.multiplier.5 will receive a permanent xp boost of 5
 permission-based-multiplier: true
 
+#
 ignore-xp-bottles: false
 
 # Select the timezone you are in https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
@@ -33,11 +34,11 @@ global-boost:
         end-date: "01-01"
         multiplier: 5
         notify: "&5🎉 &dHappy New Year! &7Kick off the year with a &e$multiplier &7XP Boost!"
-    days-of-week: # 0 or 1 to disable
+    days-of-week: # 1 to disable
       Monday: 1
       Tuesday: 1
-      Wednesday: 2
+      Wednesday: 1
       Thursday: 1
-      Friday: 3
+      Friday: 1
       Saturday: 1
-      Sunday: 3
+      Sunday: 1
