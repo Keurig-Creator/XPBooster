@@ -60,10 +60,14 @@ public class NumUtil {
     }
 
     public static String formatMultiplier(double multiplier) {
-        if (multiplier == (int) multiplier) {
-            return String.format("%.0fx", multiplier);
+        if (multiplier >= 0) {
+            if (multiplier % 1 == 0) {
+                return String.format("%.0fx", multiplier); // No decimal part
+            } else {
+                return String.format("%.1fx", multiplier); // One decimal place
+            }
         } else {
-            return multiplier + "x";
+            return "1x";
         }
     }
 
