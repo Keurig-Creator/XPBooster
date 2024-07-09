@@ -4,6 +4,7 @@ import com.keurigsweb.xpbooster.XPBoostPlugin;
 import com.keurigsweb.xpbooster.base.data.EXPBoost;
 import com.keurigsweb.xpbooster.base.data.booster.Booster;
 import com.keurigsweb.xpbooster.base.data.booster.global.GlobalBoost;
+import com.keurigsweb.xpbooster.base.data.booster.global.HolidayBoost;
 import com.keurigsweb.xpbooster.base.handler.InternalXPBoostHandler;
 import com.keurigsweb.xpbooster.util.ConfigValue;
 import com.keurigsweb.xpbooster.util.TimeUtil;
@@ -37,6 +38,33 @@ public class XPBoostAPI {
         }
 
         return null;
+    }
+
+    public static double getTotalBoost(Player player) {
+        double multiplier = 0;
+        double globalMultiplier = 0;
+        double holidayMultiplier = HolidayBoost.GLOBAL_MULTIPLIER;
+        double permissionMultiplier = XPBoostPlugin.permisionMultiplier.getOrDefault(player.getUniqueId(), 0.0);
+
+        if (hasBoost(player.getUniqueId())) {
+            multiplier = getBoost(player.getUniqueId()).getMultiplier();
+        }
+
+        if (!getBoostHandler().getGlobalBoosts().isEmpty()) {
+            for (GlobalBoost globalBoost : getBoostHandler().getGlobalBoosts()) {
+                if (ConfigValue.GLOBAL_STACKING) {
+                    globalMultiplier += globalBoost.getMultiplier();
+                } else if (globalBoost.getMultiplier() > globalMultiplier) {
+                    globalMultiplier = globalBoost.getMultiplier();
+                }
+            }
+        }
+
+        if (ConfigValue.GLOBAL_STACKING) {
+            return Math.abs(multiplier + globalMultiplier + holidayMultiplier + permissionMultiplier);
+        } else {
+            return Math.max(Math.max(Math.max(permissionMultiplier, multiplier), globalMultiplier), holidayMultiplier);
+        }
     }
 
     public static double getMultiplier(Player player) {
