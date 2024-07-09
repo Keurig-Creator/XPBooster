@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -144,11 +145,15 @@ public abstract class Menu implements InventoryHolder {
     }
 
     public boolean isOpenMenu(HumanEntity player) {
-        if (player.getOpenInventory() == null || player.getOpenInventory().getType() != InventoryType.CHEST || (!(player.getOpenInventory().getTopInventory().getHolder() instanceof Menu))) {
+        try {
+            InventoryView openInventory = player.getOpenInventory();
+            if (openInventory.getType() != InventoryType.CHEST || !(openInventory.getTopInventory().getHolder() instanceof Menu)) {
+                return false;
+            }
+            return openInventory.getTopInventory().getHolder() instanceof Menu;
+        } catch (IncompatibleClassChangeError ignored) {
             return false;
         }
-
-        return equals((player.getOpenInventory().getTopInventory().getHolder() instanceof Menu));
     }
 
     public ActionItem getActionSlot(int slot) {

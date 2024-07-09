@@ -20,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.xml.crypto.dom.DOMCryptoContext;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -31,7 +32,7 @@ public class VoucherClickEvent {
 
     public boolean onClick(PlayerInteractEvent e) {
         StringBuilder boosterId = new StringBuilder();
-        NBT.get(e.getItem(), c -> {
+        NBT.get(Objects.requireNonNull(e.getItem()), c -> {
             boosterId.append(c.getString("boosterId"));
         });
 
