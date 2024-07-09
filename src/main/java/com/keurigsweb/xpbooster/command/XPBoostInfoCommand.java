@@ -38,76 +38,41 @@ public class XPBoostInfoCommand extends BaseCommand {
             chat.add("&8&l----- &e&lBooster Info &8&l-----\n");
             chat.add("\n");
 
-            double globalMultiplier = 0;
-            double holidayMultiplier = 0;
-            double permissionMultiplier = 0;
-            double multiplier = 0;
-
             if (boost != null) {
-                multiplier = boost.getMultiplier();
-            }
-
-            if (!XPBoostAPI.getBoostHandler().getGlobalBoosts().isEmpty()) {
-                for (GlobalBoost globalBoost : XPBoostAPI.getBoostHandler().getGlobalBoosts()) {
-                    if (ConfigValue.GLOBAL_STACKING) {
-                        globalMultiplier += globalBoost.getMultiplier();
-                    } else if (globalBoost.getMultiplier() > globalMultiplier) {
-                        globalMultiplier = globalBoost.getMultiplier();
-                    }
-                }
-            }
-
-            if (HolidayBoost.GLOBAL_MULTIPLIER > 0) {
-                holidayMultiplier = HolidayBoost.GLOBAL_MULTIPLIER;
-            }
-
-            if (multiplier > 0) {
-                chat.add("&e&l" + NumUtil.formatMultiplier(multiplier) + " &8Your Booster");
+                chat.add("&e&l" + NumUtil.formatMultiplier(boost.getMultiplier()) + " &8Your Booster");
                 chat.add("&8&l- &7Time &e" + boost.getRemainingTime());
                 chat.add("\n");
             }
 
-            if (XPBoostPlugin.permisionMultiplier.get(player.getUniqueId()) > 0) {
-                permissionMultiplier = XPBoostPlugin.permisionMultiplier.get(player.getUniqueId());
+            for (GlobalBoost globalBoost : XPBoostAPI.getBoostHandler().getGlobalBoosts()) {
+                chat.add("&e&l" + NumUtil.formatMultiplier(globalBoost.getMultiplier()) + " &8Global Booster");
+                chat.add("&8&l- &7By &e" + Bukkit.getPlayer(UUID.fromString(globalBoost.getUuid())).getName());
+                chat.add("&8&l- &7Time &e" + globalBoost.getRemainingTime());
+                chat.add("\n");
             }
 
-            if (globalMultiplier > 0) {
-                if (!XPBoostAPI.getBoostHandler().getGlobalBoosts().isEmpty()) {
-                    for (GlobalBoost globalBoost : XPBoostAPI.getBoostHandler().getGlobalBoosts()) {
-                        chat.add("&e&l" + NumUtil.formatMultiplier(globalBoost.getMultiplier()) + " &8Global Booster");
-                        chat.add("&8&l- &7By &e" + Bukkit.getPlayer(UUID.fromString(globalBoost.getUuid())).getName());
-                        chat.add("&8&l- &7Time &e" + globalBoost.getRemainingTime());
-                        chat.add("\n");
-                    }
-                }
-            }
-
+            double permissionMultiplier = XPBoostPlugin.permisionMultiplier.getOrDefault(player.getUniqueId(), 0.0);
             if (permissionMultiplier > 0) {
                 chat.add("&e&l" + NumUtil.formatMultiplier(permissionMultiplier) + " &8Permission Boost");
                 chat.add("\n");
             }
 
-
-            if (holidayMultiplier > 0) {
-                chat.add("&e&l" + NumUtil.formatMultiplier(holidayMultiplier) + " &8Event Booster");
+            if (HolidayBoost.GLOBAL_MULTIPLIER > 0) {
+                chat.add("&e&l" + NumUtil.formatMultiplier(HolidayBoost.GLOBAL_MULTIPLIER) + " &8Event Booster");
                 // Add relevant information for event booster
                 chat.add("\n");
             }
 
+            double totalMultiplier = XPBoostAPI.getTotalBoost(player);
+            double highestMultiplier = Math.max(Math.max(Math.max(permissionMultiplier, boost != null ? boost.getMultiplier() : 0), XPBoostAPI.getGlobalMultiplier()), HolidayBoost.GLOBAL_MULTIPLIER);
 
             StringBuilder total = new StringBuilder();
-            double highestMultiplier = Math.max(Math.max(Math.max(permissionMultiplier, multiplier), globalMultiplier), holidayMultiplier);
-            double totalMultiplier = Math.abs(multiplier + globalMultiplier + holidayMultiplier + permissionMultiplier);
+            total.append("&f&lTOTAL BONUS &7").append(NumUtil.formatMultiplier(totalMultiplier));
 
-            if (!ConfigValue.GLOBAL_STACKING) {
-                total.append("&f&lTOTAL BONUS &7").append(NumUtil.formatMultiplier(highestMultiplier));
-            } else {
-                total.append("&f&lTOTAL BONUS &7").append(NumUtil.formatMultiplier(totalMultiplier));
-            }
-
-            if (highestMultiplier == multiplier) {
+            if (highestMultiplier == (boost != null ? boost.getMultiplier() : 0)) {
                 total.append(" &8| &cHighest Value");
             }
+
             chat.add(2, total.toString());
             chat.add(3, "\n");
 
