@@ -83,15 +83,19 @@ public class XPBoostCommand extends BaseCommand {
             replace.addReplacement(Replacement.DURATION_REGEX, args[0]);
         }
 
-//        GlobalBoost globalBoost = GlobalBoost.builder()
-//                .uuid(toSet.getUniqueId().toString())
-//                .multiplier(multiplier)
-//                .time(TimeUtil.getTime(args[0])).build();
-
         XPBoostAPI.addGlobalBoost(toSet.getPlayer(), multiplier, args[0]);
 
         String message = Language.GLOBAL_MESSAGE.toString(replace);
         Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(message));
+    }
+
+    @Subcommand("resetglobal")
+    public void onResetGlobal(CommandSender sender) {
+        Replacement replace = Replacement.createReplacement(getName(), sender.getName());
+        XPBoostAPI.removeGlobalBoost(XPBoostAPI.getGlobalMultiplier());
+
+        String message = Language.GLOBAL_RESET_MESSAGE.toString(replace);
+        sender.sendMessage(message);
     }
 
     @Subcommand("voucher")
