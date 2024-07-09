@@ -11,6 +11,7 @@ public enum Language {
     BOOST_END_MESSAGE("&7Your XP Boost has &eexpired&7."),
     SET_BOOST_MESSAGE("&7Set XP boost to &c$target&7 with a multiplier of &c$multiplier&7 for &e$duration&7."),
     GLOBAL_MESSAGE("&7Global XP Boost multiplier &e$multiplier &7activated by &e$target&7!"),
+    GLOBAL_RESET_MESSAGE("&7Global XP Boost multiplier has been &ereset"),
     GIVE_VOUCHER_MESSAGE("&7Gave XP boost voucher &f&l$name &7to &c$target&7"),
     VOUCHER_RECEIVE_MESSAGE("&7You were given the $name &7XP boost voucher"),
     BOOSTER_ACTIVATE_MESSAGE("&7Your XP multiplier is now &e$multiplier &7Booster time is now &e$time"),
