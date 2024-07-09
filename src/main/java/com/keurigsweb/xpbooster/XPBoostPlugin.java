@@ -3,6 +3,7 @@ package com.keurigsweb.xpbooster;
 import co.aikar.commands.CommandReplacements;
 import co.aikar.commands.PaperCommandManager;
 import com.keurigsweb.xpbooster.adapter.VaultPluginAdapter;
+import com.keurigsweb.xpbooster.api.BoostExpansion;
 import com.keurigsweb.xpbooster.api.XPBoostAPI;
 import com.keurigsweb.xpbooster.base.data.EXPBoost;
 import com.keurigsweb.xpbooster.base.data.booster.Booster;
@@ -111,6 +112,11 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
 
         new BoostEndTask(this).runTaskTimerAsynchronously(this, 0, 5);
+
+        // Small check to make sure that PlaceholderAPI is installed
+        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new BoostExpansion().register();
+        }
     }
 
     /**
