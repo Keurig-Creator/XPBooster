@@ -23,6 +23,14 @@ public class ConfigValue {
     public static List<Holiday> GLOBAL_HOLIDAYS = new ArrayList<>();
     public static boolean IGNOREXPBOTTLES;
     public static Map<DayOfWeek, Double> GLOBAL_DAYS_OF_WEEK = new HashMap<>();
+    public static ROUNDING ROUND;
+    public static double ROUND_DECIMAL;
+
+    public enum ROUNDING {
+        ROUND,
+        CEIL,
+        FLOOR;
+    }
 
     static {
         loadValues();
@@ -37,6 +45,8 @@ public class ConfigValue {
         GLOBAL_STACKING = instance.config.getBoolean("global-boost.allow-stacking");
         GLOBAL_TIMEZONE = instance.config.getString("global-boost.schedule.timezone");
         IGNOREXPBOTTLES = instance.config.getBoolean("ignore-xp-bottles");
+        ROUND = ROUNDING.valueOf(instance.config.getString("rounding"));
+        ROUND_DECIMAL = instance.config.getDouble("round-decimal");
         ConfigurationSection holidays = instance.config.getConfigurationSection("global-boost.schedule.holidays");
         if (holidays != null) {
             GLOBAL_HOLIDAYS.clear();
