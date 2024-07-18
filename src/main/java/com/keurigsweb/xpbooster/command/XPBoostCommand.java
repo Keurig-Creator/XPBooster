@@ -157,7 +157,7 @@ public class XPBoostCommand extends BaseCommand {
         } else if (multiplier > plugin.config.getDouble("maximum-multiplier")) {
             Chat.message(sender, Language.MAXIMUM_MULTIPLIER.toString(replace));
             return;
-        } else if (!plugin.config.getBoolean("full_range_multiplier") && !NumUtil.isWholeOrHalf(multiplier)) {
+        } else if (!plugin.config.getBoolean("full-range-multiplier") && !NumUtil.isWholeOrHalf(multiplier)) {
             Chat.message(sender, Language.FULL_RANGE_MULTIPLIER.toString(replace));
             return;
         }

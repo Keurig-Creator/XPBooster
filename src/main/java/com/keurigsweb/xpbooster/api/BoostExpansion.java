@@ -26,7 +26,7 @@ public class BoostExpansion extends PlaceholderExpansion {
     public @Nullable String onRequest(OfflinePlayer player, @NotNull String params) {
         if (params.equalsIgnoreCase("boost")) {
             return player == null ? null : NumUtil.formatMultiplier(XPBoostAPI.getMultiplier(player.getPlayer()));
-        } else if(params.equalsIgnoreCase("global")) {
+        } else if(params.equalsIgnoreCase("total")) {
             return player == null ? null : NumUtil.formatMultiplier(XPBoostAPI.getTotalBoost(player.getPlayer()));
         } else if (params.equalsIgnoreCase("time")) {
             return player == null ? null : XPBoostAPI.getRemainingTime(player.getPlayer());
