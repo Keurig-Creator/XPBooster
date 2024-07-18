@@ -4,6 +4,7 @@ import com.keurigsweb.xpbooster.XPBoostPlugin;
 import com.keurigsweb.xpbooster.api.XPBoostAPI;
 import com.keurigsweb.xpbooster.base.data.EXPBoost;
 import com.keurigsweb.xpbooster.base.data.booster.global.HolidayBoost;
+import com.keurigsweb.xpbooster.util.Chat;
 import com.keurigsweb.xpbooster.util.ConfigValue;
 import lombok.AllArgsConstructor;
 import org.bukkit.entity.ExperienceOrb;
@@ -60,10 +61,32 @@ public class PlayerExpChangeListener implements Listener {
             event.setAmount(adjustExperience(event.getAmount(), multiplier));
         }
     }
-
+    /**
+     * Custom rounding method from config
+     */
     public int roundMultiplier(double multiplier) {
-        return (int) Math.round(multiplier);
+        switch (ConfigValue.ROUND) {
+            case CEIL:
+                return (int) Math.ceil(multiplier);
+            case FLOOR:
+                return (int) Math.floor(multiplier);
+            case ROUND:
+                double roundDecimal = ConfigValue.ROUND_DECIMAL;
+                double decimalPart = multiplier % 1;
+
+                // Adjust the comparison to check if the decimal part is greater than ROUND_DECIMAL
+                if (decimalPart >= roundDecimal || Math.abs(decimalPart - roundDecimal) < 0.000001) {
+                    return (int) Math.ceil(multiplier); // Round up if equal or greater than ROUND_DECIMAL
+                } else {
+                    return (int) Math.floor(multiplier); // Round down otherwise
+                }
+            default:
+                throw new IllegalArgumentException("Unknown rounding method");
+        }
     }
+
+
+
 
     public int adjustExperience(int originalExperience, double multiplier) {
         // Calculate adjusted experience
