@@ -70,6 +70,8 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
         int pluginId = 21541;
         metrics = new Metrics(this, pluginId);
 
+        new PluginUpdater(this, 115954).checkForUpdates();
+
         instance = this;
         config = new ConfigYml("settings.yml", this);
         lang = new ConfigYml("lang.yml", this);
