@@ -1,5 +1,5 @@
 name: XPBooster
-version: 1.3.2
+version: 1.3.3
 main: com.keurigsweb.xpbooster.XPBoostPlugin
 api-version: '1.13'
 softdepend:
