@@ -41,7 +41,7 @@ public class XPBoostAPI {
     }
 
     public static double getTotalBoost(Player player) {
-        double multiplier = 0;
+        double multiplier = 1;
         double globalMultiplier = 0;
         double holidayMultiplier = HolidayBoost.GLOBAL_MULTIPLIER;
         double permissionMultiplier = XPBoostPlugin.permisionMultiplier.getOrDefault(player.getUniqueId(), 0.0);
