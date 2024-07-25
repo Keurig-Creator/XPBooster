@@ -31,7 +31,7 @@ public class XPBoostInfoCommand extends BaseCommand {
     @Default
     public void onInfo(Player player) {
         Replacement replace = Replacement.createReplacement(getName(), player.getName());
-        if (XPBoostAPI.hasBoost(player.getUniqueId()) || XPBoostAPI.getGlobalMultiplier() > 0 || HolidayBoost.GLOBAL_MULTIPLIER > 0) {
+        if (XPBoostAPI.hasBoost(player.getUniqueId()) || XPBoostAPI.getGlobalMultiplier() > 0 || HolidayBoost.GLOBAL_MULTIPLIER > 0 || XPBoostPlugin.permisionMultiplier.containsKey(player.getUniqueId())) {
             EXPBoost boost = XPBoostAPI.getBoost(player.getUniqueId());
             List<String> chat = new ArrayList<>();
 
