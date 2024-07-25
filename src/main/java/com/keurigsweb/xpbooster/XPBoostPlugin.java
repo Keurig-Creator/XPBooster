@@ -22,6 +22,7 @@ import com.keurigsweb.xpbooster.listener.PlayerInteractListener;
 import com.keurigsweb.xpbooster.listener.PlayerJoinListener;
 import com.keurigsweb.xpbooster.language.Language;
 import com.keurigsweb.xpbooster.tasks.BoostEndTask;
+import com.keurigsweb.xpbooster.tasks.PermissionMultiplierTask;
 import com.keurigsweb.xpbooster.util.Chat;
 import com.keurigsweb.xpbooster.util.ConfigYml;
 import com.keurigsweb.xpbooster.util.JsonConfig;
@@ -114,6 +115,7 @@ public final class XPBoostPlugin extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
 
         new BoostEndTask(this).runTaskTimerAsynchronously(this, 0, 5);
+        new PermissionMultiplierTask(this).runTaskTimerAsynchronously(this, 0, 20 * 5);
 
         // Small check to make sure that PlaceholderAPI is installed
         if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
