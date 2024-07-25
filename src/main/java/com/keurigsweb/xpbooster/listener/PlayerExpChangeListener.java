@@ -51,10 +51,12 @@ public class PlayerExpChangeListener implements Listener {
             multiplier = roundMultiplier(HolidayBoost.GLOBAL_MULTIPLIER);
         }
 
-        if (ConfigValue.GLOBAL_STACKING) {
-            multiplier += roundMultiplier(XPBoostPlugin.permisionMultiplier.get(player.getUniqueId()));
-        } else if (XPBoostPlugin.permisionMultiplier.get(player.getUniqueId()) > multiplier){
-            multiplier = roundMultiplier(XPBoostPlugin.permisionMultiplier.get(player.getUniqueId()));
+        if (XPBoostPlugin.permisionMultiplier.get(player.getUniqueId()) != null) {
+            if (ConfigValue.GLOBAL_STACKING) {
+                multiplier += roundMultiplier(XPBoostPlugin.permisionMultiplier.get(player.getUniqueId()));
+            } else if (XPBoostPlugin.permisionMultiplier.get(player.getUniqueId()) > multiplier){
+                multiplier = roundMultiplier(XPBoostPlugin.permisionMultiplier.get(player.getUniqueId()));
+            }
         }
 
         if (multiplier > 0) {
