@@ -38,8 +38,6 @@ public class PluginUpdater {
                     // Compare versions
                     String currentVersion = plugin.getDescription().getVersion();
 
-                    Chat.log(currentVersion);
-                    Chat.log(latestVersion);
                     if (!latestVersion.equals(currentVersion)) {
                         Chat.log("A new version is available: " + latestVersion);
                         update = true;
