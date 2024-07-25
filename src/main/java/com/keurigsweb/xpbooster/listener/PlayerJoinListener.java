@@ -5,6 +5,7 @@ import com.keurigsweb.xpbooster.XPBoostPlugin;
 import com.keurigsweb.xpbooster.base.data.booster.global.GlobalBoost;
 import com.keurigsweb.xpbooster.base.data.booster.global.HolidayBoost;
 import com.keurigsweb.xpbooster.event.VoucherClickEvent;
+import com.keurigsweb.xpbooster.tasks.PermissionMultiplierTask;
 import com.keurigsweb.xpbooster.util.Chat;
 import com.keurigsweb.xpbooster.util.Tasks;
 import lombok.AllArgsConstructor;
@@ -31,19 +32,7 @@ public class PlayerJoinListener implements Listener {
         String notify = HolidayBoost.GLOBAL_NOTIFY;
        // Use Permission based multiplier
         if (plugin.config.getBoolean("permission-based-multiplier")) {
-            List<String> permissions = player.getEffectivePermissions().stream()
-                    .filter(p -> p.getPermission().contains("xpbooster.multiplier"))
-                    .map(p -> p.getPermission().split("\\.")[2]) // Extracting the multiplier value
-                    .toList();
-
-            double highestMultiplier = permissions.stream()
-                    .mapToDouble(Double::parseDouble)
-                    .max()
-                    .orElse(0); // Default value if no multiplier found
-
-            if (player.hasPermission("xpbooster.multiplier." + highestMultiplier)) {
-                XPBoostPlugin.permisionMultiplier.put(player.getUniqueId(), highestMultiplier);
-            }
+            PermissionMultiplierTask.checkPermissionMultiplier(player);
         }
         if (notify != null) {
             Tasks.runTaskLater(plugin, () -> {
@@ -58,8 +47,6 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-
         XPBoostPlugin.permisionMultiplier.remove(player.getUniqueId());
     }
-
 }
