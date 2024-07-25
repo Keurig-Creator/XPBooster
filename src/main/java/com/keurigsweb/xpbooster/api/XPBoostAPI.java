@@ -41,7 +41,7 @@ public class XPBoostAPI {
     }
 
     public static double getTotalBoost(Player player) {
-        double multiplier = 1;
+        double multiplier = 0;
         double globalMultiplier = 0;
         double holidayMultiplier = HolidayBoost.GLOBAL_MULTIPLIER;
         double permissionMultiplier = XPBoostPlugin.permisionMultiplier.getOrDefault(player.getUniqueId(), 0.0);
@@ -60,11 +60,15 @@ public class XPBoostAPI {
             }
         }
 
+        double totalBoost;
         if (ConfigValue.GLOBAL_STACKING) {
-            return Math.abs(multiplier + globalMultiplier + holidayMultiplier + permissionMultiplier);
+            totalBoost = Math.abs(multiplier + globalMultiplier + holidayMultiplier + permissionMultiplier);
         } else {
-            return Math.max(Math.max(Math.max(permissionMultiplier, multiplier), globalMultiplier), holidayMultiplier);
+            totalBoost = Math.max(Math.max(Math.max(permissionMultiplier, multiplier), globalMultiplier), holidayMultiplier);
         }
+
+        // Return 1x if totalBoost is 0
+        return totalBoost == 0 ? 1 : totalBoost;
     }
 
     public static double getMultiplier(Player player) {
