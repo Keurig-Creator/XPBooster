@@ -8,20 +8,14 @@ import com.keurigsweb.xpbooster.base.data.ui.VoucherMenu;
 import com.keurigsweb.xpbooster.base.menu.data.MenuManager;
 import com.keurigsweb.xpbooster.base.menu.data.PlayerMenu;
 import com.keurigsweb.xpbooster.language.Language;
-import com.keurigsweb.xpbooster.util.NumUtil;
-import com.keurigsweb.xpbooster.util.TimeUtil;
 import com.keurigsweb.xpbooster.util.replacement.Replacement;
 import de.tr7zw.changeme.nbtapi.NBT;
 import lombok.AllArgsConstructor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import javax.xml.crypto.dom.DOMCryptoContext;
-import java.util.HashMap;
 import java.util.Objects;
-import java.util.UUID;
 
 @AllArgsConstructor
 public class VoucherClickEvent {
@@ -31,6 +25,11 @@ public class VoucherClickEvent {
     private ItemStack item;
 
     public boolean onClick(PlayerInteractEvent e) {
+        // Check if the item is null or air
+        if (item == null || item.getType().isAir()) {
+            return false; // Or handle the case where the item is null/air
+        }
+
         StringBuilder boosterId = new StringBuilder();
         NBT.get(Objects.requireNonNull(e.getItem()), c -> {
             boosterId.append(c.getString("boosterId"));
@@ -66,7 +65,7 @@ public class VoucherClickEvent {
         } else {
             EXPBoost expBoost = XPBoostAPI.addBoost(player, booster);
             Replacement replacement = booster.getReplacement(Language.BOOSTER_ACTIVATE_MESSAGE.toString());
-            replacement.addReplacement(Replacement.TIME_REGEX, expBoost.getRemainingTime());
+            replacement.addReplacement(Replacement.TIME_REGEX, expBoost.getRemainingTimeFormat());
             player.sendMessage(replacement.getReplacement());
             XPBoostAPI.addBoost(player, booster);
         }
