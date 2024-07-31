@@ -10,7 +10,7 @@ default-item:
     - "&7Time of &e$time"
 
 regular_boost_shop:
-  command: "boosts|boostershop" # *server needs to be restarted for this to take effect
+  command: "boosts|boostershop|boosters" # *server needs to be restarted for this to take effect
   gui-name: "&eXP &6Boost &fShop"
   size: 27
   instant-claim: false
