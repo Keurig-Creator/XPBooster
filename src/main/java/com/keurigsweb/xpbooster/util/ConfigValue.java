@@ -14,6 +14,7 @@ import java.util.Map;
 
 public class ConfigValue {
 
+    public static boolean NOTIFY_UPDATES;
     public static boolean GLOBAL_ENABLED;
     public static double GLOBAL_DEFAULT_MULTIPLIER;
     public static int GLOBAL_MAX_DURATION;
@@ -38,6 +39,7 @@ public class ConfigValue {
 
     public static void loadValues() {
         XPBoostPlugin instance = XPBoostPlugin.getInstance();
+        NOTIFY_UPDATES = instance.getConfig().getBoolean("notify-updates");
         GLOBAL_ENABLED = instance.config.getBoolean("global-boost.enabled");
         GLOBAL_DEFAULT_MULTIPLIER = instance.config.getDouble("global-boost.default-multiplier");
         GLOBAL_MAX_DURATION = instance.config.getInt("global-boost.max-duration-hours");

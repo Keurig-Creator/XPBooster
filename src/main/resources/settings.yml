@@ -1,3 +1,6 @@
+# Console will still send notifications out
+notify-updates: true
+
 # Minimum multiplier: the next decimal example 1.5
 minimum-multiplier: 1
 

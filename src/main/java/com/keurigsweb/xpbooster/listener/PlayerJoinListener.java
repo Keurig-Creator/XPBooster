@@ -7,6 +7,7 @@ import com.keurigsweb.xpbooster.base.data.booster.global.HolidayBoost;
 import com.keurigsweb.xpbooster.event.VoucherClickEvent;
 import com.keurigsweb.xpbooster.tasks.PermissionMultiplierTask;
 import com.keurigsweb.xpbooster.util.Chat;
+import com.keurigsweb.xpbooster.util.ConfigValue;
 import com.keurigsweb.xpbooster.util.Tasks;
 import lombok.AllArgsConstructor;
 import org.bukkit.entity.Player;
@@ -37,7 +38,7 @@ public class PlayerJoinListener implements Listener {
         if (notify != null) {
             Tasks.runTaskLater(plugin, () -> {
                 Chat.message(player, notify);
-                if (PluginUpdater.isUpdate() && player.hasPermission("xpbooster.update")) {
+                if (ConfigValue.NOTIFY_UPDATES && PluginUpdater.isUpdate() && (player.hasPermission("xpbooster.update") || player.isOp())) {
                     Chat.message(player, "&aXPBooster &7is out of date latest version is &c" + PluginUpdater.LATEST_VERSION + " &7You are currently on &a" + PluginUpdater.CURRENT_VERSION);
                 }
             }, 5);

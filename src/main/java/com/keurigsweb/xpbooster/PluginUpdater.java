@@ -41,7 +41,6 @@ public class PluginUpdater {
                     if (!latestVersion.equals(currentVersion)) {
                         Chat.log("A new version is available: " + latestVersion);
                         update = true;
-                        // Notify players or perform update actions here
                     }
                     LATEST_VERSION = latestVersion;
                     CURRENT_VERSION = currentVersion;
