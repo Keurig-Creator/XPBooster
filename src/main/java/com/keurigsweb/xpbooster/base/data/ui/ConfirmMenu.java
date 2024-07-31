@@ -17,7 +17,6 @@ import com.keurigsweb.xpbooster.util.InventoryUtil;
 import com.keurigsweb.xpbooster.util.ItemBuilder;
 import com.keurigsweb.xpbooster.util.NumUtil;
 import com.keurigsweb.xpbooster.util.replacement.Replacement;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -141,7 +140,7 @@ public class ConfirmMenu extends Menu {
 
                     // Apply booster to the player
                     EXPBoost expBoost = XPBoostAPI.addBoost(player, booster);
-                    replacement.addReplacement(Replacement.TIME_REGEX, expBoost.getRemainingTime());
+                    replacement.addReplacement(Replacement.TIME_REGEX, expBoost.getRemainingTimeFormat());
                     player.sendMessage(replacement.getReplacement());
                 }
             }

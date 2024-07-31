@@ -32,9 +32,16 @@ public class XPBoostAPI {
         return getBoostHandler().getBoost(uuid);
     }
 
+    /**
+     * Get a users boost
+     */
+    public static EXPBoost getBoost(Player player) {
+        return getBoostHandler().getBoost(player.getUniqueId());
+    }
+
     public static String getRemainingTime(Player player) {
         if (hasBoost(player.getUniqueId())) {
-            return getBoost(player.getUniqueId()).getRemainingTime();
+            return getBoost(player.getUniqueId()).getRemainingTimeFormat();
         }
 
         return null;
@@ -109,6 +116,21 @@ public class XPBoostAPI {
 
     public static GlobalBoost getGlobalBoost(Double multiplier) {
         return getBoostHandler().getGlobalBoost(multiplier);
+    }
+
+    public static String getGlobalMultiplierTimeFormat() {
+        GlobalBoost globalBoost = getGlobalBoost(getGlobalMultiplier());
+
+        if (globalBoost == null) {
+            return "0s";
+        }
+
+        return globalBoost.getRemainingTimeFormat();
+    }
+
+    public static String getGlobalMultiplierTime() {
+        GlobalBoost globalBoost = getGlobalBoost(getGlobalMultiplier());
+        return globalBoost.getRemainingTime();
     }
 
     public static double getGlobalMultiplier() {

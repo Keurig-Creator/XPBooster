@@ -58,11 +58,22 @@ public class GlobalBoost {
         return false;
     }
 
-    public String getRemainingTime() {
+    public String getRemainingTimeFormat() {
         if (time == 0) {
             return "PERMANENT";
         } else {
             return NumUtil.timeFormat(time, true);
+        }
+    }
+
+    /**
+     * Retrieves the remaining time in seconds
+     */
+    public String getRemainingTime() {
+        if (time == 0) {
+            return "0";
+        } else {
+            return ((time - System.currentTimeMillis()) / 1000) + "";
         }
     }
 

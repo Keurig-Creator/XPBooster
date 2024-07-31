@@ -11,7 +11,6 @@ import com.keurigsweb.xpbooster.base.data.booster.global.GlobalBoost;
 import com.keurigsweb.xpbooster.base.data.booster.global.HolidayBoost;
 import com.keurigsweb.xpbooster.language.Language;
 import com.keurigsweb.xpbooster.util.Chat;
-import com.keurigsweb.xpbooster.util.ConfigValue;
 import com.keurigsweb.xpbooster.util.NumUtil;
 import com.keurigsweb.xpbooster.util.replacement.Replacement;
 import org.bukkit.Bukkit;
@@ -20,7 +19,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -40,14 +38,14 @@ public class XPBoostInfoCommand extends BaseCommand {
 
             if (boost != null) {
                 chat.add("&e&l" + NumUtil.formatMultiplier(boost.getMultiplier()) + " &8Your Booster");
-                chat.add("&8&l- &7Time &e" + boost.getRemainingTime());
+                chat.add("&8&l- &7Time &e" + boost.getRemainingTimeFormat());
                 chat.add("\n");
             }
 
             for (GlobalBoost globalBoost : XPBoostAPI.getBoostHandler().getGlobalBoosts()) {
                 chat.add("&e&l" + NumUtil.formatMultiplier(globalBoost.getMultiplier()) + " &8Global Booster");
                 chat.add("&8&l- &7By &e" + Bukkit.getPlayer(UUID.fromString(globalBoost.getUuid())).getName());
-                chat.add("&8&l- &7Time &e" + globalBoost.getRemainingTime());
+                chat.add("&8&l- &7Time &e" + globalBoost.getRemainingTimeFormat());
                 chat.add("\n");
             }
 
@@ -91,7 +89,7 @@ public class XPBoostInfoCommand extends BaseCommand {
 
         if (XPBoostAPI.hasBoost(target.getUniqueId())) {
             EXPBoost boost = XPBoostAPI.getBoost(target.getUniqueId());
-            Chat.message(sender, "&8&l----- &eActive &6Booster Info &8&l-----\n \n&7Player &e" + target.getName() + "\n&7Multiplier &e" + boost.getMultiplier() + "\n&7Time remaining: &e" + boost.getRemainingTime() + "\n ");
+            Chat.message(sender, "&8&l----- &eActive &6Booster Info &8&l-----\n \n&7Player &e" + target.getName() + "\n&7Multiplier &e" + boost.getMultiplier() + "\n&7Time remaining: &e" + boost.getRemainingTimeFormat() + "\n ");
         } else {
             Chat.message(sender, Language.TARGET_NO_ACTIVE_BOOSTER.toString());
         }

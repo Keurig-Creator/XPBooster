@@ -1,7 +1,6 @@
 package com.keurigsweb.xpbooster.base.data;
 
 import com.google.gson.*;
-import com.keurigsweb.xpbooster.util.Chat;
 import com.keurigsweb.xpbooster.util.NumUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -62,11 +61,22 @@ public class EXPBoost {
         return boostTime.compareTo(now) < 0;
     }
 
-    public String getRemainingTime() {
+    public String getRemainingTimeFormat() {
         if (time == 0) {
             return "PERMANENT";
         } else {
             return NumUtil.timeFormat(time, true);
+        }
+    }
+
+    /**
+     * Retrieves the remaining time in seconds
+     */
+    public String getRemainingTime() {
+        if (time == 0) {
+            return "0";
+        } else {
+            return ((time - System.currentTimeMillis()) / 1000.0) + "";
         }
     }
 
