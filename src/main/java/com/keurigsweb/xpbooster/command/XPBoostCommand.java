@@ -7,12 +7,10 @@ import com.keurigsweb.xpbooster.XPBoostPlugin;
 import com.keurigsweb.xpbooster.api.XPBoostAPI;
 import com.keurigsweb.xpbooster.base.data.EXPBoost;
 import com.keurigsweb.xpbooster.base.data.booster.Booster;
-import com.keurigsweb.xpbooster.base.data.booster.global.GlobalBoost;
 import com.keurigsweb.xpbooster.base.handler.InternalXPBoostHandler;
 import com.keurigsweb.xpbooster.language.Language;
 import com.keurigsweb.xpbooster.util.Chat;
 import com.keurigsweb.xpbooster.util.NumUtil;
-import com.keurigsweb.xpbooster.util.TimeUtil;
 import com.keurigsweb.xpbooster.util.replacement.Replacement;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -44,6 +42,8 @@ public class XPBoostCommand extends BaseCommand {
                         "&e/xpbooster &6add &7<player> &8[time]\n" +
                         "&e/xpbooster &6remove &7<player>\n" +
                         "&e/xpbooster &6reload\n" +
+                        "&e/xpbooster &6global <player> <multiplier> [time]\n" +
+                        "&e/xpbooster &6resetglobal\n" +
                         " \n" + // First empty line
                         "&e/booster &8| &6booster info\n",
                 "&e/" + plugin.getReplacements().replace("%shopcommand").split("\\|")[0] + " &8| &6shop command\n",
@@ -239,7 +239,7 @@ public class XPBoostCommand extends BaseCommand {
 
         if (XPBoostAPI.hasBoost(player.getUniqueId())) {
             EXPBoost boost = XPBoostAPI.getBoost(player.getUniqueId());
-            Chat.message(player, "&8&l----- &eActive &6Booster Info &8&l-----\n \n&7Multiplier &e" + boost.getMultiplier() + "\n&7Time remaining: &e" + boost.getRemainingTime() + "\n ");
+            Chat.message(player, "&8&l----- &eActive &6Booster Info &8&l-----\n \n&7Multiplier &e" + boost.getMultiplier() + "\n&7Time remaining: &e" + boost.getRemainingTimeFormat() + "\n ");
         } else {
             Chat.message(player, Language.NO_ACTIVE_BOOSTER.toString());
         }
